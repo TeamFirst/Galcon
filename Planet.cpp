@@ -3,7 +3,15 @@
 #include "Planet.h"
 
 
-CPlanet::CPlanet()
+CPlanet::CPlanet(unsigned short id, unsigned short x, unsigned short y,
+                 unsigned short radius, unsigned long army,
+                 unsigned short playerId):
+   m_id(id),
+   m_x(x),
+   m_y(y),
+   m_radius(radius),
+   m_army(army),
+   m_playerId(playerId)
 {
 }
 

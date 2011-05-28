@@ -5,7 +5,7 @@
 class CPlanet
 {
 public:
-   CPlanet();
+   CPlanet(unsigned short, unsigned short, unsigned short, unsigned short, unsigned long, unsigned short);
    ~CPlanet();
 
    unsigned long GetArmy() const;

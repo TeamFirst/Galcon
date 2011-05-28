@@ -19,7 +19,8 @@ HEADERS += \
     Game.h \
     Fleet.h \
     Space.h \
-    Message.h
+    Message.h \
+    SceneUpdate.h
 
 FORMS += \
     enterwindow.ui
