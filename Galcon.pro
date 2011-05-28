@@ -18,7 +18,8 @@ HEADERS += \
     Planet.h \
     Game.h \
     Fleet.h \
-    Space.h
+    Space.h \
+    Message.h
 
 FORMS += \
     enterwindow.ui
