@@ -9,9 +9,11 @@ public:
    ~CPlanet();
    const double EPS = 0.5;
 
-   unsigned long GetArmy () const;
-   unsigned int GetPlayer () const;
+   unsigned long GetArmy() const;
+   unsigned int GetPlayerId() const;
    void GetPosition(unsigned int&, unsigned int&) const;
+   unsigned int GetRadius() const;
+
    bool DataChanged(const unsigned long, const unsigned int) const;
 
    void SetArmy (const unsigned long);

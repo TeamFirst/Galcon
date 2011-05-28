@@ -13,6 +13,7 @@ public:
    void SlotStartData(IMessage*);
    void SlotStateMap(IMessage*);
    void SlotFinishGame(IMessage*);
+
 };
 
 #endif // CGAME_H

@@ -15,6 +15,8 @@ public:
    void IncreaseProcent(double); //For simulation
 
    void GetPosition (unsigned short&, unsigned short&) const;  //Output into GUI
+   unsigned int GetShipCount();
+   unsigned int GetPlayerId();
 
 private:
    struct Point
