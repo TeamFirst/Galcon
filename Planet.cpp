@@ -14,7 +14,7 @@ unsigned long CPlanet::GetArmy() const
 
 unsigned int CPlanet::GetPlayerId() const
 {
-   return this->m_player->GetId();
+   return this->m_playerId;
 }
 
 void CPlanet::GetPosition(unsigned int& o_nX, unsigned int& o_nY) const
@@ -38,6 +38,6 @@ void CPlanet::SetArmy(const unsigned int i_nArmy)
 
 void CPlanet::SetPlayer(const unsigned int i_nPlayer)
 {
-   m_player = i_nPlayer;
+   m_playerId = i_nPlayer;
 }
 
