@@ -41,13 +41,3 @@ void CPlanet::SetPlayer(const unsigned int i_nPlayer)
    m_player = i_nPlayer;
 }
 
-
-
-bool CPlanet::DataChanged(const unsigned long i_nArmy, const unsigned int i_nPlayer) const
-{
-   if ((m_army != i_nArmy) || (m_player != i_nPlayer))
-   {
-      return true;
-   }
-   return false;
-}
