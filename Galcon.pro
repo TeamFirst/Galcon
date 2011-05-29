@@ -9,7 +9,8 @@ SOURCES += \
     enterwindow.cpp \
     Planet.cpp \
     Game.cpp \
-    Fleet.cpp
+    Fleet.cpp \
+    Space.cpp
 
 HEADERS += \
     gui.h \

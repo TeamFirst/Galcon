@@ -39,6 +39,7 @@ public:
 
    void UpdatePlanets(const std::vector<std::pair<unsigned long, unsigned int> >&);
    void Update(const double i_time);
+   void CreateFleet(CPlanet*, CPlanet*, );
    void DeleteFleet(unsigned int i_nId);
 private:
    std::vector<CPlanet* > m_planets;
