@@ -10,6 +10,7 @@ SOURCES += \
     Planet.cpp \
     Game.cpp \
     Fleet.cpp \
+    Space.cpp \
     criticalmessage.cpp
 
 HEADERS += \
