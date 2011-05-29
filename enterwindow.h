@@ -2,11 +2,12 @@
 #define ENTERWINDOW_H
 
 #include <QWidget>
+#include "Message.h"
 
 namespace Ui {
     class CEnterWindow;
 }
-typedef IMessage * pIMessage;
+
 
 class CEnterWindow : public QWidget
 {
@@ -15,11 +16,21 @@ class CEnterWindow : public QWidget
 public:
     explicit CEnterWindow(QWidget *parent = 0);
     ~CEnterWindow();
+
 signals:
     void SendClientToServer(pIMessage mess);
 
+public slots:
+    void TakeError(pIMessage mess);
+
+    void TakeFinishGame(pIMessage mess);
+
+    void TakeStartGame(pIMessage mess);
+
+    void TakeTimeStartToGame(pIMessage mess);
+
 private:
-    //Check connection data and send to the server if valid
+    //Check connection data and send IMessage to the server if valid
     void CheckAndSend();
     Ui::CEnterWindow *ui;
 

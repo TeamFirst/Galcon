@@ -1,4 +1,5 @@
 #include <QHostAddress>
+#include <QVariant>
 #include "enterwindow.h"
 #include "ui_enterwindow.h"
 #include "criticalmessage.h"
@@ -34,7 +35,12 @@ void CEnterWindow::CheckAndSend()
         CCriticalMessage::Show("Error", "Name not entered");
     }
     QHostAddress host;
-
-
-
+    if (!host.setAddress(ui->m_ip))
+    {
+        CCriticalMessage::Show("Error", "Bad IP");
+    }
+    if (!(QVariant(ui->m_port->text()).canConvert(QVariant::Int)))
+    {
+        CCriticalMessage::Show("Error", "Port is not valid");
+    }
 }

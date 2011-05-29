@@ -1,5 +1,9 @@
 #ifndef IMESSAGE_H
 #define IMESSAGE_H
+#include <QSharedPointer>
+
+struct IMessage;
+typedef QSharedPointer<IMessage> pIMessage;
 
 struct IMessage
 {
@@ -14,9 +18,9 @@ struct IMessage
       eMessageError,
       eMessageAddView,
    };
-
+   virtual int GetTypeMessage() const = 0;
+protected:
    ETypeMessage m_type;
-   int GetTypeMessage();
 };
 
 #endif // IMESSAGE_H
