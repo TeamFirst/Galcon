@@ -10,8 +10,10 @@ SOURCES += \
     Planet.cpp \
     Game.cpp \
     Fleet.cpp \
-    criticalmessage.cpp \
-    messageconnecttoserver.cpp
+    messageconnecttoserver.cpp\
+    Space.cpp \
+    criticalmessage.cpp
+
 
 HEADERS += \
     gui.h \
@@ -25,7 +27,6 @@ HEADERS += \
     criticalmessage.h \
     Message.h \
     messageconnecttoserver.h
-    Message.h \
     SceneUpdate.h
 
 FORMS += \
