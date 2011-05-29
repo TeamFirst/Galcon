@@ -22,6 +22,8 @@ HEADERS += \
     Space.h \
     SceneUpdate.h \
     criticalmessage.h
+    Message.h \
+    SceneUpdate.h
 
 FORMS += \
     enterwindow.ui

@@ -5,27 +5,26 @@
 class CPlanet
 {
 public:
-   CPlanet();
+   CPlanet(unsigned short, unsigned short, unsigned short, unsigned short, unsigned long, unsigned short);
    ~CPlanet();
-   const double EPS = 0.5;
 
    unsigned long GetArmy() const;
    unsigned int GetPlayerId() const;
    void GetPosition(unsigned int&, unsigned int&) const;
    unsigned int GetRadius() const;
 
-   bool DataChanged(const unsigned long, const unsigned int) const;
-
    void SetArmy (const unsigned long);
    void SetPlayer (const unsigned int);
 
 private:
+   const double EPS = 0.5;
+
    unsigned short m_id;
    unsigned short m_x;
    unsigned short m_y;
    unsigned short m_radius;
    double m_army;
-   CPlayer* m_player;
+   unsigned short m_playerId;
 };
 
 #endif // CPLANET_H
