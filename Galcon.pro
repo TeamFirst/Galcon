@@ -1,4 +1,4 @@
-QT += core gui
+QT += core gui network
 
 
 TEMPLATE = app
@@ -9,7 +9,8 @@ SOURCES += \
     enterwindow.cpp \
     Planet.cpp \
     Game.cpp \
-    Fleet.cpp
+    Fleet.cpp \
+    criticalmessage.cpp
 
 HEADERS += \
     gui.h \
@@ -18,7 +19,9 @@ HEADERS += \
     Planet.h \
     Game.h \
     Fleet.h \
-    Space.h
+    Space.h \
+    SceneUpdate.h \
+    criticalmessage.h
 
 FORMS += \
     enterwindow.ui
