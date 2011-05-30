@@ -4,6 +4,7 @@
 
 #include "MessageItf.h"
 
+
 namespace Message
 {
    struct CMessageConnectToServer : public IMessage
