@@ -2,6 +2,7 @@
 
 #include "Planet.h"
 
+const double EPS = 0.5;
 
 CPlanet::CPlanet(unsigned short id, unsigned short x, unsigned short y,
                  unsigned short radius, unsigned long army,
@@ -36,7 +37,7 @@ unsigned int CPlanet::GetRadius() const
    return m_radius;
 }
 
-void CPlanet::SetArmy(const unsigned int i_nArmy)
+void CPlanet::SetArmy(const unsigned long i_nArmy)
 {
    if ((m_army - i_nArmy) > EPS)
    {

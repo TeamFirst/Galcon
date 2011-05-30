@@ -1,23 +1,21 @@
-#ifndef FLEET_H
-#define FLEET_H
+#pragma once
 
-#include "Planet.h"
-#include "Player.h"
+class CPlanet;
 
 class CFleet
 {
 public:
-   CFleet(unsigned short, CPlanet*, CPlanet*, unsigned int, unsigned int, double);
-   ~CFleet();
+   CFleet(unsigned short id, CPlanet* from, CPlanet* to,
+          unsigned int playerId, unsigned long number, double percent);
 
-   void SetPercent(double); //For synhronization with server
+   void SetPercent(unsigned short); //For synhronization with server
 
    void IncreaseProcent(double); //For simulation
 
    //Output into GUI
    void GetPosition (double&, double&) const;
-   unsigned int GetShipCount();
-   unsigned int GetPlayerId();
+   unsigned long GetShipCount() const;
+   unsigned short GetPlayerId() const;
    bool ReachedDestination() const;
 
 private:
@@ -36,7 +34,7 @@ private:
 
    unsigned int m_playerId;
    unsigned short m_id;
-   unsigned short m_number;
+   unsigned long m_number;
 
    double m_percentPassed;
    double m_actualX;
@@ -45,4 +43,3 @@ private:
    bool m_reached;
 };
 
-#endif // FLEET_H
