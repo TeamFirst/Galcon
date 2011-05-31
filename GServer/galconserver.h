@@ -3,6 +3,7 @@
 
 #include <QtGui/QDialog>
 #include <map>
+#include <QString>
 
 class QNetworkSession;
 class QTcpServer;
@@ -49,6 +50,8 @@ private:
    QTcpServer *m_tcpServer;   
    unsigned int m_currentClientID;
    SocketsMap m_connectedSockets;
+
+   QString m_mesStr;
 };
 
 #endif // GALCONSERVER_H

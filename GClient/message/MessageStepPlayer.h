@@ -19,7 +19,7 @@ namespace Message
       unsigned int m_percent;
       std::vector<unsigned int> m_startPlanetID;
 
-   //protected:
+   protected:
 
       virtual std::string toString() const
       {

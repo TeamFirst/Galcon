@@ -13,6 +13,7 @@
 #include "message/MessageStateMap.h"
 #include "message/MessageStartMapGame.h"
 #include "message/MessageTimeToStartGame.h"
+#include "Parser.h"
 
 namespace ServerManagerDecl
 {
@@ -44,8 +45,11 @@ namespace ServerManagerDecl
    private:
       void connectToServer(const std::string serverIP, const unsigned int m_serverPort);
       void sendToServer(const Message::IMessagePtr pMessage);
+      void parseStrFromServer(const std::string sMes);
 
       QTcpSocket * m_tcpSocket;
+
+      CParser m_parser;
 
       /// flags
       bool m_connectToServer;

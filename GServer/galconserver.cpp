@@ -51,10 +51,9 @@ void CGalconServer::slotReadClient()
    QTcpSocket* pClientSocket = (QTcpSocket*)sender();
    QDataStream in(pClientSocket);
    in.setVersion(QDataStream::Qt_4_7);
-   qint16 nextBlockSize = 0;
+   qint8 nextBlockSize = 0;
    for (;;)
    {
-
       if (pClientSocket->bytesAvailable() < sizeof(quint16))
       {
          break;
@@ -66,10 +65,10 @@ void CGalconServer::slotReadClient()
          break;
       }
 
-      QString str;
+      QByteArray str;
       in>> str;
 
-      ui->tEClient->append(str);
+      ui->tEClient->append(QString(str));
 
       nextBlockSize = 0;
    }
@@ -80,10 +79,10 @@ void CGalconServer::sendToClient( QTcpSocket* pSocket, const QString& str )
    QByteArray  arrBlock;
    QDataStream out(&arrBlock, QIODevice::WriteOnly);
    out.setVersion(QDataStream::Qt_4_7);
-   out << quint16(0) << str;
+   out << quint8(0) << str.toUtf8();
 
    out.device()->seek(0);
-   out << quint16(arrBlock.size() - sizeof(quint16));
+   out << quint8(arrBlock.size() - sizeof(quint8));
 
    pSocket->write(arrBlock);
 }
@@ -105,36 +104,48 @@ void CGalconServer::sendToConnectedClients( const QString& str )
 
 void CGalconServer::on_pBSC_CONNID_clicked()
 {
-
+   m_mesStr.clear();
+   m_mesStr = "SC_CONNID#3##";
+   ui->lESend->setText(m_mesStr);
 }
 
 void CGalconServer::on_pBSC_TIMETOSTART_clicked()
 {
-
+   m_mesStr.clear();
+   m_mesStr = "SC_TIMETOSTART#9##";
+   ui->lESend->setText(m_mesStr);
 }
 
 void CGalconServer::on_pBSC_START_clicked()
 {
-
+   m_mesStr.clear();
+   m_mesStr.append("SÑ_START#100#80#2#25#(1,1,20,40,12,20)(2,0,40,20,10,15)(3,0,50,70,45,8)");
+   m_mesStr.append("(4,2,80,60,12,20)#(1,Red Fox)(2,Star_123456)##");
+   ui->lESend->setText(m_mesStr);
 }
 
 void CGalconServer::on_pBSC_STATE_clicked()
 {
-
+   m_mesStr.clear();
+   m_mesStr = "SC_STATE#(1,1,20)(2,0,15)(3,0,8)(4,4,8)#(1,2,4,2,12,0)(2,2,3,2,24,0)##";
+   ui->lESend->setText(m_mesStr);
 }
 
 void CGalconServer::on_pBSC_FINISH_clicked()
 {
-
+   m_mesStr.clear();
+   m_mesStr = "SC_FINISH#2##";
+   ui->lESend->setText(m_mesStr);
 }
 
 void CGalconServer::on_pBSC_ERR_clicked()
 {
-
+   m_mesStr.clear();
+   m_mesStr = "SC_ERR#Player1 disconnected!##";
+   ui->lESend->setText(m_mesStr);
 }
 
 void CGalconServer::on_pBSend_clicked()
 {
-
    sendToConnectedClients(ui->lESend->text());
 }

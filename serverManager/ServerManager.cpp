@@ -9,23 +9,23 @@ namespace ServerManagerDecl
    CServerManager::CServerManager():
       m_connectToServer(false)
    {
-
    }
 
    CServerManager::~CServerManager()
    {
-
    }
+
 /// private function
-   void CServerManager::connectToServer(const std::string serverIP, const unsigned int m_serverPort)
+   void CServerManager::connectToServer(const std::string serverIP,
+      const unsigned int m_serverPort)
    {
       m_tcpSocket = new QTcpSocket(this);
 
       m_tcpSocket->connectToHost(QString(serverIP.c_str()), m_serverPort);
       connect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
       connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
-      connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(slotError(QAbstractSocket::SocketError)));
-
+      connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+         this,SLOT(slotError(QAbstractSocket::SocketError)));
    }
 
    void CServerManager::sendToServer(const Message::IMessagePtr pMessage)
@@ -33,12 +33,16 @@ namespace ServerManagerDecl
       QByteArray  arrBlock;
       QDataStream out(&arrBlock, QIODevice::WriteOnly);
       out.setVersion(QDataStream::Qt_4_7);
-      out << quint16(0) << QString(pMessage->toString().c_str());
+      out << quint8(0) << QString(pMessage->toString().c_str()).toUtf8();
 
       out.device()->seek(0);
-      out << quint16(arrBlock.size() - sizeof(quint16));
+      out << quint8(arrBlock.size() - sizeof(quint8));
 
       m_tcpSocket->write(arrBlock);
+   }
+
+   void CServerManager::parseStrFromServer(const std::string sMes)
+   {
    }
 
 /// slots connect to server
@@ -55,7 +59,7 @@ namespace ServerManagerDecl
    {
       QDataStream in(m_tcpSocket);
       in.setVersion(QDataStream::Qt_4_7);
-      qint16 nextBlockSize = 0;
+      qint8 nextBlockSize = 0;
       for (;;)
       {
           if (m_tcpSocket->bytesAvailable() < sizeof(quint16))
@@ -70,21 +74,28 @@ namespace ServerManagerDecl
               break;
           }
 
-          QString str;
+          QByteArray str;
           in >> str;
 
           QMessageBox msgBox;
-          msgBox.setText(str);
+          msgBox.setText(QString(str));
           msgBox.exec();
 
           nextBlockSize = 0;
+
+          parseStrFromServer(QString(str).toStdString());
       }
    }
 
    void CServerManager::slotError(QAbstractSocket::SocketError)
    {
+      m_connectToServer = false;
 
+      QMessageBox msgBox;
+      msgBox.setText("Error connection");
+      msgBox.exec();
    }
+
 /// public slots
    void CServerManager::TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage)
    {
@@ -105,7 +116,6 @@ namespace ServerManagerDecl
    {
       if(m_connectToServer)
       {
-         std::string str = pMessage->toString();
          sendToServer(pMessage);
       }
       else
