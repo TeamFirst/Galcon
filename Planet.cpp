@@ -2,6 +2,7 @@
 
 #include "Planet.h"
 
+const double EPS = 0.5;
 
 CPlanet::CPlanet(unsigned short id, unsigned short x, unsigned short y,
                  unsigned short radius, unsigned long army,
@@ -20,9 +21,14 @@ unsigned long CPlanet::GetArmy() const
    return floor(m_army);
 }
 
-unsigned int CPlanet::GetPlayerId() const
+unsigned short CPlanet::GetPlayerId() const
 {
    return this->m_playerId;
+}
+
+unsigned short CPlanet::GetId() const
+{
+   return m_id;
 }
 
 void CPlanet::GetPosition(unsigned int& o_nX, unsigned int& o_nY) const
@@ -36,16 +42,13 @@ unsigned int CPlanet::GetRadius() const
    return m_radius;
 }
 
-void CPlanet::SetArmy(const unsigned int i_nArmy)
+void CPlanet::SetArmy(const unsigned long army)
 {
-   if ((m_army - i_nArmy) > EPS)
-   {
-      m_army = i_nArmy;
-   }
+   m_army = army;
 }
 
-void CPlanet::SetPlayer(const unsigned int i_nPlayer)
+void CPlanet::SetPlayer(const unsigned short playerId)
 {
-   m_playerId = i_nPlayer;
+   m_playerId = playerId;
 }
 

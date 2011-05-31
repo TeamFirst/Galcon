@@ -1,24 +1,22 @@
 #ifndef CPLANET_H
 #define CPLANET_H
-#include "Player.h"
 
 class CPlanet
 {
 public:
-   CPlanet(unsigned short, unsigned short, unsigned short, unsigned short, unsigned long, unsigned short);
-   ~CPlanet();
+   CPlanet(unsigned short id, unsigned short x, unsigned short y,
+           unsigned short radius, unsigned long army, unsigned short playerId);
 
    unsigned long GetArmy() const;
-   unsigned int GetPlayerId() const;
-   void GetPosition(unsigned int&, unsigned int&) const;
+   unsigned short GetPlayerId() const;
+   void GetPosition(unsigned int& x, unsigned int& y) const;
    unsigned int GetRadius() const;
+   unsigned short GetId() const;
 
-   void SetArmy (const unsigned long);
-   void SetPlayer (const unsigned int);
+   void SetArmy (const unsigned long army);
+   void SetPlayer (const unsigned short playerId);
 
 private:
-   const double EPS = 0.5;
-
    unsigned short m_id;
    unsigned short m_x;
    unsigned short m_y;

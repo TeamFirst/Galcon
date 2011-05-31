@@ -3,51 +3,44 @@
 
 #include <vector>
 #include <list>
-#include <string>
+#include <map>
 
-#include "Planet.h"
-#include "Fleet.h"
+#include "message/MessageStartMapGame.h"
+#include "message/MessageStateMap.h"
 
-struct CPlanetStartData
-{
-   int m_planetId;
-   int m_planetR;
-   int m_planetX;
-   int m_planetY;
-   int m_playerId;
-   int m_countFleet;
-};
+class CPlanet;
+class CFleet;
 
-struct CPlayerStartData
-{
-   int m_playerId;
-   std::string m_playerName;
-};
+//struct CPlanetStartData;
 
-struct CMessageStartMapGame
-{
+//struct CPlayerStartData;
 
-};
-
-
+//struct CMessageStartMapGame;
 
 class CSpace
 {
 public:
-   CSpace(int, int, int, int , std::vector<CPlanetStartData>, std::vector<CPlayerStartData>);
+   CSpace(unsigned short flySpeed, unsigned short growSpeed, unsigned short xSize, unsigned short ySize,
+          std::vector<Message::CPlanetStartData> planets);
    ~CSpace();
 
-   void UpdatePlanets(const std::vector<std::pair<unsigned long, unsigned int> >&);
+   typedef std::map<unsigned short, std::pair<unsigned long, unsigned short> > PlanetCont;
+
+   void SetPlanets(const PlanetCont&);
+   void SetFleets(const Message::CStateFleet&);
    void Update(const double i_time);
-   void CreateFleet(CPlanet*, CPlanet*, );
-   void DeleteFleet(unsigned int i_nId);
+
+   std::vector<CPlanet*> GetPlanets() const;
+   std::list<CFleet*> GetFleets() const;
 private:
+
    std::vector<CPlanet* > m_planets;
    std::list<CFleet* > m_fleets;
-   unsigned int m_width;
-   unsigned int m_height;
-   unsigned int m_speed;
-   unsigned int m_growth;
+   unsigned short m_speed;
+   unsigned short m_growth;
+   unsigned short m_width;
+   unsigned short m_height;
+
 };
 
 #endif // SPACE_H
