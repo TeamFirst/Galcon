@@ -4,8 +4,6 @@
 #include <vector>
 #include <QSharedPointer>
 
-#include "MessageItf.h"
-
 namespace Message
 {
    struct CMessageStartMapGame;
@@ -28,7 +26,7 @@ namespace Message
       std::string m_playerName;
    }; // struct CPlayerStartData
 
-   struct CMessageStartMapGame : public IMessage
+   struct CMessageStartMapGame
    {
       unsigned int m_flyV;
       unsigned int m_growV;
@@ -36,13 +34,6 @@ namespace Message
       unsigned int m_mapY;
       std::vector<CPlanetStartData> m_planetData;
       std::vector<CPlayerStartData> m_playerData;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
 
    }; // struct CMessageStartMapGame
 

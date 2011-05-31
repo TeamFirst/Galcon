@@ -2,24 +2,15 @@
 
 #include <QSharedPointer>
 
-#include "MessageItf.h"
-
 namespace Message
 {
    struct CMessageFinishGame;
 
    typedef QSharedPointer<CMessageFinishGame> CMessageFinishGamePtr;
 
-   struct CMessageFinishGame : public IMessage
+   struct CMessageFinishGame
    {
-      unsigned int m_playerID;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
+      unsigned int m_playerID;   
 
    }; // struct CMessageFinishGame
 } // namespace Message
