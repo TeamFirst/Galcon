@@ -27,7 +27,7 @@ public:
    typedef std::map<unsigned short, std::pair<unsigned long, unsigned short> > PlanetCont;
 
    void SetPlanets(const PlanetCont&);
-   void SetFleet(const Message::CStateFleet&);
+   void SetFleets(const Message::CStateFleet&);
    void Update(const double i_time);
 
    std::vector<CPlanet*> GetPlanets() const;

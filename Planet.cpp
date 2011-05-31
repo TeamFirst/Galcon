@@ -21,7 +21,7 @@ unsigned long CPlanet::GetArmy() const
    return floor(m_army);
 }
 
-unsigned int CPlanet::GetPlayerId() const
+unsigned short CPlanet::GetPlayerId() const
 {
    return this->m_playerId;
 }
@@ -47,7 +47,7 @@ void CPlanet::SetArmy(const unsigned long army)
    m_army = army;
 }
 
-void CPlanet::SetPlayer(const unsigned int playerId)
+void CPlanet::SetPlayer(const unsigned short playerId)
 {
    m_playerId = playerId;
 }

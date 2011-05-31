@@ -56,9 +56,12 @@ void UnitTestFinalTest::testCaseFleet()
    fl.GetPosition(x,y);
    QVERIFY2((x - 5 < eps) && (y - 15 < eps), "Failture count real position");
 
-   fl.IncreaseProcent(25);
-   fl.GetPosition(x,y);
-   QVERIFY2((x - 7.5 < eps) && (y - 17.5 < eps), "Failture increase procent");
+   CPlanet* fr2 = new CPlanet(1, 10, 10, 5, 100500, 1);
+   CPlanet* to2 = new CPlanet(2, 10, 20, 15, 100, 2);
+   CFleet fl2(0, fr2, to2, 1, 500, 50);
+   fl2.IncreaseWay(5);
+   fl2.GetPosition(x,y);
+   QVERIFY2((x - 200 < eps) && (y - 15 < eps), "Failture increase procent");
 
    fl.SetPercent(10);
    fl.GetPosition(x,y);

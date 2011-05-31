@@ -26,4 +26,5 @@ HEADERS += \
     Fleet.h \
     Space.h \
     message/MessageStateMap.h \
-    message/MessageStartMapGame.h
+    message/MessageStartMapGame.h \
+    Game.h

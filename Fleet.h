@@ -10,7 +10,7 @@ public:
 
    void SetPercent(unsigned short percent); //For synhronization with server
 
-   void IncreaseProcent(double onPercent); //For simulation
+   void IncreaseWay(double onWay); //For simulation
 
    //Output into GUI
    void GetPosition (double& x, double& y) const;
@@ -41,6 +41,7 @@ private:
    double m_actualX;
    double m_actualY;
 
+   double m_distance;
    bool m_reached;
 };
 

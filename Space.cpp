@@ -43,13 +43,33 @@ CSpace::~CSpace()
 
 void CSpace::Update(const double i_time)
 {
+   double plGrowth = i_time * m_growth;
+   double flMove = i_time * m_speed;
    for (unsigned int i = 0; i < m_planets.size(); ++i)
    {
+      m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth);
+   }
+   for(std::list<CFleet*>::iterator iter = m_fleets.begin(); iter != m_fleets.end(); ++iter)
+   {
+      iter.operator *()->IncreaseWay(flMove);
+   }
 
+}
+
+void CSpace::SetPlanets(const PlanetCont& planets)
+{
+   int currId(0);
+   for (unsigned int i = 0; i != m_planets.size(); ++i)
+   {
+      if (planets.find(m_planets[i]->GetId()) != planets.end())
+      {
+         m_planets[i]->SetArmy(planets.find(m_planets[i]->GetId())->second.first);
+         m_planets[i]->SetPlayer(planets.find(m_planets[i]->GetId())->second.second);
+      }
    }
 }
 
-void CSpace::SetFleet(const Message::CStateFleet &)
+void CSpace::SetFleets(const Message::CStateFleet& message)
 {
 
 }

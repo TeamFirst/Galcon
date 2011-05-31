@@ -1,5 +1,6 @@
 #include "Fleet.h"
 #include "Planet.h"
+#include <cmath>
 
 CFleet::CFleet(unsigned int id, CPlanet* from, CPlanet* to, unsigned int playerId, unsigned long number, double percent):
    m_id(id),
@@ -28,6 +29,9 @@ CFleet::CFleet(unsigned int id, CPlanet* from, CPlanet* to, unsigned int playerI
    m_to->GetPosition(x, y);
    m_toPl.x = x;
    m_toPl.y = y;
+
+   m_distance = sqrt((m_toPl.x - m_fromPl.x) * (m_toPl.x - m_fromPl.x) +
+                   (m_toPl.y - m_fromPl.y) * (m_toPl.y - m_fromPl.y));
    updatePosition();
 }
 
@@ -75,9 +79,10 @@ void CFleet::SetPercent(const unsigned short i_nPerc)
    updatePosition();
 }
 
-void CFleet::IncreaseProcent(double i_incOn)
+void CFleet::IncreaseWay(double onWay)
 {
-   this->SetPercent(m_percentPassed + i_incOn);
+   double onPerc = onWay/m_distance;
+   this->SetPercent(m_percentPassed + onPerc);
 }
 
 bool CFleet::ReachedDestination() const
