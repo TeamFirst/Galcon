@@ -22,6 +22,8 @@ private slots:
 
    void on_pBSend_clicked();
 
+   void on_pBStepPlayer_clicked();
+
 private:
     Ui::CGalconClient *ui;
     ServerManagerDecl::CServerManager m_serverManager;

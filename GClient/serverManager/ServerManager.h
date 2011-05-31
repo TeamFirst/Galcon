@@ -47,5 +47,8 @@ namespace ServerManagerDecl
 
       QTcpSocket * m_tcpSocket;
 
+      /// flags
+      bool m_connectToServer;
+
    }; // class CServerManager
 } // namespace ServerManagerDecl

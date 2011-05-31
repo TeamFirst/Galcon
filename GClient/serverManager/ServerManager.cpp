@@ -6,7 +6,8 @@
 namespace ServerManagerDecl
 {
 /// constructor
-   CServerManager::CServerManager()
+   CServerManager::CServerManager():
+      m_connectToServer(false)
    {
 
    }
@@ -29,15 +30,10 @@ namespace ServerManagerDecl
 
    void CServerManager::sendToServer(const Message::IMessagePtr pMessage)
    {
-      //QMessageBox msgBox;
-      //std::string str = (*pMessage).toString();
-      //msgBox.setText(QString(str.c_str()));
-      //msgBox.exec();
-
       QByteArray  arrBlock;
       QDataStream out(&arrBlock, QIODevice::WriteOnly);
       out.setVersion(QDataStream::Qt_4_7);
-      out << quint16(0) << QString((*pMessage).toString().c_str());
+      out << quint16(0) << QString(pMessage->toString().c_str());
 
       out.device()->seek(0);
       out << quint16(arrBlock.size() - sizeof(quint16));
@@ -48,6 +44,8 @@ namespace ServerManagerDecl
 /// slots connect to server
    void CServerManager::slotConnected()
    {
+      m_connectToServer = true;
+
       QMessageBox msgBox;
       msgBox.setText("Connected");
       msgBox.exec();
@@ -90,12 +88,32 @@ namespace ServerManagerDecl
 /// public slots
    void CServerManager::TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage)
    {
-      connectToServer((*pMessage).m_serverIP, (*pMessage).m_serverPort);
-      sendToServer(pMessage);
+      if(!m_connectToServer)
+      {
+         connectToServer(pMessage->m_serverIP, pMessage->m_serverPort);
+         sendToServer(pMessage);
+      }
+      else
+      {
+         QMessageBox msgBox;
+         msgBox.setText("Error, You again trying connect to server");
+         msgBox.exec();
+      }
    }
 
    void CServerManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
+      if(m_connectToServer)
+      {
+         std::string str = pMessage->toString();
+         sendToServer(pMessage);
+      }
+      else
+      {
+         QMessageBox msgBox;
+         msgBox.setText("Error, No connection to server");
+         msgBox.exec();
+      }
    }
 
 } // namespace ServerManagerDecl

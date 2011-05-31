@@ -24,7 +24,12 @@ namespace Message
 
       virtual std::string toString() const
       {
-         return std::string();
+         if(m_namePlayer.empty())
+         {
+            return "CS_CONN##";
+         }
+
+         return "CS_CONN#" + m_namePlayer + "##";
       }
 
    }; // struct CMessageConnectToServer
