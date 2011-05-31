@@ -18,7 +18,8 @@ TEMPLATE = app
 SOURCES += tst_unittestfinaltest.cpp \
     Planet.cpp \
     Fleet.cpp \
-    Space.cpp
+    Space.cpp \
+    Game.cpp
 #DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \

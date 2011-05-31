@@ -59,9 +59,9 @@ void UnitTestFinalTest::testCaseFleet()
    CPlanet* fr2 = new CPlanet(1, 10, 10, 5, 100500, 1);
    CPlanet* to2 = new CPlanet(2, 10, 20, 15, 100, 2);
    CFleet fl2(0, fr2, to2, 1, 500, 50);
-   fl2.IncreaseWay(5);
+   fl2.IncreaseWay(6);
    fl2.GetPosition(x,y);
-   QVERIFY2((x - 200 < eps) && (y - 15 < eps), "Failture increase procent");
+   QVERIFY2(x - 10 < eps && y == 16, "Failture increase procent");
 
    fl.SetPercent(10);
    fl.GetPosition(x,y);
@@ -81,8 +81,8 @@ void UnitTestFinalTest::testCaseFleet()
 
 void UnitTestFinalTest::testCaseSpace()
 {
-
-   Message::CPlanetStartData data = {100, 1, 5 , 0, 10, 1};
+   const double eps = 0.0001;
+   Message::CPlanetStartData data = {100, 1, 5 , 10, 10, 1};
    Message::CPlanetStartData data2 = {200, 2, 15 , 10, 20, 2};
    std::vector<Message::CPlanetStartData> vec;
    vec.push_back(data);
@@ -98,6 +98,32 @@ void UnitTestFinalTest::testCaseSpace()
    QVERIFY2(planets.size() == 2, "Fail add planets to space");
 
    QVERIFY2(planets[0]->GetArmy() == 100 , "Fail add correct planet to space");
+
+   sp->Update(2);
+   QVERIFY2((planets[0]->GetArmy() == 102) && (planets[1]->GetArmy() == 202) , "Fail to update space");
+
+   CSpace::PlanetCont a;
+   a[1] = std::pair<unsigned long, unsigned short>(230,2);
+   sp->SetPlanets(a);
+   QVERIFY2((planets[0]->GetArmy() == 230 && planets[0]->GetPlayerId() == 2) , "Fail to set planets in space");
+
+   CPlanet* pl = sp->GetPlanetById(1);
+   QVERIFY2(pl->GetArmy() == 230 , "Fail get planet by id");
+
+   Message::CStateFleet mes = { 100, 1, 50, 2, 1, 1 };
+   std::vector<Message::CStateFleet> mesVec;
+   mesVec.push_back(mes);
+   sp->SetFleets(mesVec);
+   CFleet* fl = sp->GetFleets().front();
+   QVERIFY2(fl->GetShipCount() == 100, "Fail to set fleet");
+
+   double x(0), y(0);
+   fl->GetPosition(x,y);
+   QVERIFY2(y == 15, "Fail update fleet");
+
+   sp->Update(1);
+   fl->GetPosition(x,y);
+   QVERIFY2(true, "Fail update fleet");
 
 
 }

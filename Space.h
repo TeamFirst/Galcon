@@ -27,12 +27,16 @@ public:
    typedef std::map<unsigned short, std::pair<unsigned long, unsigned short> > PlanetCont;
 
    void SetPlanets(const PlanetCont&);
-   void SetFleets(const Message::CStateFleet&);
+   void SetFleets(const std::vector<Message::CStateFleet>&);
    void Update(const double i_time);
 
    std::vector<CPlanet*> GetPlanets() const;
    std::list<CFleet*> GetFleets() const;
+
+   CPlanet* GetPlanetById(unsigned short id) const;
 private:
+
+
 
    std::vector<CPlanet* > m_planets;
    std::list<CFleet* > m_fleets;

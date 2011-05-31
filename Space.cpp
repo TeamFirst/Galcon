@@ -45,20 +45,29 @@ void CSpace::Update(const double i_time)
 {
    double plGrowth = i_time * m_growth;
    double flMove = i_time * m_speed;
+
    for (unsigned int i = 0; i < m_planets.size(); ++i)
    {
       m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth);
    }
-   for(std::list<CFleet*>::iterator iter = m_fleets.begin(); iter != m_fleets.end(); ++iter)
+
+   CFleet* currFleet;
+   foreach (currFleet, m_fleets)
    {
-      iter.operator *()->IncreaseWay(flMove);
+      currFleet->IncreaseWay(flMove);
+      if (currFleet->ReachedDestination())
+      {
+         //std::list<CFleet*>::iterator destroy(iter);
+         delete currFleet;
+         //m_fleets.erase(destroy);
+      }
    }
+
 
 }
 
 void CSpace::SetPlanets(const PlanetCont& planets)
 {
-   int currId(0);
    for (unsigned int i = 0; i != m_planets.size(); ++i)
    {
       if (planets.find(m_planets[i]->GetId()) != planets.end())
@@ -69,9 +78,34 @@ void CSpace::SetPlanets(const PlanetCont& planets)
    }
 }
 
-void CSpace::SetFleets(const Message::CStateFleet& message)
+void CSpace::SetFleets(const std::vector<Message::CStateFleet>& message)
 {
-
+   Message::CStateFleet currMessFleet;
+   foreach (currMessFleet, message)
+   {
+      CFleet* currFleet;
+      bool flag = true;
+      foreach (currFleet, m_fleets)
+      {
+         if (currFleet->GetId() == currMessFleet.m_fleetID)
+         {
+            currFleet->SetPercent(currMessFleet.m_percentRoute);
+            flag = false;
+         }
+      }
+      if (flag)
+      {
+         CPlanet* planetFr = GetPlanetById(currMessFleet.m_planetStartID);
+         CPlanet* planetTo = GetPlanetById(currMessFleet.m_planetFinishID);
+         CFleet* newFleet = new CFleet(currMessFleet.m_fleetID,
+                                 planetFr,
+                                 planetTo,
+                                 currMessFleet.m_playerID,
+                                 currMessFleet.m_countFleet,
+                                 currMessFleet.m_percentRoute);
+         m_fleets.push_back(newFleet);
+      }
+   }
 }
 
 std::list<CFleet*> CSpace::GetFleets() const
@@ -82,4 +116,15 @@ std::list<CFleet*> CSpace::GetFleets() const
 std::vector<CPlanet*> CSpace::GetPlanets() const
 {
    return m_planets;
+}
+
+CPlanet* CSpace::GetPlanetById(unsigned short id) const
+{
+   CPlanet* planet;
+   foreach (planet, m_planets)
+   {
+      if (planet->GetId() == id)
+         return planet;
+   }
+   return 0;
 }
