@@ -2,24 +2,15 @@
 
 #include <QSharedPointer>
 
-#include "MessageItf.h"
-
 namespace Message
 {
    struct CMessaheTimeToStartGame;
 
    typedef QSharedPointer<CMessaheTimeToStartGame> CMessaheTimeToStartGamePtr;
 
-   struct CMessaheTimeToStartGame : public IMessage
+   struct CMessaheTimeToStartGame
    {
-      unsigned int m_second;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
+      unsigned int m_second;  
 
    }; // struct CMessaheTimeToStartGame
 

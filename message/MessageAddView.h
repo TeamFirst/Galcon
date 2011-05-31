@@ -2,8 +2,6 @@
 
 #include <QSharedPointer>
 
-#include "MessageItf.h"
-
 namespace Message
 {
    class ISceneUpdates;
@@ -11,16 +9,9 @@ namespace Message
 
    typedef QSharedPointer<CMessageAddView> CMessageAddViewPtr;
 
-   struct CMessageAddView : public IMessage
+   struct CMessageAddView
    {
       ISceneUpdates* m_view;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
 
    }; // struct CMessageAddView   
 

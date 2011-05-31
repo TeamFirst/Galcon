@@ -3,8 +3,6 @@
 #include <vector>
 #include <QSharedPointer>
 
-#include "MessageItf.h"
-
 namespace Message
 {
    struct CMessageStateMap;
@@ -29,17 +27,10 @@ namespace Message
 
    }; // struct CStateFleet
 
-   struct CMessageStateMap : public IMessage
+   struct CMessageStateMap
    {
       std::vector<CStateFleet> m_fleetState;
       std::vector<CStatePlanet> m_planetState;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
 
    }; // struct CMessageStateMap
 

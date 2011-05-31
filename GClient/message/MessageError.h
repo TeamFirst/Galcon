@@ -3,7 +3,6 @@
 #include <string>
 #include <QSharedPointer>
 
-#include "MessageItf.h"
 
 namespace Message
 {
@@ -11,16 +10,9 @@ namespace Message
 
    typedef QSharedPointer<CMessageError> CMessageErrorPtr;
 
-   struct CMessageError : public IMessage
+   struct CMessageError
    {
-      std::string m_strError;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
+      std::string m_strError;   
 
    }; // struct CMessageError
 } // namespace Message

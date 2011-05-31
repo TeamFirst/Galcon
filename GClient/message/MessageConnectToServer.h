@@ -35,16 +35,9 @@ namespace Message
    }; // struct CMessageConnectToServer
 
 
-   struct CMessageConfirmationConnectToServer : public IMessage
+   struct CMessageConfirmationConnectToServer
    {
-      unsigned int m_playerID;
-
-   protected:
-
-      virtual std::string toString() const
-      {
-         return std::string();
-      }
+      unsigned int m_playerID;   
 
    }; // struct CMessageConfirmationConnectToServer
 } // namespace Message

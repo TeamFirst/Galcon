@@ -43,6 +43,29 @@ namespace ServerManagerDecl
 
    void CServerManager::parseStrFromServer(const std::string sMes)
    {
+      switch(m_parser.CheckTypeMessage(sMes))
+      {
+      case CParser::eConfirmConnect :
+         m_parser.ParseMConfirmConnect(sMes);
+         break;
+      case CParser::eError :
+         m_parser.ParseMError(sMes);
+         break;
+      case CParser::eFinishGame :
+         m_parser.ParseMFinishGame(sMes);
+         break;
+      case CParser::eStartGame :
+         m_parser.ParseMStartMapGame(sMes);
+         break;
+      case CParser::eStateMap :
+         m_parser.ParseMStateMap(sMes);
+         break;
+      case CParser::eTimeToStart :
+         m_parser.ParseMTimeToStartGame(sMes);
+         break;
+      case CParser::eUnknown :
+         break;
+      }
    }
 
 /// slots connect to server
@@ -62,7 +85,7 @@ namespace ServerManagerDecl
       qint8 nextBlockSize = 0;
       for (;;)
       {
-          if (m_tcpSocket->bytesAvailable() < sizeof(quint16))
+          if (m_tcpSocket->bytesAvailable() < sizeof(quint8))
           {
               break;
           }
@@ -83,7 +106,7 @@ namespace ServerManagerDecl
 
           nextBlockSize = 0;
 
-          parseStrFromServer(QString(str).toStdString());
+          parseStrFromServer('#' + QString(str).toStdString());
       }
    }
 
