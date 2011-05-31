@@ -1,12 +1,19 @@
-
 #pragma once
 
 #include <string>
+#include <QSharedPointer>
 
 #include "MessageItf.h"
 
 namespace Message
 {
+   struct CMessageConnectToServer;
+   struct CMessageConfirmationConnectToServer;
+
+   typedef QSharedPointer<CMessageConnectToServer> CMessageConnectToServerPtr;
+   typedef QSharedPointer<CMessageConfirmationConnectToServer>
+      CMessageConfirmationConnectToServerPtr;
+
    struct CMessageConnectToServer : public IMessage
    {
       std::string m_namePlayer;

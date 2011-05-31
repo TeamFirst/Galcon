@@ -1,12 +1,16 @@
-
 #pragma once
 
 #include <string>
+#include <QSharedPointer>
 
 #include "MessageItf.h"
 
 namespace Message
 {
+   struct CMessageError;
+
+   typedef QSharedPointer<CMessageError> CMessageErrorPtr;
+
    struct CMessageError : public IMessage
    {
       std::string m_strError;

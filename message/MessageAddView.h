@@ -1,11 +1,15 @@
-
 #pragma once
+
+#include <QSharedPointer>
 
 #include "MessageItf.h"
 
 namespace Message
 {
    class ISceneUpdates;
+   struct CMessageAddView;
+
+   typedef QSharedPointer<CMessageAddView> CMessageAddViewPtr;
 
    struct CMessageAddView : public IMessage
    {
@@ -18,6 +22,6 @@ namespace Message
          return std::string();
       }
 
-   }; // struct CMessageAddView
+   }; // struct CMessageAddView   
 
 } // namespace Message

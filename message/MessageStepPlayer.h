@@ -1,12 +1,16 @@
-
 #pragma once
 
 #include <vector>
+#include <QSharedPointer>
 
 #include "MessageItf.h"
 
 namespace Message
 {
+   struct CMessageStepPlayer;
+
+   typedef QSharedPointer<CMessageStepPlayer> CMessageStepPlayerPtr;
+
    struct CMessageStepPlayer : public IMessage
    {
       unsigned int m_finishPlanetID;

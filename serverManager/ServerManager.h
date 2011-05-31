@@ -1,11 +1,18 @@
-
 #pragma once
+
+#include <string>
 
 #include <QObject>
 #include <QTcpSocket>
-#include <QMessageBox>
 
 #include "message/MessageItf.h"
+#include "message/MessageConnectToServer.h"
+#include "message/MessageStepPlayer.h"
+#include "message/MessageError.h"
+#include "message/MessageFinishGame.h"
+#include "message/MessageStateMap.h"
+#include "message/MessageStartMapGame.h"
+#include "message/MessageTimeToStartGame.h"
 
 namespace ServerManagerDecl
 {
@@ -15,23 +22,19 @@ namespace ServerManagerDecl
 
    public:
       CServerManager();
-      ~CServerManager();
-
-      void StartServerManager();
+      ~CServerManager();      
 
    public slots:
-
-      //void TakeServerConnect(Message::IMessage* i_pcMessage);
-      //void TakeStepPlayer(Message::IMessage* i_pcMessage);
+      void TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage);
+      void TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage);
 
    signals:
-
-      //void SendConfirmConnect(Message::IMessage* i_pcMessage);
-      //void SendError(Message::IMessage* i_pcMessage);
-      //void SendFinishGame(Message::IMessage* i_pcMessage);
-      //void SendStateMap(Message::IMessage* i_pcMessage);
-      //void SendStartGame(Message::IMessage* i_pcMessage);
-      //void SendTimeToStart(Message::IMessage* i_pcMessage);
+      void SendConfirmConnect(const Message::CMessageConfirmationConnectToServerPtr pMessage);
+      void SendError(const Message::CMessageErrorPtr pMessage);
+      void SendFinishGame(const Message::CMessageFinishGamePtr pMessage);
+      void SendStateMap(const Message::CMessageStateMapPtr pMessage);
+      void SendStartGame(const Message::CMessageStartMapGamePtr pMessage);
+      void SendTimeToStart(const Message::CMessaheTimeToStartGamePtr pMessage);
 
    private slots:
       void slotConnected();
@@ -39,6 +42,8 @@ namespace ServerManagerDecl
       void slotError(QAbstractSocket::SocketError);
 
    private:
+      void connectToServer(const std::string serverIP, const unsigned int m_serverPort);
+      void sendToServer(const Message::IMessagePtr pMessage);
 
       QTcpSocket * m_tcpSocket;
 

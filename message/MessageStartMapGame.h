@@ -1,13 +1,17 @@
-
 #pragma once
 
 #include <string>
 #include <vector>
+#include <QSharedPointer>
 
 #include "MessageItf.h"
 
 namespace Message
 {
+   struct CMessageStartMapGame;
+
+   typedef QSharedPointer<CMessageStartMapGame> CMessageStartMapGamePtr;
+
    struct CPlanetStartData
    {
       unsigned int m_countFleet;
