@@ -5,29 +5,38 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    gui.cpp \
-    enterwindow.cpp \
+#    gui.cpp \
+#    enterwindow.cpp \
     Planet.cpp \
     Game.cpp \
     Fleet.cpp \
-    messageconnecttoserver.cpp \
+#    messageconnecttoserver.cpp \
     Space.cpp \
-    criticalmessage.cpp
+#    criticalmessage.cpp
 
 
 HEADERS += \
-    gui.h \
-    enterwindow.h \
+#    gui.h \
+#    enterwindow.h \
     Player.h \
     Planet.h \
-    Game.h \
-    Fleet.h \
-    Space.h \
+     Game.h \
+     Fleet.h \
+     Space.h \
     SceneUpdate.h \
-    criticalmessage.h \
-    Message.h \
-    messageconnecttoserver.h \
-    SceneUpdate.h
+#    criticalmessage.h \
+#    Message.h \
+#    messageconnecttoserver.h \
+#    SceneUpdate.h \
+#    message/MessageStartMapGame.h \
+#    message/MessageTimeToStartGame.h \
+#    message/MessageStepPlayer.h \
+#    message/MessageStateMap.h \
+#    message/MessageItf.h \
+#    message/MessageFinishGame.h \
+#    message/MessageError.h \
+#    message/MessageConnectToServer.h \
+#    message/MessageAddView.h
 
 FORMS += \
     enterwindow.ui

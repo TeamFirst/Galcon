@@ -9,11 +9,12 @@ public:
 
    unsigned long GetArmy() const;
    unsigned int GetPlayerId() const;
-   void GetPosition(unsigned int&, unsigned int&) const;
+   void GetPosition(unsigned int& x, unsigned int& y) const;
    unsigned int GetRadius() const;
+   unsigned short GetId() const;
 
-   void SetArmy (const unsigned long);
-   void SetPlayer (const unsigned int);
+   void SetArmy (const unsigned long army);
+   void SetPlayer (const unsigned int playerId);
 
 private:
    unsigned short m_id;

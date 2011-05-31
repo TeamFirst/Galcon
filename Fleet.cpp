@@ -1,7 +1,7 @@
 #include "Fleet.h"
 #include "Planet.h"
 
-CFleet::CFleet(unsigned short id, CPlanet* from, CPlanet* to, unsigned int playerId, unsigned long number, double percent):
+CFleet::CFleet(unsigned int id, CPlanet* from, CPlanet* to, unsigned int playerId, unsigned long number, double percent):
    m_id(id),
    m_from(from),
    m_to(to),
@@ -42,6 +42,11 @@ unsigned short CFleet::GetPlayerId() const
    return m_playerId;
 }
 
+unsigned int CFleet::GetId() const
+{
+   return m_id;
+}
+
 unsigned long CFleet::GetShipCount() const
 {
    return m_number;
@@ -53,15 +58,18 @@ void CFleet::SetPercent(const unsigned short i_nPerc)
    if (m_percentPassed >= 100)
    {
       m_percentPassed = 100;
-      m_reached = true;
-      if (m_to->GetArmy() < m_number)
+      if (!m_reached)
       {
-         m_to->SetPlayer(m_playerId);
-         m_to->SetArmy(m_number - m_to->GetArmy());
-      }
-      else
-      {
-         m_to->SetArmy(m_to->GetArmy() - m_number);
+         m_reached = true;
+         if (m_to->GetArmy() < m_number)
+         {
+            m_to->SetPlayer(m_playerId);
+            m_to->SetArmy(m_number - m_to->GetArmy());
+         }
+         else
+         {
+            m_to->SetArmy(m_to->GetArmy() - m_number);
+         }
       }
    }
    updatePosition();

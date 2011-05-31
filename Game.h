@@ -1,9 +1,10 @@
 #ifndef CGAME_H
 #define CGAME_H
+#include <QObject>
 
 typedef int IMessage;
 
-class CGame
+class CGame : public QObject
 {
    Q_OBJECT
 

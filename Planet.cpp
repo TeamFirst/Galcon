@@ -26,6 +26,11 @@ unsigned int CPlanet::GetPlayerId() const
    return this->m_playerId;
 }
 
+unsigned short CPlanet::GetId() const
+{
+   return m_id;
+}
+
 void CPlanet::GetPosition(unsigned int& o_nX, unsigned int& o_nY) const
 {
    o_nX = m_x;
@@ -37,16 +42,13 @@ unsigned int CPlanet::GetRadius() const
    return m_radius;
 }
 
-void CPlanet::SetArmy(const unsigned long i_nArmy)
+void CPlanet::SetArmy(const unsigned long army)
 {
-   if ((m_army - i_nArmy) > EPS)
-   {
-      m_army = i_nArmy;
-   }
+   m_army = army;
 }
 
-void CPlanet::SetPlayer(const unsigned int i_nPlayer)
+void CPlanet::SetPlayer(const unsigned int playerId)
 {
-   m_playerId = i_nPlayer;
+   m_playerId = playerId;
 }
 
