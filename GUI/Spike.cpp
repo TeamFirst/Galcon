@@ -32,9 +32,8 @@ void CSpike::slTimerSignal()
     Message::CMessageConfirmationConnectToServerPtr ptr(new Message::CMessageConfirmationConnectToServer());
     ptr->m_playerID = 8;
     qDebug() << "Id user set to 8";
-    emit sConnectedToServer(ptr);
     timer.singleShot(2000, this, SLOT(slSendStartGame()));
-
+    this->gui.TakeConfirmConnectToServer(ptr);
 }
 void CSpike::slSendStartGame()
 {

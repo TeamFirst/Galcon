@@ -8,6 +8,7 @@ CWaitWindow::CWaitWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     m_timer.setInterval(1000);
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(slTimer()));
 }
 
 CWaitWindow::~CWaitWindow()
@@ -16,9 +17,10 @@ CWaitWindow::~CWaitWindow()
 }
 void CWaitWindow::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
 {
-    m_timer.start();
+
     this->m_left = ptr->m_second;
-    ui->lcdNumber->display((int)m_left);
+    int left = m_left;
+    ui->lcdNumber->display(left);
     m_timer.start();
 }
 
