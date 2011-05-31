@@ -18,14 +18,16 @@ public slots:
     void TakeStartGame(pIMessage mess);
 
     void TakeTimeStartToGame(pIMessage mess);
-signals:
 
+    void Take
+signals:
+    void SendClientToServer(pIMessage mess);
 
 
 public slots:
     void SlotServerError(IMessage );
 private:
-    CEnterWindow * enterWindow;
+    CEnterWindow * m_enterWindow;
 };
 
 #endif // GUI_H

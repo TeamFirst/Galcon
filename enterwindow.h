@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include "Message.h"
+#include "messageconnecttoserver.h"
 
 namespace Ui {
     class CEnterWindow;
 }
 
 
-class CEnterWindow : public QWidget
+class CEnterWindow : public QDialog
 {
     Q_OBJECT
 
@@ -19,15 +20,6 @@ public:
 
 signals:
     void SendClientToServer(pIMessage mess);
-
-public slots:
-    void TakeError(pIMessage mess);
-
-    void TakeFinishGame(pIMessage mess);
-
-    void TakeStartGame(pIMessage mess);
-
-    void TakeTimeStartToGame(pIMessage mess);
 
 private:
     //Check connection data and send IMessage to the server if valid
