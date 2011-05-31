@@ -7,6 +7,8 @@
 #include "enterwindow.h"
 #include "message/MessageConnectToServer.h"
 #include "message/MessageTimeToStartGame.h"
+#include "message/MessageStartMapGame.h"
+#include "PlayWindow.h"
 class CGUI : public QObject
 {
     Q_OBJECT
@@ -21,9 +23,11 @@ public slots:
 
 //    void TakeFinishGame(pIMessage mess);
 
-//    void TakeStartGame(pIMessage mess);
+
 
 //    void TakeTimeStartToGame(pIMessage mess);
+    void TakeStartGame(CMessageStartMapGamePtr mess);
+
     void TakeStartGame(Message::CMessageTimeToStartGamePtr ptr);
 
     void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);
@@ -41,6 +45,7 @@ private:
     int m_playerId;
     CWaitWindow * m_waitWindow;
     CEnterWindow * m_enterWindow;
+    CPlayWindow * m_play_window;
 };
 
 #endif // GUI_H

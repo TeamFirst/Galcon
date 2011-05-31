@@ -18,7 +18,8 @@ SOURCES += \
     GUI/gui.cpp \
     GUI/main.cpp \
     GUI/Spike.cpp \
-    GUI/Waitwindow.cpp
+    GUI/Waitwindow.cpp \
+    GUI/PlayWindow.cpp
 
 
 HEADERS += \
@@ -46,12 +47,14 @@ HEADERS += \
     message/MessageStepPlayer.h \
     message/MessageTimeToStartGame.h \
     GUI/Spike.h \
-    GUI/WaitWindow.h
+    GUI/WaitWindow.h \
+    GUI/PlayWindow.h
 
 FORMS += \
     #enterwindow.ui \
     GUI/enterwindow.ui \
-    GUI/waitwindow.ui
+    GUI/waitwindow.ui \
+    GUI/playwindow.ui
 
 OTHER_FILES += \
     README
