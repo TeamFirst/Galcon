@@ -40,7 +40,7 @@ void CGame::SlotStartData(Message::CMessageStartMapGamePtr data)
                         data->m_mapX,
                         data->m_mapY,
                         data->m_planetData);
-   emit SendStartGame();
+   emit SendStartGame(data->m_mapX, data->m_mapY);
 }
 
 void CGame::SlotStateMap(Message::CMessageStateMapPtr data)

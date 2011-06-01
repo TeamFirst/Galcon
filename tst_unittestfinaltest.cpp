@@ -140,6 +140,7 @@ void UnitTestFinalTest::testCaseSpace()
 void UnitTestFinalTest::testCaseGame()
 {
    CGame* game = new CGame();
+
 }
 
 QTEST_APPLESS_MAIN(UnitTestFinalTest);

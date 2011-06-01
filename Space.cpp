@@ -91,22 +91,24 @@ void CSpace::Update(const double i_time)
 void CSpace::SetPlanets(const std::vector<Message::CStatePlanet>& i_planets)
 {
    // For every existing planet update its army & owner from given data
-   std::vector<Message::CStatePlanet>::iterator iter;
-
-   for (unsigned int i = 0; i != m_planets.size(); ++i)
+   Message::CStatePlanet inPl;
+   CPlanet* currPl;
+   bool NewFlag = false;
+   foreach (inPl, i_planets)
    {
-//      for (iter = i_planets.begin(); iter != i_planets.end(); ++iter)
-//      {
-//         if (iter.operator *().m_planetID == m_planets[i]->GetId())
-//         {
-//            break;
-//         }
-//      }
-//      if (iter != i_planets.end())
-//      {
-//         m_planets[i]->SetArmy(iter.operator *().m_countFleet);
-//         m_planets[i]->SetPlayer(iter.operator *().m_playerID);
-//      }
+      foreach (currPl, m_planets)
+      {
+         if (inPl.m_planetID == currPl->GetId())
+         {
+            NewFlag = true;
+            break;
+         }
+      }
+      if (NewFlag)
+      {
+         currPl->SetArmy(inPl.m_countFleet);
+         currPl->SetPlayer(inPl.m_playerID);
+      }
    }
 }
 

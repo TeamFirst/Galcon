@@ -19,7 +19,7 @@ public:
    static const unsigned long m_timeTick = 1000;
 
 signals:
-   void SendStartGame();
+   void SendStartGame(unsigned int mapX, unsigned int mapY);
    void signalTimer();
 
 public slots:
