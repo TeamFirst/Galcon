@@ -30,7 +30,7 @@ CFleet::CFleet(unsigned int id, CPlanet* from, CPlanet* to, unsigned int playerI
    m_toPl.x = x;
    m_toPl.y = y;
 
-   m_distance = sqrt((m_toPl.x - m_fromPl.x) * (m_toPl.x - m_fromPl.x) +
+   m_distance = sqrt((double)(m_toPl.x - m_fromPl.x) * (m_toPl.x - m_fromPl.x) +
                    (m_toPl.y - m_fromPl.y) * (m_toPl.y - m_fromPl.y));
    updatePosition();
 }
