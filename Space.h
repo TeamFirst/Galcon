@@ -11,11 +11,6 @@
 class CPlanet;
 class CFleet;
 
-//struct CPlanetStartData;
-
-//struct CPlayerStartData;
-
-//struct CMessageStartMapGame;
 
 class CSpace
 {

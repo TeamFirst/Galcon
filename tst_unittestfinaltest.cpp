@@ -110,23 +110,25 @@ void UnitTestFinalTest::testCaseSpace()
    CPlanet* pl = sp->GetPlanetById(1);
    QVERIFY2(pl->GetArmy() == 230 , "Fail get planet by id");
 
-   Message::CStateFleet mes = { 100, 1, 50, 2, 1, 1 };
+   Message::CStateFleet mes = { 220, 1, 50, 2, 1, 1 };
    std::vector<Message::CStateFleet> mesVec;
    mesVec.push_back(mes);
    sp->SetFleets(mesVec);
    CFleet* fl = sp->GetFleets().front();
-   QVERIFY2(fl->GetShipCount() == 100, "Fail to set fleet");
+   QVERIFY2(fl->GetShipCount() == 220, "Fail to set fleet");
 
    double x(0), y(0);
    fl->GetPosition(x,y);
    QVERIFY2(y == 15, "Fail update fleet");
-
-   sp->Update(1); // Speed = 2!
+   QVERIFY2(planets[1]->GetArmy() == 202, "Fail to attack planet");
+   sp->Update(3); // Speed = 2!
    fl->GetPosition(x,y);
-   QVERIFY2(y == 17 , "Fail update fleet");
+   QVERIFY2(y == 20 , "Fail update fleet");
 
-   sp->Update(2);
-   QVERIFY2(planets[0]->GetArmy() == 233, "Fail to attack planet");
+   sp->Update(1);
+   QVERIFY2(planets[1]->GetArmy() == 16 && planets[1]->GetPlayerId() == 1, "Fail to attack planet");
+
+   QVERIFY2(sp->GetFleets().empty() && fl == 0, "Fail to delete fleet after attack");
 
 
 }

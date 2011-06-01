@@ -57,19 +57,34 @@ void CSpace::Update(const double i_time)
 
    // Move fleets
    CFleet* currFleet;
+   bool ReachedFleetsPresent(true);
    foreach (currFleet, m_fleets)
    {
       currFleet->IncreaseWay(flMove);
-
-      // If fleet reached planet - remove it from list
-      if (currFleet->ReachedDestination())
-      {
-         //std::list<CFleet*>::iterator destroy(iter);
-         delete currFleet;
-         //m_fleets.erase(destroy);
-      }
    }
 
+   //Delete reached fleets
+   while (ReachedFleetsPresent)
+   {
+      std::list<CFleet*>::iterator iter;
+      for(iter = m_fleets.begin(); iter != m_fleets.end(); ++iter)
+      {
+         if (iter.operator *()->ReachedDestination())
+         {
+            break;
+         }
+      }
+      if (iter != m_fleets.end())
+      {
+         CFleet* toDelete = iter.operator *();
+         m_fleets.erase(iter);
+         delete toDelete;
+      }
+      else
+      {
+         ReachedFleetsPresent = false;
+      }
+   }
 
 }
 
@@ -77,13 +92,14 @@ void CSpace::SetPlanets(const PlanetCont& planets)
 {
 
    // For every existing planet update its army & owner from given data
-
+   PlanetCont::const_iterator iter;
    for (unsigned int i = 0; i != m_planets.size(); ++i)
    {
-      if (planets.find(m_planets[i]->GetId()) != planets.end())
+      iter = planets.find(m_planets[i]->GetId());
+      if (iter != planets.end())
       {
-         m_planets[i]->SetArmy(planets.find(m_planets[i]->GetId())->second.first);
-         m_planets[i]->SetPlayer(planets.find(m_planets[i]->GetId())->second.second);
+         m_planets[i]->SetArmy(iter->second.first);
+         m_planets[i]->SetPlayer(iter->second.second);
       }
    }
 }
