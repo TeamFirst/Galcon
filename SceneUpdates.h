@@ -2,7 +2,7 @@
 #define SCENEUPDATES_H
 
 #include <vector>
-
+#include <list>
 #include "Planet.h"
 #include "Fleet.h"
 
@@ -10,14 +10,16 @@ class ISceneUpdates
 {
 
 public:
+// Do we realy need it?
+//   ISceneUpdates()
+//   {}
+   virtual ~ISceneUpdates()
+   {}
 
-   ISceneUpdates();
-   virtual ~ISceneUpdates() = 0;
+   virtual void OnShowView() = 0;
+   virtual void OnHideView() = 0;
 
-   virtual void OnShowView();
-   virtual void OnHideView();
-
-   virtual void OnUpdate(const std::vector<CPlanet* >&, const std::list<CFleet* >&);
+   virtual void OnUpdate(const std::vector<CPlanet* >&, const std::list<CFleet* >&) = 0;
 };
 
 #endif // SCENEUPDATE_H
