@@ -1,11 +1,19 @@
-#include "PlayWindow.h"
+#include <QGraphicsView>
+
 #include "ui_playwindow.h"
 #include "message/MessageStartMapGame.h"
+#include "PlayWindow.h"
+
+#include "PlayArea.h"
+#include "GUIPlanet.h"
+#include "GUIFleet.h"
+#include "../Planet.h"
+#include "../Fleet.h"
 CPlayWindow::CPlayWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CPlayWindow)
 {
-    m_play = new CPlayArea();
+    m_playArea = new CPlayArea();
     ui->setupUi(this);
 }
 
@@ -13,25 +21,71 @@ CPlayWindow::~CPlayWindow()
 {
     delete ui;
 }
-void CPlayWindow::TakeStartGame(Message::CMessageStartMapGamePtr mess)
+void CPlayWindow::TakeFieldSize(unsigned int X, unsigned int Y)
 {
-    m_verLogic = mess->m_mapY;
-    m_horLogic = mess->m_mapX;
+    m_verLogic = Y;
+    m_horLogic = X;
+
+    m_playArea = new CPlayArea(this);
 
     SetNewPlaySize();
+
+    m_playArea->setScene(&m_scene);
+
+    connect(&m_view, SIGNAL(sUpdate()), this, SLOT(slUpdate()));
 }
 void CPlayWindow::SetNewPlaySize()
 {
-    m_horPhys = ui->m_play->size().width();
-    m_verPhys = ui->m_play->size().height();
+    m_horPhys = m_playArea->size().width();
+    m_verPhys = m_playArea->size().height();
 
     double kX = m_horPhys / m_horLogic;
     double kY =  m_verPhys / m_verLogic;
 
     m_k = kX < kY ? kX : kY;
 
-    ui->m_play->resize(m_horPhys * m_k, m_verPhys * m_k);
+    m_playArea->resize(m_horPhys * m_k, m_verPhys * m_k);
 
-    m_horPhys = ui->m_play->size().width();
-    m_verPhys = ui->m_play->size().height();
+    m_horPhys = m_playArea->size().width();
+    m_verPhys = m_playArea->size().height();
+}
+void CPlayWindow::slGameStarts()
+{
+    m_planets = m_view.GetPlanets();
+    m_fleets = m_view.GetFleets();
+    for (unsigned int i = 0; i < m_planets->size(); i++)
+    {
+        m_scene.addItem(new CGUIPlanet((*m_planets)[i], &m_k, this));
+    }
+}
+void CPlayWindow::UpdateFleets()
+{
+    m_scene.clear();
+    std::list<CFleet* >::const_iterator it;
+    CGUIFleet * fl;
+    it = m_fleets->begin();
+    for (; it !=  (*m_fleets).end(); it++)
+    {
+
+        for (int i = 0; i < m_gFleets.size(); i++)
+        {
+            if (((*it)->GetId()) == ((m_gFleets)[i])->GetFleet()->GetId())
+            {
+                goto out;
+            }
+        }
+        fl = new CGUIFleet((*it), &m_k, this);
+        m_scene.addItem(fl);
+        m_gFleets.push_back(fl);
+
+        out:
+            int c = 0;
+    }
+}
+void CPlayWindow::slUpdate()
+{
+    UpdateFleets();
+    m_playArea->repaint();
+
+
 }

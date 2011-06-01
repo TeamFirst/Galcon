@@ -3,13 +3,19 @@
 
 #include <QColor>
 #include <QGraphicsItem>
-#include "../Planet.h"
+
+class CPlanet;
 
 class CGUIPlanet : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
     CGUIPlanet(const CPlanet *, const double * K, QObject * parent = 0);
+
+    const CPlanet * GetPlanet() const
+    {
+        return m_planet;
+    }
 //    void SetCoord(const double, const double);
 
 //    void SetCoef(const double *);

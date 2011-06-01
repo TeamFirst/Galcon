@@ -1,5 +1,4 @@
-#ifndef GUIPLANET_H
-#define GUIPLANET_H
+#pragma once
 
 #include <QGraphicsItem>
 #include "../Planet.h"
@@ -9,7 +8,10 @@ class CGUIFleet : public QObject, public QGraphicsItem
 
 public:
     CGUIFleet(const CFleet *, const double * K, QObject * parent = 0);
-
+    const CFleet * GetFleet() const
+    {
+        return m_fleet;
+    }
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -33,4 +35,4 @@ private:
 
 };
 
-#endif // GUIPLANET_H
+

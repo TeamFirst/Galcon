@@ -2,8 +2,19 @@
 #define PLAYWINDOW_H
 
 #include <QDialog>
-#include "message/MessageStartMapGame.h"
+#include <QGraphicsScene>
+
+#include <QVector>
 #include "GUIView.h"
+#include "message/MessageStartMapGame.h"
+#include "GUIFleet.h"
+
+class QGraphicsScene;
+class CPlayArea;
+class CPlanet;
+class CFleet;
+
+
 namespace Ui {
     class CPlayWindow;
 }
@@ -16,10 +27,21 @@ public:
     explicit CPlayWindow(QWidget *parent = 0);
     ~CPlayWindow();
 public slots:
-    void TakeStartGame(Message::CMessageStartMapGamePtr mess);
-
+    void TakeFieldSize(unsigned int X, unsigned int Y);
+private slots:
+    void UpdateFleets();
+    void slGameStarts();
+    void slUpdate();
 private:
-    CGUIView view;
+
+
+
+    QVector<CGUIFleet *> m_gFleets;
+    const std::vector<CPlanet *> * m_planets;
+    const std::list<CFleet* > * m_fleets;
+    QGraphicsScene m_scene;
+    CPlayArea * m_playArea;
+    CGUIView m_view;
     void SetNewPlaySize();
     double m_horLogic;
     double m_verLogic;
@@ -28,7 +50,7 @@ private:
     double m_verPhys;
     // size relations between logical and physical coordinates
     double m_k;
-    CPlayArea * m_play;
+
     Ui::CPlayWindow *ui;
 };
 

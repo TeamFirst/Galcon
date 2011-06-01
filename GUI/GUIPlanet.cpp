@@ -2,25 +2,26 @@
 #include <QPainter>
 #include <QVariant>
 #include "GUIPlanet.h"
-CGUIPlanet::CGUIPlanet(const CPlanet * planet, const double * K, QObject * parent = 0):
+#include "../Planet.h"
+CGUIPlanet::CGUIPlanet(const CPlanet * planet, const double * K, QObject * parent):
         QObject(parent),
         mp_K(K),
         m_planet(planet)
 {
-
-
-}
-QRectF CGUIPlanet::boundingRect() const
-{
-
-
-    m_planet->GetPosition(m_x, m_y);
+    unsigned int x, y;
+    m_planet->GetPosition(x, y);
+    m_x = x; m_y = y;
 
     m_x = m_x * (*mp_K);
     m_y = m_y * (*mp_K);
 
     m_r = (m_planet->GetRadius()) * (*mp_K);
+
+}
+QRectF CGUIPlanet::boundingRect() const
+{
     QRectF rect(m_x - m_r, m_y - m_r, 2 * m_r, 2 * m_r);
+    return rect;
 }
 void CGUIPlanet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget)
@@ -40,7 +41,7 @@ void CGUIPlanet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     QBrush b(Qt::blue);
     painter->setBrush(b);
     painter->drawEllipse(m_x , m_y , m_r, m_r);
-    painter->drawText(m_x, m_y, QVariant(m_planet->GetArmy()).toString());
+    painter->drawText(m_x, m_y, QVariant(qulonglong(m_planet->GetArmy())).toString());
 
 
 }
