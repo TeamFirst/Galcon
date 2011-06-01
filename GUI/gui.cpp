@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "gui.h"
 #include "WaitWindow.h"
+#include "criticalmessage.h"
 using namespace Message;
 CGUI::CGUI(QObject *parent) :
     QObject(parent)
@@ -46,4 +47,8 @@ void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
     }
     m_waitWindow->TakeStartGame(ptr);
     first = false;
+}
+void CGUI::TakeError(Message::CMessageError mess)
+{
+    CCriticalMessage::Show("Error", "Error");
 }

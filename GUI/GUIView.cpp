@@ -27,8 +27,8 @@ void CGUIView::OnUpdate(const std::vector<CPlanet* >& planets, const std::list<C
     m_planets = planets;
     m_fleets = fleets;
     emit sUpdate();
-
 }
+
 const std::vector<CPlanet *> * CGUIView::GetPlanets() const
 {
     return &m_planets;

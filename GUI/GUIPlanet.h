@@ -1,12 +1,15 @@
 #ifndef GUIPLANET_H
 #define GUIPLANET_H
 
+#include <QColor>
 #include <QGraphicsItem>
+#include "../Planet.h"
 
-class CGUIPlanet : public QGraphicsItem
+class CGUIPlanet : public QObject, public QGraphicsItem
 {
-
+    Q_OBJECT
 public:
+    CGUIPlanet(const CPlanet *, const double * K, QObject * parent = 0);
 //    void SetCoord(const double, const double);
 
 //    void SetCoef(const double *);
@@ -17,6 +20,7 @@ public:
 
 //    void SetPlayerID()
 
+    void SetSelected(bool s);
 
 
 protected:
@@ -30,13 +34,11 @@ signals:
 
 public slots:
 private:
-    double m_xLog;
-    double m_yLog;
+    QColor col;
+    bool m_selected;
+    double m_x, m_y, m_r;
     const double * mp_K;
-    unsigned int m_ownerID;
-    const unsigned m_ourPlayer;
-
-
+    const CPlanet * m_planet;
 };
 
 #endif // GUIPLANET_H

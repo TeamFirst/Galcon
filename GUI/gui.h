@@ -8,6 +8,7 @@
 #include "message/MessageConnectToServer.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
+#include "message/MessageError.h"
 #include "PlayWindow.h"
 class CGUI : public QObject
 {
@@ -19,7 +20,8 @@ public:
     void Exec();
 
 public slots:
-//    void TakeError(pIMessage mess);
+
+    void TakeError(Message::CMessageError mess);
 
 //    void TakeFinishGame(pIMessage mess);
 

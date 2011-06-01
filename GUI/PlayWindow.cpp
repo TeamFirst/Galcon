@@ -5,6 +5,7 @@ CPlayWindow::CPlayWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CPlayWindow)
 {
+    m_play = new CPlayArea();
     ui->setupUi(this);
 }
 
@@ -18,9 +19,6 @@ void CPlayWindow::TakeStartGame(Message::CMessageStartMapGamePtr mess)
     m_horLogic = mess->m_mapX;
 
     SetNewPlaySize();
-
-
-
 }
 void CPlayWindow::SetNewPlaySize()
 {

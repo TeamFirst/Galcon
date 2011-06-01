@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "message/MessageStartMapGame.h"
+#include "GUIView.h"
 namespace Ui {
     class CPlayWindow;
 }
@@ -18,6 +19,7 @@ public slots:
     void TakeStartGame(Message::CMessageStartMapGamePtr mess);
 
 private:
+    CGUIView view;
     void SetNewPlaySize();
     double m_horLogic;
     double m_verLogic;
@@ -26,6 +28,7 @@ private:
     double m_verPhys;
     // size relations between logical and physical coordinates
     double m_k;
+    CPlayArea * m_play;
     Ui::CPlayWindow *ui;
 };
 
