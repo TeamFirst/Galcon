@@ -57,33 +57,57 @@ void CSpace::Update(const double i_time)
 
    // Move fleets
    CFleet* currFleet;
+   bool ReachedFleetsPresent(true);
    foreach (currFleet, m_fleets)
    {
       currFleet->IncreaseWay(flMove);
+   }
 
-      // If fleet reached planet - remove it from list
-      if (currFleet->ReachedDestination())
+   //Delete reached fleets
+   while (ReachedFleetsPresent)
+   {
+      std::list<CFleet*>::iterator iter;
+      for(iter = m_fleets.begin(); iter != m_fleets.end(); ++iter)
       {
-         //std::list<CFleet*>::iterator destroy(iter);
-         delete currFleet;
-         //m_fleets.erase(destroy);
+         if (iter.operator *()->ReachedDestination())
+         {
+            break;
+         }
+      }
+      if (iter != m_fleets.end())
+      {
+         CFleet* toDelete = iter.operator *();
+         m_fleets.erase(iter);
+         delete toDelete;
+      }
+      else
+      {
+         ReachedFleetsPresent = false;
       }
    }
 
-
 }
 
-void CSpace::SetPlanets(const PlanetCont& planets)
+void CSpace::SetPlanets(const std::vector<Message::CStatePlanet>& i_planets)
 {
-
    // For every existing planet update its army & owner from given data
-
-   for (unsigned int i = 0; i != m_planets.size(); ++i)
+   Message::CStatePlanet inPl;
+   CPlanet* currPl;
+   bool NewFlag = false;
+   foreach (inPl, i_planets)
    {
-      if (planets.find(m_planets[i]->GetId()) != planets.end())
+      foreach (currPl, m_planets)
       {
-         m_planets[i]->SetArmy(planets.find(m_planets[i]->GetId())->second.first);
-         m_planets[i]->SetPlayer(planets.find(m_planets[i]->GetId())->second.second);
+         if (inPl.m_planetID == currPl->GetId())
+         {
+            NewFlag = true;
+            break;
+         }
+      }
+      if (NewFlag)
+      {
+         currPl->SetArmy(inPl.m_countFleet);
+         currPl->SetPlayer(inPl.m_playerID);
       }
    }
 }
@@ -104,6 +128,7 @@ void CSpace::SetFleets(const std::vector<Message::CStateFleet>& message)
          {
             currFleet->SetPercent(currMessFleet.m_percentRoute);
             flag = false;
+            break;
          }
       }
 

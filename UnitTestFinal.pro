@@ -19,7 +19,8 @@ SOURCES += tst_unittestfinaltest.cpp \
     Planet.cpp \
     Fleet.cpp \
     Space.cpp \
-    Game.cpp
+    Game.cpp \
+    Player.cpp
 #DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
@@ -31,4 +32,5 @@ HEADERS += \
     Game.h \
     message/MessageAddView.h \
     SceneUpdates.h \
-    message/MessageFinishGame.h
+    message/MessageFinishGame.h \
+    Player.h

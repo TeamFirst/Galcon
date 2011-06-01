@@ -11,11 +11,6 @@
 class CPlanet;
 class CFleet;
 
-//struct CPlanetStartData;
-
-//struct CPlayerStartData;
-
-//struct CMessageStartMapGame;
 
 class CSpace
 {
@@ -25,9 +20,9 @@ public:
           std::vector<Message::CPlanetStartData> planets);
    ~CSpace();
 
-   typedef std::map<unsigned short, std::pair<unsigned long, unsigned short> > PlanetCont;
+   //typedef std::map<unsigned short, std::pair<unsigned long, unsigned short> > PlanetCont;
 
-   void SetPlanets(const PlanetCont&);
+   void SetPlanets(const std::vector<Message::CStatePlanet>&);
    void SetFleets(const std::vector<Message::CStateFleet>&);
    void Update(const double i_time);
 

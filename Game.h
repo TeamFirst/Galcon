@@ -1,6 +1,7 @@
 #ifndef CGAME_H
 #define CGAME_H
 #include <QObject>
+#include <QTimer>
 
 #include "SceneUpdates.h"
 #include "Space.h"
@@ -15,9 +16,10 @@ class CGame : public QObject
 
 public:
    CGame();
+   static const unsigned long m_timeTick = 1000;
 
 signals:
-   void SendStartGame();
+   void SendStartGame(unsigned int mapX, unsigned int mapY);
    void signalTimer();
 
 public slots:
@@ -33,7 +35,7 @@ private:
 
    ISceneUpdates* m_view;
    CSpace* m_space;
-   unsigned long m_timeTick;
+   QTimer* m_timer;
 };
 
 #endif // CGAME_H
