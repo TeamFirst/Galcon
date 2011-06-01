@@ -27,11 +27,13 @@ void CPlayWindow::TakeFieldSize(unsigned int X, unsigned int Y)
     m_horLogic = X;
 
     m_playArea = new CPlayArea(this);
+    m_playArea->resize(this->size().width() * 0.9, size().height() * 0.9);
 
     SetNewPlaySize();
 
     m_playArea->setScene(&m_scene);
 
+    DrawSky();
     connect(&m_view, SIGNAL(sUpdate()), this, SLOT(slUpdate()));
 }
 void CPlayWindow::SetNewPlaySize()
@@ -57,6 +59,10 @@ void CPlayWindow::slGameStarts()
     {
         m_scene.addItem(new CGUIPlanet((*m_planets)[i], &m_k, this));
     }
+}
+CGUIView * CPlayWindow::GetView()
+{
+    return &m_view;
 }
 void CPlayWindow::UpdateFleets()
 {
@@ -88,4 +94,12 @@ void CPlayWindow::slUpdate()
     m_playArea->repaint();
 
 
+}
+void CPlayWindow::DrawSky()
+{
+    //m_scene.addPixmap(QPixmap(":/GUI/sky.jpg"));
+    m_scene.addPixmap(QPixmap("D:\Projects\Galcon\Galcon\GUI\sky.jpg"));
+
+    m_scene.addText("Hello");
+    //m_playArea->repaint();
 }

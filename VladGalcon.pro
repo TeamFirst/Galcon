@@ -75,4 +75,8 @@ FORMS += \
     GUI/playwindow.ui
 
 OTHER_FILES += \
-    README
+    README \
+    GUI/sky.jpg
+
+RESOURCES += \
+    resource.qrc

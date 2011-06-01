@@ -12,14 +12,17 @@
 class CPlayWindow;
 class CWaitWindow;
 class CEnterWindow;
+class ISceneUpdates;
 class CGUI : public QObject
 {
     Q_OBJECT
 public:
     explicit CGUI(QObject *parent = 0);
+    ISceneUpdates * GetScene();
     virtual ~CGUI();
 
     void Exec();
+
 
 public slots:
 

@@ -2,7 +2,7 @@
 #include <QDebug>
 CSpike::CSpike(QObject *parent) :
     QObject(parent)
-{    
+{
 
     bool res;
     res = QObject::connect(
@@ -40,4 +40,9 @@ void CSpike::slSendStartGame()
     Message::CMessageTimeToStartGamePtr ptr(new Message::CMessageTimeToStartGame());
     ptr->m_second = 10;
     emit sGameStartsIn(ptr);
+    timer.singleShot(12000, this, SLOT(slSendBoardSize()));
+}
+void CSpike::slSendBoardSize()
+{
+   gui.TakeFieldSize(500, 600);
 }

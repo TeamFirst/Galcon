@@ -26,6 +26,7 @@ class CPlayWindow : public QDialog
 public:
     explicit CPlayWindow(QWidget *parent = 0);
     ~CPlayWindow();
+    CGUIView * GetView();
 public slots:
     void TakeFieldSize(unsigned int X, unsigned int Y);
 private slots:
@@ -33,7 +34,7 @@ private slots:
     void slGameStarts();
     void slUpdate();
 private:
-
+    void DrawSky();
 
 
     QVector<CGUIFleet *> m_gFleets;
@@ -48,6 +49,7 @@ private:
 
     double m_horPhys;
     double m_verPhys;
+
     // size relations between logical and physical coordinates
     double m_k;
 

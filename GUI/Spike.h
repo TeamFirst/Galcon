@@ -22,6 +22,7 @@ signals:
 private slots:
     void slTimerSignal();
     void slSendStartGame();
+    void slSendBoardSize();
 private:
     CGUI gui;
     QTimer timer;
