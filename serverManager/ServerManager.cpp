@@ -16,7 +16,7 @@ namespace ServerManagerDecl
    }
 
 /// private function
-   void CServerManager::connectToServer(const std::string serverIP,
+   void CServerManager::connectToServer(const std::string& serverIP,
       const unsigned int m_serverPort)
    {
       m_tcpSocket = new QTcpSocket(this);
@@ -41,7 +41,7 @@ namespace ServerManagerDecl
       m_tcpSocket->write(arrBlock);
    }
 
-   void CServerManager::parseStrFromServer(const std::string sMes)
+   void CServerManager::parseStrFromServer(const std::string& sMes)
    {
       switch(m_parser.CheckTypeMessage(sMes))
       {

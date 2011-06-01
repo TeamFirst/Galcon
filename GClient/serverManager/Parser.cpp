@@ -21,7 +21,7 @@ namespace ServerManagerDecl
    }
 
 /// function for parse
-   CParser::ETypeMessage CParser::CheckTypeMessage(const std::string sMes) const
+   CParser::ETypeMessage CParser::CheckTypeMessage(const std::string& sMes) const
    {
       std::vector< std::pair<std::string, ETypeMessage> >::const_iterator it =
             m_vMsgStrEnumType.begin();
@@ -37,7 +37,7 @@ namespace ServerManagerDecl
    }
 
    const Message::CMessageConfirmationConnectToServerPtr
-      CParser::ParseMConfirmConnect(const std::string sMes)
+      CParser::ParseMConfirmConnect(const std::string& sMes)
    {      
       /// SC_CONNID#3##
       char sBuf[20];
@@ -54,7 +54,7 @@ namespace ServerManagerDecl
    }
 
    const Message::CMessageErrorPtr
-      CParser::ParseMError(const std::string sMes)
+      CParser::ParseMError(const std::string& sMes)
    {
       /// SC_ERR#Player1 disconnected!##
       // std::string m_strError;
@@ -69,28 +69,28 @@ namespace ServerManagerDecl
    }
 
    const Message::CMessageFinishGamePtr
-      CParser::ParseMFinishGame(const std::string sMes)
+      CParser::ParseMFinishGame(const std::string& sMes)
    {
       return Message::CMessageFinishGamePtr(
          new Message::CMessageFinishGame);
    }
 
    const Message::CMessageStateMapPtr
-      CParser::ParseMStateMap(const std::string sMes)
+      CParser::ParseMStateMap(const std::string& sMes)
    {
       return Message::CMessageStateMapPtr(
          new Message::CMessageStateMap);
    }
 
    const Message::CMessageStartMapGamePtr
-      CParser::ParseMStartMapGame(const std::string sMes)
+      CParser::ParseMStartMapGame(const std::string& sMes)
    {
       return Message::CMessageStartMapGamePtr(
          new Message::CMessageStartMapGame);
    }
 
    const Message::CMessageTimeToStartGamePtr
-      CParser::ParseMTimeToStartGame(const std::string sMes)
+      CParser::ParseMTimeToStartGame(const std::string& sMes)
    {
       return Message::CMessageTimeToStartGamePtr(
          new Message::CMessageTimeToStartGame);

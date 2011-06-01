@@ -2,8 +2,6 @@
 
 #include <vector>
 #include <string>
-#include <stdlib.h>
-#include <stdio.h>
 #include <QSharedPointer>
 
 #include "MessageItf.h"
