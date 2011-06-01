@@ -28,4 +28,7 @@ HEADERS += \
     Space.h \
     message/MessageStateMap.h \
     message/MessageStartMapGame.h \
-    Game.h
+    Game.h \
+    message/MessageAddView.h \
+    SceneUpdates.h \
+    message/MessageFinishGame.h

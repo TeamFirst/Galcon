@@ -20,6 +20,7 @@ class CFleet;
 class CSpace
 {
 public:
+
    CSpace(unsigned short flySpeed, unsigned short growSpeed, unsigned short xSize, unsigned short ySize,
           std::vector<Message::CPlanetStartData> planets);
    ~CSpace();
@@ -34,9 +35,8 @@ public:
    std::list<CFleet*> GetFleets() const;
 
    CPlanet* GetPlanetById(unsigned short id) const;
+
 private:
-
-
 
    std::vector<CPlanet* > m_planets;
    std::list<CFleet* > m_fleets;

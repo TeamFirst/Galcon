@@ -59,9 +59,9 @@ void UnitTestFinalTest::testCaseFleet()
    CPlanet* fr2 = new CPlanet(1, 10, 10, 5, 100500, 1);
    CPlanet* to2 = new CPlanet(2, 10, 20, 15, 100, 2);
    CFleet fl2(0, fr2, to2, 1, 500, 50);
-   fl2.IncreaseWay(6);
+   fl2.IncreaseWay(2);
    fl2.GetPosition(x,y);
-   QVERIFY2(x - 10 < eps && y == 16, "Failture increase procent");
+   QVERIFY2(x - 10 < eps && y - 17 <eps, "Failture increase procent");
 
    fl.SetPercent(10);
    fl.GetPosition(x,y);
@@ -121,9 +121,12 @@ void UnitTestFinalTest::testCaseSpace()
    fl->GetPosition(x,y);
    QVERIFY2(y == 15, "Fail update fleet");
 
-   sp->Update(1);
+   sp->Update(1); // Speed = 2!
    fl->GetPosition(x,y);
-   QVERIFY2(true, "Fail update fleet");
+   QVERIFY2(y == 17 , "Fail update fleet");
+
+   sp->Update(2);
+   QVERIFY2(planets[0]->GetArmy() == 233, "Fail to attack planet");
 
 
 }

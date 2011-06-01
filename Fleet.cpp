@@ -81,7 +81,7 @@ void CFleet::SetPercent(const unsigned short i_nPerc)
 
 void CFleet::IncreaseWay(double onWay)
 {
-   double onPerc = onWay/m_distance;
+   double onPerc = 100.0 * onWay/m_distance;
    this->SetPercent(m_percentPassed + onPerc);
 }
 

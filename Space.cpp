@@ -46,15 +46,22 @@ void CSpace::Update(const double i_time)
    double plGrowth = i_time * m_growth;
    double flMove = i_time * m_speed;
 
+   // Make growth on planets
    for (unsigned int i = 0; i < m_planets.size(); ++i)
    {
-      m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth);
+      if (m_planets[i]->GetPlayerId() != 0) //Exclude growth on neutral planets
+      {
+         m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth);
+      }
    }
 
+   // Move fleets
    CFleet* currFleet;
    foreach (currFleet, m_fleets)
    {
       currFleet->IncreaseWay(flMove);
+
+      // If fleet reached planet - remove it from list
       if (currFleet->ReachedDestination())
       {
          //std::list<CFleet*>::iterator destroy(iter);
@@ -68,6 +75,9 @@ void CSpace::Update(const double i_time)
 
 void CSpace::SetPlanets(const PlanetCont& planets)
 {
+
+   // For every existing planet update its army & owner from given data
+
    for (unsigned int i = 0; i != m_planets.size(); ++i)
    {
       if (planets.find(m_planets[i]->GetId()) != planets.end())
@@ -80,11 +90,14 @@ void CSpace::SetPlanets(const PlanetCont& planets)
 
 void CSpace::SetFleets(const std::vector<Message::CStateFleet>& message)
 {
+   // For every given fleet
    Message::CStateFleet currMessFleet;
    foreach (currMessFleet, message)
    {
       CFleet* currFleet;
       bool flag = true;
+
+      // Search for it in existing list
       foreach (currFleet, m_fleets)
       {
          if (currFleet->GetId() == currMessFleet.m_fleetID)
@@ -93,6 +106,8 @@ void CSpace::SetFleets(const std::vector<Message::CStateFleet>& message)
             flag = false;
          }
       }
+
+      // If didn't found - add it to list
       if (flag)
       {
          CPlanet* planetFr = GetPlanetById(currMessFleet.m_planetStartID);
