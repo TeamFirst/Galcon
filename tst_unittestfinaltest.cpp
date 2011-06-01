@@ -4,6 +4,7 @@
 #include "Planet.h"
 #include "Fleet.h"
 #include "Space.h"
+#include "Game.h"
 
 class UnitTestFinalTest : public QObject
 {
@@ -17,6 +18,7 @@ private Q_SLOTS:
     void testCasePlanet();
     void testCaseFleet();
     void testCaseSpace();
+    void testCaseGame();
 };
 
 UnitTestFinalTest::UnitTestFinalTest()
@@ -102,9 +104,12 @@ void UnitTestFinalTest::testCaseSpace()
    sp->Update(2);
    QVERIFY2((planets[0]->GetArmy() == 102) && (planets[1]->GetArmy() == 202) , "Fail to update space");
 
-   CSpace::PlanetCont a;
-   a[1] = std::pair<unsigned long, unsigned short>(230,2);
-   sp->SetPlanets(a);
+
+   Message::CStatePlanet stPlanet = { 230, 1, 2 };
+   std::vector<Message::CStatePlanet> stVecPl;
+   //a[1] = std::pair<unsigned long, unsigned short>(230,2);
+   stVecPl.push_back(stPlanet);
+   sp->SetPlanets(stVecPl);
    QVERIFY2((planets[0]->GetArmy() == 230 && planets[0]->GetPlayerId() == 2) , "Fail to set planets in space");
 
    CPlanet* pl = sp->GetPlanetById(1);
@@ -128,9 +133,13 @@ void UnitTestFinalTest::testCaseSpace()
    sp->Update(1);
    QVERIFY2(planets[1]->GetArmy() == 16 && planets[1]->GetPlayerId() == 1, "Fail to attack planet");
 
-   QVERIFY2(sp->GetFleets().empty() && fl == 0, "Fail to delete fleet after attack");
+   QVERIFY2(sp->GetFleets().empty(), "Fail to delete fleet after attack");
 
+}
 
+void UnitTestFinalTest::testCaseGame()
+{
+   CGame* game = new CGame();
 }
 
 QTEST_APPLESS_MAIN(UnitTestFinalTest);

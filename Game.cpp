@@ -2,17 +2,21 @@
 
 CGame::CGame()
 {
-
+   m_timer = new QTimer(this);
+   connect(m_timer, SIGNAL(timeout()), this, SIGNAL(signalTimer()));
 }
 
 void CGame::AddView(Message::CMessageAddViewPtr mes)
 {
    m_view = mes->m_view;
+   m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
+
+   m_timer->start(m_timeTick);
 }
 
 void CGame::DeleteGame()
 {
-   //stop timer;
+   m_timer->stop();
 
    delete m_space;
 }
@@ -41,5 +45,8 @@ void CGame::SlotStartData(Message::CMessageStartMapGamePtr data)
 
 void CGame::SlotStateMap(Message::CMessageStateMapPtr data)
 {
+   m_space->SetFleets(data->m_fleetState);
+   m_space->SetPlanets(data->m_planetState);
 
+   m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
 }

@@ -88,19 +88,25 @@ void CSpace::Update(const double i_time)
 
 }
 
-void CSpace::SetPlanets(const PlanetCont& planets)
+void CSpace::SetPlanets(const std::vector<Message::CStatePlanet>& i_planets)
 {
-
    // For every existing planet update its army & owner from given data
-   PlanetCont::const_iterator iter;
+   std::vector<Message::CStatePlanet>::iterator iter;
+
    for (unsigned int i = 0; i != m_planets.size(); ++i)
    {
-      iter = planets.find(m_planets[i]->GetId());
-      if (iter != planets.end())
-      {
-         m_planets[i]->SetArmy(iter->second.first);
-         m_planets[i]->SetPlayer(iter->second.second);
-      }
+//      for (iter = i_planets.begin(); iter != i_planets.end(); ++iter)
+//      {
+//         if (iter.operator *().m_planetID == m_planets[i]->GetId())
+//         {
+//            break;
+//         }
+//      }
+//      if (iter != i_planets.end())
+//      {
+//         m_planets[i]->SetArmy(iter.operator *().m_countFleet);
+//         m_planets[i]->SetPlayer(iter.operator *().m_playerID);
+//      }
    }
 }
 
@@ -120,6 +126,7 @@ void CSpace::SetFleets(const std::vector<Message::CStateFleet>& message)
          {
             currFleet->SetPercent(currMessFleet.m_percentRoute);
             flag = false;
+            break;
          }
       }
 
