@@ -15,7 +15,7 @@ public:
     virtual void OnHideView();
 
     const std::vector<CPlanet *> * GetPlanets() const;
-    const std::vector<CPlanet *> * GetFleets() const;
+    const std::list<CFleet* > * GetFleets() const;
 
     virtual void OnUpdate(const std::vector<CPlanet* >&, const std::list<CFleet* >&);
 

@@ -31,12 +31,11 @@ void CGUIView::OnUpdate(const std::vector<CPlanet* >& planets, const std::list<C
 }
 const std::vector<CPlanet *> * CGUIView::GetPlanets() const
 {
-
+    return &m_planets;
 
 }
-const std::vector<CPlanet *> * CGUIView::GetFleets() const
+const std::list<CFleet* > * CGUIView::GetFleets() const
 {
-
-
+    return &m_fleets;
 }
 
