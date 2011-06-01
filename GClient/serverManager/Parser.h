@@ -47,7 +47,7 @@ namespace ServerManagerDecl
       const Message::CMessageStartMapGamePtr
          ParseMStartMapGame(const std::string sMes);
 
-      const Message::CMessaheTimeToStartGamePtr
+      const Message::CMessageTimeToStartGamePtr
          ParseMTimeToStartGame(const std::string sMes);
 
    private:

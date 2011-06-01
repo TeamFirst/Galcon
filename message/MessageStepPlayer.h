@@ -24,7 +24,6 @@ namespace Message
 
       virtual std::string toString() const
       {
-         char sBuf[20];
          std::string sMes("CS_STEP#");
          QString temp;
          std::vector<unsigned int>::const_iterator it = m_startPlanetID.begin();

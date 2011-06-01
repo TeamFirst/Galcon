@@ -106,7 +106,7 @@ namespace ServerManagerDecl
 
           nextBlockSize = 0;
 
-          parseStrFromServer('#' + QString(str).toStdString());
+          parseStrFromServer(QString(str).toStdString());
       }
    }
 

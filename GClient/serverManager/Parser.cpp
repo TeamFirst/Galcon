@@ -25,12 +25,10 @@ namespace ServerManagerDecl
    {
       std::vector< std::pair<std::string, ETypeMessage> >::const_iterator it =
             m_vMsgStrEnumType.begin();
-      std::string::size_type pos;
+
       for(; it != m_vMsgStrEnumType.end(); ++it)
       {
-         pos = 0;
-         pos = sMes.find_first_of((*it).first.c_str());
-         if(pos == 1)
+         if(0 == sMes.find(it->first))
          {
             return (*it).second;
          }
@@ -91,11 +89,11 @@ namespace ServerManagerDecl
          new Message::CMessageStartMapGame);
    }
 
-   const Message::CMessaheTimeToStartGamePtr
+   const Message::CMessageTimeToStartGamePtr
       CParser::ParseMTimeToStartGame(const std::string sMes)
    {
-      return Message::CMessaheTimeToStartGamePtr(
-         new Message::CMessaheTimeToStartGame);
+      return Message::CMessageTimeToStartGamePtr(
+         new Message::CMessageTimeToStartGame);
    }
 
 } //namespace ServerManagerDecl

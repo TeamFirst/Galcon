@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
+#include <stdio.h>
 #include <QSharedPointer>
 
 #include "MessageItf.h"
@@ -23,19 +24,25 @@ namespace Message
 
       virtual std::string toString() const
       {
-         char sBuf[20];
          std::string sMes("CS_STEP#");
+         QString temp;
          std::vector<unsigned int>::const_iterator it = m_startPlanetID.begin();
          for(; it != m_startPlanetID.end(); ++it)
          {
             sMes.append("(");
-            sMes.append(ulltoa(*it, sBuf, 10));
+            temp.setNum(*it, 10);
+            sMes.append(temp.toStdString());
             sMes.append(")");
          }
          sMes.append("#");
-         sMes.append(ulltoa(m_percent, sBuf, 10));
+         temp.clear();
+         temp.setNum(m_percent, 10);
+         sMes.append(temp.toStdString());
          sMes.append("#");
-         sMes.append(ulltoa(m_finishPlanetID, sBuf, 10));
+         temp.clear();
+         temp.setNum(m_finishPlanetID, 10);
+         sMes.append(temp.toStdString());
+
          sMes.append("##");
 
          return sMes;

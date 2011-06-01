@@ -35,7 +35,7 @@ namespace ServerManagerDecl
       void SendFinishGame(const Message::CMessageFinishGamePtr pMessage);
       void SendStateMap(const Message::CMessageStateMapPtr pMessage);
       void SendStartGame(const Message::CMessageStartMapGamePtr pMessage);
-      void SendTimeToStart(const Message::CMessaheTimeToStartGamePtr pMessage);
+      void SendTimeToStart(const Message::CMessageTimeToStartGamePtr pMessage);
 
    private slots:
       void slotConnected();
