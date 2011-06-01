@@ -26,8 +26,6 @@ public slots:
 
 
 //    void TakeTimeStartToGame(pIMessage mess);
-    void TakeStartGame(CMessageStartMapGamePtr mess);
-
     void TakeStartGame(Message::CMessageTimeToStartGamePtr ptr);
 
     void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);
@@ -45,7 +43,7 @@ private:
     int m_playerId;
     CWaitWindow * m_waitWindow;
     CEnterWindow * m_enterWindow;
-    CPlayWindow * m_play_window;
+    CPlayWindow * m_playWindow;
 };
 
 #endif // GUI_H

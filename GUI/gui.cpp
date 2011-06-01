@@ -8,7 +8,7 @@ CGUI::CGUI(QObject *parent) :
 {
     m_enterWindow = new CEnterWindow();
     m_waitWindow = new CWaitWindow();
-    m_play_window = new CPlayWindow();
+    m_playWindow = new CPlayWindow();
     connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
             this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
 
@@ -46,9 +46,4 @@ void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
     }
     m_waitWindow->TakeStartGame(ptr);
     first = false;
-}
-void CGUI::TakeStartGame(CMessageStartMapGamePtr mess)
-{
-    m_waitWindow->close();
-    m_play_window->show();
 }
