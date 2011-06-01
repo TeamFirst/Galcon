@@ -19,13 +19,10 @@ public:
     void Exec();
 
 public slots:
-//    void TakeError(pIMessage mess);
 
-//    void TakeFinishGame(pIMessage mess);
-
-
-
-//    void TakeTimeStartToGame(pIMessage mess);
+    //void TakeError(pIMessage mess);
+    //void TakeFinishGame(pIMessage mess);
+    //void TakeTimeStartToGame(pIMessage mess);
     void TakeStartGame(Message::CMessageTimeToStartGamePtr ptr);
 
     void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);

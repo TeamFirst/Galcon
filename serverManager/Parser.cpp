@@ -91,11 +91,11 @@ namespace ServerManagerDecl
          new Message::CMessageStartMapGame);
    }
 
-   const Message::CMessaheTimeToStartGamePtr
+   const Message::CMessageTimeToStartGamePtr
       CParser::ParseMTimeToStartGame(const std::string sMes)
    {
-      return Message::CMessaheTimeToStartGamePtr(
-         new Message::CMessaheTimeToStartGame);
+      return Message::CMessageTimeToStartGamePtr(
+         new Message::CMessageTimeToStartGame);
    }
 
 } //namespace ServerManagerDecl
