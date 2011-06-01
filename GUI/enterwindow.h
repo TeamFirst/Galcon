@@ -1,38 +1,38 @@
 #ifndef ENTERWINDOW_H
 #define ENTERWINDOW_H
 
-#include <QWidget>
-#include "Message.h"
+#include <QDialog>
+
+
+#include "../message/MessageConnectToServer.h"
 
 namespace Ui {
     class CEnterWindow;
 }
 
 
-class CEnterWindow : public QWidget
+class CEnterWindow : public QDialog
 {
     Q_OBJECT
 
 public:
     explicit CEnterWindow(QWidget *parent = 0);
     ~CEnterWindow();
+public slots:
+    void slConnectedToServer();
 
 signals:
-    void SendClientToServer(pIMessage mess);
+    void SendClientToServer(Message::CMessageConnectToServerPtr);
 
-public slots:
-    void TakeError(pIMessage mess);
-
-    void TakeFinishGame(pIMessage mess);
-
-    void TakeStartGame(pIMessage mess);
-
-    void TakeTimeStartToGame(pIMessage mess);
 
 private:
+
     //Check connection data and send IMessage to the server if valid
     void CheckAndSend();
+
+
     Ui::CEnterWindow *ui;
+
 
 private slots:
     void on_connectButton_clicked();

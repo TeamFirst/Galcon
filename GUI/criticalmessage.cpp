@@ -4,7 +4,7 @@ CCriticalMessage::CCriticalMessage(QObject *parent) :
     QObject(parent)
 {
 }
-static void CCriticalMessage::Show(QString & title, QString & text, bool sync)
+void CCriticalMessage::Show(const QString & title, const QString & text, bool sync)
 {
     QMessageBox box;
     box.setText(text);
