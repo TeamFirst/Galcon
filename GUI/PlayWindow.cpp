@@ -1,5 +1,6 @@
 #include <QGraphicsView>
-
+#include <QGraphicsPixmapItem>
+#include <QDebug>
 #include "ui_playwindow.h"
 #include "message/MessageStartMapGame.h"
 #include "PlayWindow.h"
@@ -13,7 +14,7 @@ CPlayWindow::CPlayWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CPlayWindow)
 {
-    m_playArea = new CPlayArea();
+    m_playArea = 0;
     ui->setupUi(this);
 }
 
@@ -97,9 +98,14 @@ void CPlayWindow::slUpdate()
 }
 void CPlayWindow::DrawSky()
 {
-    //m_scene.addPixmap(QPixmap(":/GUI/sky.jpg"));
-    m_scene.addPixmap(QPixmap("D:\Projects\Galcon\Galcon\GUI\sky.jpg"));
+    //QPixmap pixmap(":/GUI/sky.png");
+    QBrush backgroundBrush(Qt::yellow);
+
+    //m_playArea->setScene(&m_scene);
+    //m_playArea->setBackgroundBrush(backgroundBrush);
+
+    //m_scene.addPixmap(QPixmap("D:\Projects\Galcon\Galcon\GUI\sky.jpg"));
 
     m_scene.addText("Hello");
-    //m_playArea->repaint();
+    m_playArea->repaint();
 }

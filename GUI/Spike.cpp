@@ -23,7 +23,7 @@ void CSpike::slSendClientToServer(Message::CMessageConnectToServerPtr ptr)
     qDebug() << "Client has send data for connection";
 //    timer.start(5000);
 //    connect(&timer, SIGNAL(timeout()), this, SLOT(slTimerSignal()));
-    timer.singleShot(2000, this, SLOT(slTimerSignal()));
+    timer.singleShot(1000, this, SLOT(slTimerSignal()));
 }
 
 void CSpike::slTimerSignal()
@@ -32,15 +32,15 @@ void CSpike::slTimerSignal()
     Message::CMessageConfirmationConnectToServerPtr ptr(new Message::CMessageConfirmationConnectToServer());
     ptr->m_playerID = 8;
     qDebug() << "Id user set to 8";
-    timer.singleShot(2000, this, SLOT(slSendStartGame()));
+    timer.singleShot(1000, this, SLOT(slSendStartGame()));
     this->gui.TakeConfirmConnectToServer(ptr);
 }
 void CSpike::slSendStartGame()
 {
     Message::CMessageTimeToStartGamePtr ptr(new Message::CMessageTimeToStartGame());
-    ptr->m_second = 10;
+    ptr->m_second = 1;
     emit sGameStartsIn(ptr);
-    timer.singleShot(12000, this, SLOT(slSendBoardSize()));
+    timer.singleShot(1000, this, SLOT(slSendBoardSize()));
 }
 void CSpike::slSendBoardSize()
 {

@@ -9,6 +9,7 @@ using namespace Message;
 CGUI::CGUI(QObject *parent) :
     QObject(parent)
 {
+    m_connected = false;
     m_enterWindow = new CEnterWindow();
     m_waitWindow = new CWaitWindow();
     m_playWindow = new CPlayWindow();
@@ -30,6 +31,7 @@ void CGUI::Exec()
 }
 void CGUI::TakeConfirmConnectToServer(CMessageConfirmationConnectToServerPtr mess)
 {
+    m_connected = true;
     this->m_playerId = mess->m_playerID;
     //emit sInConnectedToServer();
     m_enterWindow->slConnectedToServer();
@@ -42,14 +44,17 @@ CGUI::~CGUI()
 
 void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
 {
-    static bool first = true;
-    if (first )
+    if (m_connected)
     {
-        m_waitWindow->show();
-    }
-    m_waitWindow->TakeStartGame(ptr);
+        static bool first = true;
+        if (first )
+        {
+            m_waitWindow->show();
+        }
+        m_waitWindow->TakeStartGame(ptr);
 
-    first = false;
+        first = false;
+    }
 }
 void CGUI::TakeError(Message::CMessageError mess)
 {

@@ -27,7 +27,8 @@ SOURCES += \
     Game.cpp \
     Fleet.cpp \
     Space.cpp \
-    GUI/GUIView.cpp
+    GUI/GUIView.cpp \
+    GUI/GUISky.cpp
 
 
 HEADERS += \
@@ -66,7 +67,8 @@ HEADERS += \
     Game.h \
     Fleet.h \
     Space.h \
-    GUI/GUIView.h
+    GUI/GUIView.h \
+    GUI/GUISky.h
 
 FORMS += \
     #enterwindow.ui \
