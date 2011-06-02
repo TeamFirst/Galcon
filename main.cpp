@@ -1,7 +1,11 @@
 #include "Galcon.h"
+#include <QApplication>
 
-int main(int argc, char* argv[])
+int main (int argc, char* argv[])
 {
-   CGalcon* galconGame = new CGalcon();
-   return 0;
+   QApplication a(argc, argv);
+   CGalcon game;
+
+
+   return a.exec();
 }

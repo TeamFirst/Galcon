@@ -27,7 +27,7 @@ public:
 
 public slots:
 
-    void TakeError(Message::CMessageError mess);
+    void TakeError(Message::CMessageErrorPtr mess);
 
 //    void TakeFinishGame(pIMessage mess);
 

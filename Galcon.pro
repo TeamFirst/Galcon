@@ -1,11 +1,4 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2011-06-01T17:48:04
-#
-#-------------------------------------------------
-
 QT       += core
-
 QT       += gui network
 
 TARGET = Galcon
@@ -13,6 +6,7 @@ CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
+
 
 
 SOURCES += main.cpp \
@@ -35,8 +29,7 @@ SOURCES += main.cpp \
     Galcon.cpp \
     GUI/GUISky.cpp
 
-HEADERS += \
-    Galcon.h \
+HEADERS += Galcon.h \
     GUI/WaitWindow.h \
     GUI/PlayWindow.h \
     GUI/PlayArea.h \
@@ -54,6 +47,15 @@ HEADERS += \
     Fleet.h \
     serverManager/ServerManager.h \
     serverManager/Parser.h \
+    message/MessageAddView.h \
+    message/MessageConnectToServer.h \
+    message/MessageError.h \
+    message/MessageFinishGame.h \
+    message/MessageItf.h \
+    message/MessageStartMapGame.h \
+    message/MessageStateMap.h \
+    message/MessageStepPlayer.h \
+    message/MessageTimeToStartGame.h \
     GUI/GUISky.h
 
 FORMS += \
@@ -61,8 +63,10 @@ FORMS += \
     GUI/playwindow.ui \
     GUI/enterwindow.ui
 
-OTHER_FILES += \
-    GUI/sky.png
 
 RESOURCES += \
     resource.qrc
+
+OTHER_FILES += \
+    GUI/sky.png
+

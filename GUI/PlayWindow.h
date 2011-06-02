@@ -18,7 +18,7 @@ class CFleet;
 namespace Ui {
     class CPlayWindow;
 }
-typedef QGraphicsView TView;
+typedef CPlayArea TView;
 class CPlayWindow : public QDialog
 {
     Q_OBJECT

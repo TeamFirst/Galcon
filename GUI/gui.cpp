@@ -59,7 +59,7 @@ void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
         first = false;
     }
 }
-void CGUI::TakeError(Message::CMessageError mess)
+void CGUI::TakeError(Message::CMessageErrorPtr mess)
 {
     CCriticalMessage::Show("Error", "Error");
 }

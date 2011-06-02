@@ -21,8 +21,8 @@ void CGalconClient::on_pBServerManager_clicked()
 {
    Message::CMessageConnectToServerPtr pMes(new Message::CMessageConnectToServer);
    pMes->m_namePlayer = "GrafAllukard";
-   pMes->m_serverIP = "127.0.0.1";
-   pMes->m_serverPort = 1234;
+   pMes->m_serverIP = ui->lineEditIP->text().toStdString();
+   pMes->m_serverPort = ui->lineEditPort->text().toUInt();
 
    m_serverManager.TakeServerConnect(pMes);
 }

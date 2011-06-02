@@ -41,13 +41,13 @@ void CPlayWindow::TakeFieldSize(unsigned int X, unsigned int Y)
 
     m_playArea->setScene(&m_scene);
 
-    m_playArea->setBackgroundBrush(Qt::black);
-    m_scene.addItem(new CGUISky());
+
+    //m_scene.addItem(new CGUISky());
 
 
     DrawSky();
     connect(&m_view, SIGNAL(sUpdate()), this, SLOT(slUpdate()));
-    emit SendScene(&m_view);
+    //emit SendScene(&m_view);
 }
 void CPlayWindow::SetNewPlaySize()
 {
