@@ -45,24 +45,25 @@ namespace ServerManagerDecl
       switch(m_parser.CheckTypeMessage(sMes))
       {
       case CParser::eConfirmConnect :
-         SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
+         emit SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
          break;
       case CParser::eError :
-         SendError(m_parser.ParseMError(sMes));
+         emit SendError(m_parser.ParseMError(sMes));
          break;
       case CParser::eFinishGame :
-         SendFinishGame(m_parser.ParseMFinishGame(sMes));
+         emit SendFinishGame(m_parser.ParseMFinishGame(sMes));
          break;
       case CParser::eStartGame :
-         SendStartGame(m_parser.ParseMStartMapGame(sMes));
+         emit SendStartGame(m_parser.ParseMStartMapGame(sMes));
          break;
       case CParser::eStateMap :
-         SendStateMap(m_parser.ParseMStateMap(sMes));
+         emit SendStateMap(m_parser.ParseMStateMap(sMes));
          break;
       case CParser::eTimeToStart :
-         SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
+         emit SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
          break;
       case CParser::eUnknown :
+         emit SendInError("Error, Server send unknown message");
          break;
       }
    }
