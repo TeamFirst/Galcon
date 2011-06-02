@@ -6,7 +6,7 @@
 
 #include "GUI/gui.h"
 #include "serverManager/ServerManager.h"
-#include "Game.h"
+#include "Game/Game.h"
 
 class CGalcon : public QObject
 {

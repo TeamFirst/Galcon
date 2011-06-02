@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <list>
-#include "Planet.h"
-#include "Fleet.h"
+#include "Game/Planet.h"
+#include "Game/Fleet.h"
 
 class ISceneUpdates
 {

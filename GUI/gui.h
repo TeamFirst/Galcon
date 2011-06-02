@@ -9,6 +9,7 @@
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
 #include "message/MessageError.h"
+#include "message/MessageAddView.h"
 class CPlayWindow;
 class CWaitWindow;
 class CEnterWindow;
@@ -42,7 +43,7 @@ signals:
     void SendClientToServer(Message::CMessageConnectToServerPtr mess);
 
     void sInConnectedToServer();
-    void SendScene(ISceneUpdates *);
+    void SendScene(Message::CMessageAddViewPtr mess);
 
 private slots:
 

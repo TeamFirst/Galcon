@@ -4,7 +4,7 @@ CPlayArea::CPlayArea(QWidget *parent) :
     QGraphicsView(parent)
 {
 }
-//void CPlayArea::paintEvent ( QPaintEvent * event )
-//{
-//    QGraphicsView::paintEvent(event);
-//}
+void CPlayArea::paintEvent ( QPaintEvent * event )
+{
+    QGraphicsView::paintEvent(event);
+}

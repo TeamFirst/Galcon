@@ -1,7 +1,7 @@
 #include <QPainter>
 #include "GUIPlanet.h"
 #include "GUIFleet.h"
-#include "../Fleet.h"
+#include "Game/Fleet.h"
 
 CGUIFleet::CGUIFleet(const CFleet * fleet, const double * K, QObject * parent):
         QObject(parent),

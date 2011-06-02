@@ -7,6 +7,7 @@
 #include <QVector>
 #include "GUIView.h"
 #include "message/MessageStartMapGame.h"
+#include "message/MessageAddView.h"
 #include "GUIFleet.h"
 class QHBoxLayout;
 class QGraphicsScene;
@@ -30,7 +31,7 @@ public:
 public slots:
     void TakeFieldSize(unsigned int X, unsigned int Y);
 signals:
-    void SendScene(ISceneUpdates *);
+    void SendScene(Message::CMessageAddViewPtr);
 private slots:
     void UpdateFleets();
     void slGameStarts();

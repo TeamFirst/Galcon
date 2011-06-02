@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QGraphicsItem>
-#include "../Planet.h"
-#include "../Fleet.h"
+#include "Game/Planet.h"
+#include "Game/Fleet.h"
 class CGUIFleet : public QObject, public QGraphicsItem
 {
 

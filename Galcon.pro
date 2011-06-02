@@ -19,15 +19,15 @@ SOURCES += main.cpp \
     GUI/gui.cpp \
     GUI/enterwindow.cpp \
     GUI/criticalmessage.cpp \
-    Space.cpp \
-    Player.cpp \
-    Planet.cpp \
-    Game.cpp \
-    Fleet.cpp \
     serverManager/ServerManager.cpp \
     serverManager/Parser.cpp \
     Galcon.cpp \
-    GUI/GUISky.cpp
+    GUI/GUISky.cpp \
+    Game/Fleet.cpp \
+    Game/Game.cpp \
+    Game/Planet.cpp \
+    Game/Player.cpp \
+    Game/Space.cpp
 
 HEADERS += Galcon.h \
     GUI/WaitWindow.h \
@@ -39,12 +39,7 @@ HEADERS += Galcon.h \
     GUI/gui.h \
     GUI/enterwindow.h \
     GUI/criticalmessage.h \
-    Space.h \
     SceneUpdates.h \
-    Player.h \
-    Planet.h \
-    Game.h \
-    Fleet.h \
     serverManager/ServerManager.h \
     serverManager/Parser.h \
     message/MessageAddView.h \
@@ -56,7 +51,12 @@ HEADERS += Galcon.h \
     message/MessageStateMap.h \
     message/MessageStepPlayer.h \
     message/MessageTimeToStartGame.h \
-    GUI/GUISky.h
+    GUI/GUISky.h \
+    Game/Fleet.h \
+    Game/Game.h \
+    Game/Planet.h \
+    Game/Player.h \
+    Game/Space.h
 
 FORMS += \
     GUI/waitwindow.ui \
@@ -69,4 +69,3 @@ RESOURCES += \
 
 OTHER_FILES += \
     GUI/sky.png
-

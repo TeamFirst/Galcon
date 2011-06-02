@@ -3,13 +3,14 @@
 #include <QDebug>
 #include "ui_playwindow.h"
 #include "message/MessageStartMapGame.h"
+#include "message/MessageAddView.h"
 #include "PlayWindow.h"
 
 #include "PlayArea.h"
 #include "GUIPlanet.h"
 #include "GUIFleet.h"
-#include "../Planet.h"
-#include "../Fleet.h"
+#include "Game/Planet.h"
+#include "Game/Fleet.h"
 #include "GUISky.h"
 #include <QHBoxLayout>
 CPlayWindow::CPlayWindow(QWidget *parent) :
@@ -47,7 +48,9 @@ void CPlayWindow::TakeFieldSize(unsigned int X, unsigned int Y)
 
     DrawSky();
     connect(&m_view, SIGNAL(sUpdate()), this, SLOT(slUpdate()));
-    //emit SendScene(&m_view);
+    Message::CMessageAddViewPtr mess(new Message::CMessageAddView);
+    mess->m_view = &m_view;
+    emit SendScene(mess);
 }
 void CPlayWindow::SetNewPlaySize()
 {

@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QVariant>
 #include "GUIPlanet.h"
-#include "../Planet.h"
+#include "Game/Planet.h"
 CGUIPlanet::CGUIPlanet(const CPlanet * planet, const double * K, QObject * parent):
         QObject(parent),
         mp_K(K),

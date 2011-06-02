@@ -24,7 +24,7 @@ CGUI::CGUI(QObject *parent) :
 
     connect(m_waitWindow, SIGNAL(sStarts()), this, SLOT(slGameStarts()));
 
-    connect(m_playWindow, SIGNAL(SendScene(ISceneUpdates*)), this, SIGNAL(SendScene(ISceneUpdates*)));
+    connect(m_playWindow, SIGNAL(SendScene(Message::CMessageAddViewPtr)), this, SIGNAL(SendScene(Message::CMessageAddViewPtr)));
 
 }
 void CGUI::Exec()

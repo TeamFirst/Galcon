@@ -26,5 +26,7 @@ void CGalcon::connectSendersToTakers()
    connect(m_manager, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)),
            m_game, SLOT(SlotFinishGame(Message::CMessageFinishGamePtr)));
    connect(m_manager, SIGNAL(SendError(Message::CMessageErrorPtr)),
-           m_gui, SLOT(TakeError(Message::CMessageError)));
+           m_gui, SLOT(TakeError(Message::CMessageErrorPtr)));
+   connect(m_gui, SIGNAL(SendScene(Message::CMessageAddViewPtr)),
+           m_game, SLOT(AddView(Message::CMessageAddViewPtr)));
 }
