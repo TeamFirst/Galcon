@@ -15,7 +15,7 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
+SOURCES += \
     GUI/Waitwindow.cpp \
     GUI/PlayWindow.cpp \
     GUI/PlayArea.cpp \
@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     Fleet.cpp \
     serverManager/ServerManager.cpp \
     serverManager/Parser.cpp \
-    Galcon.cpp
+    Galcon.cpp \
+    main.cpp
 
 HEADERS += \
     Galcon.h \
@@ -52,7 +53,16 @@ HEADERS += \
     Game.h \
     Fleet.h \
     serverManager/ServerManager.h \
-    serverManager/Parser.h
+    serverManager/Parser.h \
+    message/MessageAddView.h \
+    message/MessageConnectToServer.h \
+    message/MessageError.h \
+    message/MessageFinishGame.h \
+    message/MessageItf.h \
+    message/MessageStartMapGame.h \
+    message/MessageStateMap.h \
+    message/MessageStepPlayer.h \
+    message/MessageTimeToStartGame.h
 
 FORMS += \
     GUI/waitwindow.ui \

@@ -46,7 +46,8 @@ namespace ServerManagerDecl
       switch(m_parser.CheckTypeMessage(sMes))
       {
       case CParser::eConfirmConnect :
-         m_parser.ParseMConfirmConnect(sMes);
+         this->SendConfirmConnect(
+         m_parser.ParseMConfirmConnect(sMes));
          break;
       case CParser::eError :
          m_parser.ParseMError(sMes);
@@ -61,7 +62,8 @@ namespace ServerManagerDecl
          m_parser.ParseMStateMap(sMes);
          break;
       case CParser::eTimeToStart :
-         m_parser.ParseMTimeToStartGame(sMes);
+         this->SendTimeToStart(
+         m_parser.ParseMTimeToStartGame(sMes));
          break;
       case CParser::eUnknown :
          break;
