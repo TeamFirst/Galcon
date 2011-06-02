@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "../message/MessageTimeToStartGame.h"
-#include <QTimer>;
+#include <QTimer>
 namespace Ui {
     class CWaitWindow;
 }
@@ -15,6 +15,8 @@ class CWaitWindow : public QDialog
 public:
     explicit CWaitWindow(QWidget *parent = 0);
     ~CWaitWindow();
+signals:
+    void sStarts();
 public slots:
     void TakeStartGame(Message::CMessageTimeToStartGamePtr);
 private slots:

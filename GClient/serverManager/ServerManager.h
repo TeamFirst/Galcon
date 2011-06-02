@@ -35,7 +35,7 @@ namespace ServerManagerDecl
       void SendFinishGame(const Message::CMessageFinishGamePtr pMessage);
       void SendStateMap(const Message::CMessageStateMapPtr pMessage);
       void SendStartGame(const Message::CMessageStartMapGamePtr pMessage);
-      void SendTimeToStart(const Message::CMessaheTimeToStartGamePtr pMessage);
+      void SendTimeToStart(const Message::CMessageTimeToStartGamePtr pMessage);
 
    private slots:
       void slotConnected();
@@ -43,9 +43,9 @@ namespace ServerManagerDecl
       void slotError(QAbstractSocket::SocketError);
 
    private:
-      void connectToServer(const std::string serverIP, const unsigned int m_serverPort);
+      void connectToServer(const std::string& serverIP, const unsigned int m_serverPort);
       void sendToServer(const Message::IMessagePtr pMessage);
-      void parseStrFromServer(const std::string sMes);
+      void parseStrFromServer(const std::string& sMes);
 
       QTcpSocket * m_tcpSocket;
 

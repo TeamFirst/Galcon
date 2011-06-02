@@ -2,27 +2,37 @@
 #define GUI_H
 
 #include <QObject>
-#include "WaitWindow.h"
 
-#include "enterwindow.h"
+
+
 #include "message/MessageConnectToServer.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
-#include "PlayWindow.h"
+#include "message/MessageError.h"
+class CPlayWindow;
+class CWaitWindow;
+class CEnterWindow;
+class ISceneUpdates;
 class CGUI : public QObject
 {
     Q_OBJECT
 public:
     explicit CGUI(QObject *parent = 0);
+    ISceneUpdates * GetScene();
     virtual ~CGUI();
 
     void Exec();
 
+
 public slots:
 
-    //void TakeError(pIMessage mess);
-    //void TakeFinishGame(pIMessage mess);
-    //void TakeTimeStartToGame(pIMessage mess);
+    void TakeError(Message::CMessageError mess);
+
+//    void TakeFinishGame(pIMessage mess);
+
+    void TakeFieldSize(unsigned int X, unsigned int Y);
+
+//    void TakeTimeStartToGame(pIMessage mess);
     void TakeStartGame(Message::CMessageTimeToStartGamePtr ptr);
 
     void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);
@@ -32,10 +42,11 @@ signals:
 
     void sInConnectedToServer();
 
+
 private slots:
     //void SlotServerError(IMessage );
     //void slSendClientToServer(Message::CMessageConnectToServerPtr mess);
-
+    void slGameStarts();
 private:
     int m_playerId;
     CWaitWindow * m_waitWindow;

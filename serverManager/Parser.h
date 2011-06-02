@@ -30,28 +30,37 @@ namespace ServerManagerDecl
       CParser();
       ~CParser();
 
-      ETypeMessage CheckTypeMessage(const std::string sMes) const;
+      ETypeMessage CheckTypeMessage(const std::string& sMes) const;
 
       const Message::CMessageConfirmationConnectToServerPtr
-         ParseMConfirmConnect(const std::string sMes);
+         ParseMConfirmConnect(const std::string& sMes);
 
       const Message::CMessageErrorPtr
-         ParseMError(const std::string sMes);
+         ParseMError(const std::string& sMes);
 
       const Message::CMessageFinishGamePtr
-         ParseMFinishGame(const std::string sMes);
+         ParseMFinishGame(const std::string& sMes);
 
       const Message::CMessageStateMapPtr
-         ParseMStateMap(const std::string sMes);
+         ParseMStateMap(const std::string& sMes);
 
       const Message::CMessageStartMapGamePtr
-         ParseMStartMapGame(const std::string sMes);
+         ParseMStartMapGame(const std::string& sMes);
 
       const Message::CMessageTimeToStartGamePtr
-         ParseMTimeToStartGame(const std::string sMes);
+         ParseMTimeToStartGame(const std::string& sMes);
 
    private:
+      unsigned int convertStdStrToUInt(const std::string& sMes);
+      void parseVectorUInt(
+         const std::string& sMes,
+         const std::string& separator,
+         const size_t posF,
+         const size_t posE);
+
       std::vector< std::pair<std::string, ETypeMessage> > m_vMsgStrEnumType;
+      std::vector<unsigned int> m_vParseSubMes;
 
    }; // class CParser
+
 } // namespace ServerManagerDecl

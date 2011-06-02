@@ -32,5 +32,6 @@ void CWaitWindow::slTimer()
     if (!m_left)
     {
         m_timer.stop();
+        emit sStarts();
     }
 }

@@ -2,9 +2,10 @@
 
 #include <QSharedPointer>
 
+class ISceneUpdates;
+
 namespace Message
-{
-   class ISceneUpdates;
+{   
    struct CMessageAddView;
 
    typedef QSharedPointer<CMessageAddView> CMessageAddViewPtr;

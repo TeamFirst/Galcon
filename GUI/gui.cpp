@@ -1,7 +1,10 @@
 #include <QDialog>
 #include <QDebug>
 #include "gui.h"
+#include "PlayWindow.h"
 #include "WaitWindow.h"
+#include "enterwindow.h"
+#include "criticalmessage.h"
 using namespace Message;
 CGUI::CGUI(QObject *parent) :
     QObject(parent)
@@ -12,13 +15,13 @@ CGUI::CGUI(QObject *parent) :
     connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
             this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
 
-    //connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
-    //        this, SLOT(slSendClientToServer(Message::CMessageConnectToServerPtr)));
 
     connect(
                 this, SIGNAL(sInConnectedToServer()),
                 m_enterWindow, SLOT(slConnectedToServer())
             );
+
+    connect(m_waitWindow, SIGNAL(sStarts()), this, SLOT(slGameStarts()));
 }
 void CGUI::Exec()
 {
@@ -42,8 +45,29 @@ void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
     static bool first = true;
     if (first )
     {
-        m_waitWindow->show();;
+        m_waitWindow->show();
     }
     m_waitWindow->TakeStartGame(ptr);
+
     first = false;
+}
+void CGUI::TakeError(Message::CMessageError mess)
+{
+    CCriticalMessage::Show("Error", "Error");
+}
+void CGUI::TakeFieldSize(unsigned int X, unsigned int Y)
+{
+    m_playWindow->TakeFieldSize(X, Y);
+}
+void CGUI::slGameStarts()
+{
+    qDebug() << "Game starts";
+    m_waitWindow->hide();
+    m_playWindow->show();
+}
+ISceneUpdates * CGUI::GetScene()
+{
+    if (!m_playWindow)
+        return 0;
+    return m_playWindow->GetView();
 }
