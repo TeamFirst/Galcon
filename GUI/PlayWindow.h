@@ -8,7 +8,7 @@
 #include "GUIView.h"
 #include "message/MessageStartMapGame.h"
 #include "GUIFleet.h"
-
+class QHBoxLayout;
 class QGraphicsScene;
 class CPlayArea;
 class CPlanet;
@@ -18,7 +18,7 @@ class CFleet;
 namespace Ui {
     class CPlayWindow;
 }
-
+typedef QGraphicsView TView;
 class CPlayWindow : public QDialog
 {
     Q_OBJECT
@@ -41,7 +41,7 @@ private:
     const std::vector<CPlanet *> * m_planets;
     const std::list<CFleet* > * m_fleets;
     QGraphicsScene m_scene;
-    CPlayArea * m_playArea;
+    TView * m_playArea;
     CGUIView m_view;
     void SetNewPlaySize();
     double m_horLogic;
@@ -52,7 +52,7 @@ private:
 
     // size relations between logical and physical coordinates
     double m_k;
-
+    QHBoxLayout * lay;
     Ui::CPlayWindow *ui;
 };
 

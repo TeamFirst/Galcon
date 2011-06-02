@@ -14,7 +14,7 @@ class CPlayArea : public QGraphicsView
     Q_OBJECT
 public:
     explicit CPlayArea(QWidget *parent = 0);
-    void paintEvent ( QPaintEvent * event );
+    //void paintEvent ( QPaintEvent * event );
 signals:
 
 public slots:
