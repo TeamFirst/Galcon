@@ -78,28 +78,33 @@ void UnitTestParserTest::testCParser_CheckTypeMessage()
 void UnitTestParserTest::testCParser_ParseMConfirmConnect()
 {
    std::string sMes = "SC_CONNID#3##";
-   Message::CMessageConfirmationConnectToServerPtr ptr(
-      new Message::CMessageConfirmationConnectToServer);
+   Message::CMessageConfirmationConnectToServerPtr ptr =
+      m_parser.ParseMConfirmConnect(sMes);
 
-   m_parser.ParseMConfirmConnect(sMes);
+   // unsigned int m_playerID;
+
+   QVERIFY2(ptr->m_playerID == 3, "SC_CONNID");
 }
 
 void UnitTestParserTest::testCParser_ParseMError()
 {
    std::string sMes = "SC_ERR#Player1 disconnected!##";
-   Message::CMessageErrorPtr ptr(
-      new Message::CMessageError);
+   Message::CMessageErrorPtr ptr = m_parser.ParseMError(sMes);
 
-   m_parser.ParseMError(sMes);
+   // std::string m_strError;
+
+   QVERIFY2(ptr->m_strError == std::string("Player1 disconnected!"), "SC_ERR");
 }
 
 void UnitTestParserTest::testCParser_ParseMFinishGame()
 {
    std::string sMes = "SC_FINISH#2##";
-   Message::CMessageFinishGamePtr ptr(
-      new Message::CMessageFinishGame);
+   Message::CMessageFinishGamePtr ptr =
+      m_parser.ParseMFinishGame(sMes);
 
-   m_parser.ParseMFinishGame(sMes);
+   // unsigned int m_playerID;
+
+   QVERIFY2(ptr->m_playerID == 2, "SC_FINISH");
 }
 
 void UnitTestParserTest::testCParser_ParseMStateMap()
@@ -123,10 +128,12 @@ void UnitTestParserTest::testCParser_ParseMStartMapGame()
 void UnitTestParserTest::testCParser_ParseMTimeToStartGame()
 {
    std::string sMes = "SC_TIMETOSTART#9##";
-   Message::CMessageTimeToStartGamePtr ptr(
-      new Message::CMessageTimeToStartGame);
+   Message::CMessageTimeToStartGamePtr ptr =
+      m_parser.ParseMTimeToStartGame(sMes);
 
-   m_parser.ParseMTimeToStartGame(sMes);
+   // unsigned int m_second;
+
+   QVERIFY2(ptr->m_second == 9, "SC_TIMETOSTART");
 }
 
 QTEST_APPLESS_MAIN(UnitTestParserTest);
