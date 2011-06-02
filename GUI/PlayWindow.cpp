@@ -1,5 +1,6 @@
 #include <QGraphicsView>
-
+#include <QGraphicsPixmapItem>
+#include <QDebug>
 #include "ui_playwindow.h"
 #include "message/MessageStartMapGame.h"
 #include "PlayWindow.h"
@@ -9,12 +10,16 @@
 #include "GUIFleet.h"
 #include "../Planet.h"
 #include "../Fleet.h"
+#include "GUISky.h"
+#include <QHBoxLayout>
 CPlayWindow::CPlayWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CPlayWindow)
 {
-    m_playArea = new CPlayArea();
+    m_playArea = 0;
     ui->setupUi(this);
+    lay = new QHBoxLayout(this);
+    this->setLayout(lay);
 }
 
 CPlayWindow::~CPlayWindow()
@@ -26,12 +31,19 @@ void CPlayWindow::TakeFieldSize(unsigned int X, unsigned int Y)
     m_verLogic = Y;
     m_horLogic = X;
 
-    m_playArea = new CPlayArea(this);
+    m_playArea = new TView(this);
+
+    lay->addWidget(m_playArea);
+
     m_playArea->resize(this->size().width() * 0.9, size().height() * 0.9);
 
     SetNewPlaySize();
 
     m_playArea->setScene(&m_scene);
+
+    m_playArea->setBackgroundBrush(Qt::black);
+    m_scene.addItem(new CGUISky());
+
 
     DrawSky();
     connect(&m_view, SIGNAL(sUpdate()), this, SLOT(slUpdate()));
@@ -97,9 +109,11 @@ void CPlayWindow::slUpdate()
 }
 void CPlayWindow::DrawSky()
 {
-    //m_scene.addPixmap(QPixmap(":/GUI/sky.jpg"));
-    m_scene.addPixmap(QPixmap("D:\Projects\Galcon\Galcon\GUI\sky.jpg"));
+    QPixmap pixmap(":/GUI/sky.png");
 
-    m_scene.addText("Hello");
-    //m_playArea->repaint();
+
+
+    m_scene.addPixmap(pixmap);
+
+    m_playArea->repaint();
 }

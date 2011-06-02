@@ -48,6 +48,7 @@ private slots:
     //void slSendClientToServer(Message::CMessageConnectToServerPtr mess);
     void slGameStarts();
 private:
+    bool m_connected;
     int m_playerId;
     CWaitWindow * m_waitWindow;
     CEnterWindow * m_enterWindow;
