@@ -29,6 +29,8 @@ public:
     CGUIView * GetView();
 public slots:
     void TakeFieldSize(unsigned int X, unsigned int Y);
+signals:
+    void SendScene(ISceneUpdates *);
 private slots:
     void UpdateFleets();
     void slGameStarts();

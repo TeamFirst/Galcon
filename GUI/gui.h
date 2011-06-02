@@ -17,8 +17,9 @@ class CGUI : public QObject
 {
     Q_OBJECT
 public:
-    explicit CGUI(QObject *parent = 0);
     ISceneUpdates * GetScene();
+    explicit CGUI(QObject *parent = 0);
+
     virtual ~CGUI();
 
     void Exec();
@@ -41,9 +42,11 @@ signals:
     void SendClientToServer(Message::CMessageConnectToServerPtr mess);
 
     void sInConnectedToServer();
-
+    void SendScene(ISceneUpdates *);
 
 private slots:
+
+
     //void SlotServerError(IMessage );
     //void slSendClientToServer(Message::CMessageConnectToServerPtr mess);
     void slGameStarts();

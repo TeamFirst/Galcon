@@ -47,6 +47,7 @@ void CPlayWindow::TakeFieldSize(unsigned int X, unsigned int Y)
 
     DrawSky();
     connect(&m_view, SIGNAL(sUpdate()), this, SLOT(slUpdate()));
+    emit SendScene(&m_view);
 }
 void CPlayWindow::SetNewPlaySize()
 {

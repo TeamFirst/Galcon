@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     Fleet.cpp \
     serverManager/ServerManager.cpp \
     serverManager/Parser.cpp \
-    Galcon.cpp
+    Galcon.cpp \
+    GUI/GUISky.cpp
 
 HEADERS += \
     Galcon.h \
@@ -52,9 +53,16 @@ HEADERS += \
     Game.h \
     Fleet.h \
     serverManager/ServerManager.h \
-    serverManager/Parser.h
+    serverManager/Parser.h \
+    GUI/GUISky.h
 
 FORMS += \
     GUI/waitwindow.ui \
     GUI/playwindow.ui \
     GUI/enterwindow.ui
+
+OTHER_FILES += \
+    GUI/sky.png
+
+RESOURCES += \
+    resource.qrc
