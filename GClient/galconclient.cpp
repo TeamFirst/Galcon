@@ -10,6 +10,9 @@ CGalconClient::CGalconClient(QWidget *parent) :
     ui(new Ui::CGalconClient)
 {
     ui->setupUi(this);
+
+    QObject::connect(&m_serverManager, SIGNAL(SendInError(std::string)),
+                     this, SLOT(showInfMessage(std::string)));
 }
 
 CGalconClient::~CGalconClient()
@@ -42,4 +45,9 @@ void CGalconClient::on_pBStepPlayer_clicked()
    pMes->m_finishPlanetID = 5;
 
    m_serverManager.TakeStepPlayer(pMes);
+}
+
+void CGalconClient::showInfMessage(std::string sMes)
+{
+   ui->lEInfMes->setText(sMes.c_str());
 }

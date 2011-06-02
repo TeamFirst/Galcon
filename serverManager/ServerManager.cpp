@@ -32,10 +32,10 @@ namespace ServerManagerDecl
       QByteArray  arrBlock;
       QDataStream out(&arrBlock, QIODevice::WriteOnly);
       out.setVersion(QDataStream::Qt_4_7);
-      out << quint8(0) << QString(pMessage->toString().c_str()).toUtf8();
+      out << quint16(0) << QString(pMessage->toString().c_str()).toUtf8();
 
       out.device()->seek(0);
-      out << quint8(arrBlock.size() - sizeof(quint8));
+      out << quint16(arrBlock.size() - sizeof(quint16));
 
       m_tcpSocket->write(arrBlock);
    }
@@ -79,7 +79,7 @@ namespace ServerManagerDecl
    {
       QDataStream in(m_tcpSocket);
       in.setVersion(QDataStream::Qt_4_7);
-      qint8 nextBlockSize = 0;
+      qint16 nextBlockSize = 0;
       for (;;)
       {
           if (m_tcpSocket->bytesAvailable() < sizeof(quint8))
@@ -98,6 +98,8 @@ namespace ServerManagerDecl
           in >> str;
 
           nextBlockSize = 0;
+
+          SendInError(QString(str).toStdString());
 
           parseStrFromServer(QString(str).toStdString());
       }
