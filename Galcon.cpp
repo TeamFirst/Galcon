@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "Galcon.h"
 
 CGalcon::CGalcon()
@@ -29,19 +28,3 @@ void CGalcon::connectSendersToTakers()
    connect(m_manager, SIGNAL(SendError(Message::CMessageErrorPtr)),
            m_gui, SLOT(TakeError(Message::CMessageError)));
 }
-=======
-#include "Galcon.h"
-
-CGalcon::CGalcon()
-{
-   m_gui = new CGUI();
-   m_manager = new ServerManagerDecl::CServerManager();
-   m_game = new CGame();
-}
-
-void CGalcon::connectSendersToTakers()
-{
-   connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)), m_manager, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
-
-}
->>>>>>> 04797c5b5eb9328ccd27e5ad3dcc8191ee169040
