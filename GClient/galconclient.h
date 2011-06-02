@@ -24,6 +24,8 @@ private slots:
 
    void on_pBStepPlayer_clicked();
 
+   void showInfMessage(std::string sMes);
+
 private:
     Ui::CGalconClient *ui;
     ServerManagerDecl::CServerManager m_serverManager;

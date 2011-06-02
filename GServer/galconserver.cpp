@@ -49,7 +49,7 @@ void CGalconServer::slotReadClient()
    QTcpSocket* pClientSocket = (QTcpSocket*)sender();
    QDataStream in(pClientSocket);
    in.setVersion(QDataStream::Qt_4_7);
-   qint8 nextBlockSize = 0;
+   qint16 nextBlockSize = 0;
    for (;;)
    {
       if (pClientSocket->bytesAvailable() < sizeof(quint16))
@@ -64,7 +64,7 @@ void CGalconServer::slotReadClient()
       }
 
       QByteArray str;
-      in>> str;
+      in >> str;
 
       ui->tEClient->append(QString(str));
 
@@ -77,10 +77,10 @@ void CGalconServer::sendToClient( QTcpSocket* pSocket, const QString& str )
    QByteArray  arrBlock;
    QDataStream out(&arrBlock, QIODevice::WriteOnly);
    out.setVersion(QDataStream::Qt_4_7);
-   out << quint8(0) << str.toUtf8();
+   out << quint16(0) << str.toUtf8();
 
    out.device()->seek(0);
-   out << quint8(arrBlock.size() - sizeof(quint8));
+   out << quint16(arrBlock.size() - sizeof(quint16));
 
    pSocket->write(arrBlock);
 }
