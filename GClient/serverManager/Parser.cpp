@@ -86,30 +86,54 @@ namespace ServerManagerDecl
       CParser::ParseMStateMap(const std::string& sMes)
    {
       /// "SC_STATE#(1,1,20)(2,0,15)(3,0,8)(4,4,8)#(1,2,4,2,12,0)(2,2,3,2,24,0)##";
-      // std::vector<CStateFleet> m_fleetState;
-         // unsigned int m_countFleet;
-         // unsigned int m_fleetID;
-         // unsigned int m_percentRoute;
-         // unsigned int m_planetFinishID;
-         // unsigned int m_planetStartID;
-         // unsigned int m_playerID;
-      // std::vector<CStatePlanet> m_planetState;
-         // unsigned int m_countFleet;
-         // unsigned int m_planetID;
-         // unsigned int m_playerID;
+      Message::CStatePlanet tempPlanet;
+      Message::CStateFleet tempFleet;
+
       Message::CMessageStateMapPtr ptr(
          new Message::CMessageStateMap);
 
-      size_t posBPart = sMes.find('#');
-      size_t posEPart = sMes.find('#', posBPart + 1);
+      size_t posBPart = 0;
+      size_t posEPart = 0;
+      size_t posFBr = 0;
+      size_t posSBr = 0;
       /// parse planet state
-      for(;;)
+      posBPart = sMes.find('#', posEPart + 1);
+      posEPart = sMes.find('#', posBPart + 1);
+      posFBr = sMes.find('(', posBPart);
+      posSBr = sMes.find(')', posBPart + 1);
+      for(; posFBr < posEPart;
+          posFBr = sMes.find('(', posSBr),
+          posSBr = sMes.find(')', posFBr + 1))
       {
+         parseVectorUInt(sMes, ",", posFBr, posSBr);
+
+         tempPlanet.m_planetID = m_vParseSubMes[0];
+         tempPlanet.m_playerID = m_vParseSubMes[1];
+         tempPlanet.m_countFleet = m_vParseSubMes[2];
+
+         ptr->m_planetState.push_back(tempPlanet);
       }
 
       /// parse fleet state
-      for(;;)
+      posBPart = posEPart;
+      posEPart = sMes.find('#', posBPart + 1);
+      posFBr = sMes.find('(', posBPart);
+      posSBr = sMes.find(')', posBPart + 1);
+
+      for(; posFBr < posEPart;
+         posFBr = sMes.find('(', posSBr),
+         posSBr = sMes.find(')', posFBr + 1))
       {
+         parseVectorUInt(sMes, ",", posFBr, posSBr);
+
+         tempFleet.m_fleetID = m_vParseSubMes[0];
+         tempFleet.m_playerID = m_vParseSubMes[1];
+         tempFleet.m_planetStartID = m_vParseSubMes[2];
+         tempFleet.m_planetFinishID = m_vParseSubMes[3];
+         tempFleet.m_countFleet = m_vParseSubMes[4];
+         tempFleet.m_percentRoute = m_vParseSubMes[5];
+
+         ptr->m_planetState.push_back(tempPlanet);
       }
 
       return ptr;
@@ -118,8 +142,83 @@ namespace ServerManagerDecl
    const Message::CMessageStartMapGamePtr
       CParser::ParseMStartMapGame(const std::string& sMes)
    {
-      return Message::CMessageStartMapGamePtr(
+      // SC_START#100#80#2#25#
+      // (1,1,20,40,12,20)(2,0,40,20,10,15)(3,0,50,70,45,8)(4,2,80,60,12,20)
+      // #(1,Red Fox)(2,Star_123456)##";
+      Message::CMessageStartMapGamePtr ptr(
          new Message::CMessageStartMapGame);
+
+      size_t posBPart = 0;
+      size_t posEPart = 0;
+      size_t posFBr = 0;
+      size_t posSBr = 0;
+
+      // unsigned int m_mapX;
+      posBPart = sMes.find('#');
+      posEPart = sMes.find('#', posBPart + 1);
+      ptr->m_mapX = convertStdStrToUInt(
+               sMes.substr(posBPart +1, posEPart - posBPart -1));
+      // unsigned int m_mapY;
+      posBPart = posEPart;
+      posEPart = sMes.find('#', posBPart + 1);
+      ptr->m_mapY = convertStdStrToUInt(
+               sMes.substr(posBPart +1, posEPart - posBPart -1));
+      // unsigned int m_growV;
+      posBPart = posEPart;
+      posEPart = sMes.find('#', posBPart + 1);
+      ptr->m_growV = convertStdStrToUInt(
+               sMes.substr(posBPart +1, posEPart - posBPart -1));
+      // unsigned int m_flyV;
+      posBPart = posEPart;
+      posEPart = sMes.find('#', posBPart + 1);
+      ptr->m_flyV = convertStdStrToUInt(
+               sMes.substr(posBPart +1, posEPart - posBPart -1));
+
+      // std::vector<CPlanetStartData> m_planetData;
+      Message::CPlanetStartData tempPlanet;
+
+      posBPart = posEPart;
+      posEPart = sMes.find('#', posBPart + 1);
+      posFBr = sMes.find('(', posBPart);
+      posSBr = sMes.find(')', posBPart + 1);
+
+      for(; posFBr < posEPart;
+         posFBr = sMes.find('(', posSBr),
+         posSBr = sMes.find(')', posFBr + 1))
+      {
+         parseVectorUInt(sMes, ",", posFBr, posSBr);
+         tempPlanet.m_planetID = m_vParseSubMes[0];
+         tempPlanet.m_playerID = m_vParseSubMes[1];
+         tempPlanet.m_planetX = m_vParseSubMes[2];
+         tempPlanet.m_planetY = m_vParseSubMes[3];
+         tempPlanet.m_planetR = m_vParseSubMes[4];
+         tempPlanet.m_countFleet = m_vParseSubMes[5];
+
+         ptr->m_planetData.push_back(tempPlanet);
+      }
+
+      // std::vector<CPlayerStartData> m_playerData;
+         // unsigned int m_playerID;
+         // std::string m_playerName;
+      Message::CPlayerStartData tempPlayer;
+
+      posBPart = posEPart;
+      posEPart = sMes.find('#', posBPart + 1);
+      posFBr = sMes.find('(', posBPart);
+      posSBr = sMes.find(')', posBPart + 1);
+
+      for(; posFBr < posEPart;
+         posFBr = sMes.find('(', posSBr),
+         posSBr = sMes.find(')', posFBr + 1))
+      {
+         parseVectorUInt(sMes, ",", posFBr, posSBr);
+         tempPlayer.m_playerID = m_vParseSubMes[0];
+         //tempPlayer.m_playerID = m_vParseSubMes[1];
+
+         ptr->m_playerData.push_back(tempPlayer);
+      }
+
+      return ptr;
    }
 
    const Message::CMessageTimeToStartGamePtr
@@ -160,7 +259,7 @@ namespace ServerManagerDecl
       }
 
       m_vParseSubMes.push_back(
-               convertStdStrToUInt(sMes.substr(posFB + 1, sMes.size() - posFB - 1)));
+               convertStdStrToUInt(sMes.substr(posFB + 1, posE - posFB - 1)));
    }
 
 } //namespace ServerManagerDecl

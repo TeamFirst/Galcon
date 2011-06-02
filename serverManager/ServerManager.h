@@ -37,6 +37,8 @@ namespace ServerManagerDecl
       void SendStartGame(const Message::CMessageStartMapGamePtr pMessage);
       void SendTimeToStart(const Message::CMessageTimeToStartGamePtr pMessage);
 
+      void SendInError(std::string str);
+
    private slots:
       void slotConnected();
       void slotReadyRead();

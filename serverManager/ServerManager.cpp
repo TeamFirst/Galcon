@@ -1,4 +1,3 @@
-#include <QMessageBox>
 #include <QString>
 
 #include "ServerManager.h"
@@ -46,24 +45,22 @@ namespace ServerManagerDecl
       switch(m_parser.CheckTypeMessage(sMes))
       {
       case CParser::eConfirmConnect :
-         this->SendConfirmConnect(
-         m_parser.ParseMConfirmConnect(sMes));
+         SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
          break;
       case CParser::eError :
-         m_parser.ParseMError(sMes);
+         SendError(m_parser.ParseMError(sMes));
          break;
       case CParser::eFinishGame :
-         m_parser.ParseMFinishGame(sMes);
+         SendFinishGame(m_parser.ParseMFinishGame(sMes));
          break;
       case CParser::eStartGame :
-         m_parser.ParseMStartMapGame(sMes);
+         SendStartGame(m_parser.ParseMStartMapGame(sMes));
          break;
       case CParser::eStateMap :
-         m_parser.ParseMStateMap(sMes);
+         SendStateMap(m_parser.ParseMStateMap(sMes));
          break;
       case CParser::eTimeToStart :
-         this->SendTimeToStart(
-         m_parser.ParseMTimeToStartGame(sMes));
+         SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
          break;
       case CParser::eUnknown :
          break;
@@ -75,9 +72,7 @@ namespace ServerManagerDecl
    {
       m_connectToServer = true;
 
-      QMessageBox msgBox;
-      msgBox.setText("Connected");
-      msgBox.exec();
+      SendInError("Connected");
    }
 
    void CServerManager::slotReadyRead()
@@ -102,10 +97,6 @@ namespace ServerManagerDecl
           QByteArray str;
           in >> str;
 
-          QMessageBox msgBox;
-          msgBox.setText(QString(str));
-          msgBox.exec();
-
           nextBlockSize = 0;
 
           parseStrFromServer(QString(str).toStdString());
@@ -116,9 +107,7 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
 
-      QMessageBox msgBox;
-      msgBox.setText("Error connection");
-      msgBox.exec();
+      SendInError("Error connection");
    }
 
 /// public slots
@@ -130,10 +119,8 @@ namespace ServerManagerDecl
          sendToServer(pMessage);
       }
       else
-      {
-         QMessageBox msgBox;
-         msgBox.setText("Error, You again trying connect to server");
-         msgBox.exec();
+      {         
+        SendInError("Error, You again trying connect to server");
       }
    }
 
@@ -144,10 +131,8 @@ namespace ServerManagerDecl
          sendToServer(pMessage);
       }
       else
-      {
-         QMessageBox msgBox;
-         msgBox.setText("Error, No connection to server");
-         msgBox.exec();
+      {         
+         SendInError("Error, No connection to server");
       }
    }
 
