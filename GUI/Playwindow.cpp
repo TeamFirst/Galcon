@@ -10,22 +10,11 @@ void CPlayWindow::paintEvent(QPaintEvent *)
    m_view->Draw(&painter);
 }
 
-void CPlayWindow::setView(CGUIView *view)
+void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
 {
-   m_view = view;
+   m_view = new CGUIView(x, y, this);
 }
 
-ISceneUpdates* CPlayWindow::GetView() const
-{
-   qDebug("Trying to cast");
-   return m_view;
-}
-
-void CPlayWindow::CreateWindow(unsigned int x, unsigned int y)
-{
-   qDebug("Creating window");
-   m_view = new CGUIView(x,y,this);
-}
 
 void CPlayWindow::ShowWindow()
 {
@@ -35,5 +24,11 @@ void CPlayWindow::ShowWindow()
 void CPlayWindow::DestroyWindow()
 {
    hide();
+   delete m_view;
+}
+
+CGUIView* CPlayWindow::GetView()
+{
+   return m_view;
 }
 

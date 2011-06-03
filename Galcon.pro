@@ -10,74 +10,65 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
+    Game/Space.cpp \
+    Game/Player.cpp \
+    Game/Planet.cpp \
+    Game/Game.cpp \
+    Game/Fleet.cpp \
     GUI/Waitwindow.cpp \
-#    GUI/PlayWindow.cpp \
-#    GUI/PlayArea.cpp \
-#    GUI/GUIView.cpp \
-#    GUI/GUIPlanet.cpp \
-#    GUI/GUIFleet.cpp \
+    GUI/Playwindow.cpp \
+    GUI/Guiview.cpp \
+    GUI/Guispace.cpp \
+    GUI/Guiplanet.cpp \
+    GUI/Guifleet.cpp \
     GUI/gui.cpp \
     GUI/enterwindow.cpp \
     GUI/criticalmessage.cpp \
     serverManager/ServerManager.cpp \
-    serverManager/Parser.cpp \
-    Galcon.cpp \
-#    GUI/GUISky.cpp \
-    Game/Fleet.cpp \
-    Game/Game.cpp \
-    Game/Planet.cpp \
-    Game/Player.cpp \
-    Game/Space.cpp \
-    GUI/Guifleet.cpp \
-    GUI/Guiplanet.cpp \
-    GUI/Guispace.cpp \
-    GUI/Guiview.cpp \
-    GUI/Playwindow.cpp
+    serverManager/Parser.cpp \    
+    Galcon.cpp
 
-HEADERS += Galcon.h \
+
+HEADERS += \
+    Game/Space.h \
+    Game/Player.h \
+    Game/Planet.h \
+    Game/Game.h \
+    Game/Fleet.h \
     GUI/WaitWindow.h \
-#    GUI/PlayWindow.h \
-#    GUI/PlayArea.h \
-#    GUI/GUIView.h \
-#    GUI/GUIPlanet.h \
-#    GUI/GUIFleet.h \
+    GUI/Playwindow.h \
+    GUI/Guiview.h \
+    GUI/Guispace.h \
+    GUI/Guiplanet.h \
+    GUI/Guifleet.h \
     GUI/gui.h \
     GUI/enterwindow.h \
     GUI/criticalmessage.h \
-    SceneUpdates.h \
+    message/MessageTimeToStartGame.h \
+    message/MessageStepPlayer.h \
+    message/MessageStateMap.h \
+    message/MessageStartMapGame.h \
+    message/MessageItf.h \
+    message/MessageInformation.h \
+    message/MessageFinishGame.h \
+    message/MessageError.h \
+    message/MessageConnectToServer.h \
+    message/MessageAddView.h \
     serverManager/ServerManager.h \
     serverManager/Parser.h \
-    message/MessageAddView.h \
-    message/MessageConnectToServer.h \
-    message/MessageError.h \
-    message/MessageFinishGame.h \
-    message/MessageItf.h \
-    message/MessageStartMapGame.h \
-    message/MessageStateMap.h \
-    message/MessageStepPlayer.h \
-    message/MessageTimeToStartGame.h \
-#    GUI/GUISky.h \
-    Game/Fleet.h \
-    Game/Game.h \
-    Game/Planet.h \
-    Game/Player.h \
-    Game/Space.h \
-    GUI/Guifleet.h \
-    GUI/Guiplanet.h \
-    GUI/Guispace.h \
-    GUI/Guiview.h \
-    GUI/Playwindow.h \
-    message/MessageInformation.h
+    SceneUpdates.h \
+    Galcon.h
 
 
 FORMS += \
     GUI/waitwindow.ui \
-#    GUI/playwindow.ui \
+    GUI/playwindow.ui \
     GUI/enterwindow.ui
 
 
 RESOURCES += \
-    resource.qrc
+    resource.qrc \
+    space.qrc
 
 OTHER_FILES += \
     GUI/sky.png

@@ -5,6 +5,7 @@
 #include "Guiplanet.h"
 #include "Guifleet.h"
 #include "SceneUpdates.h"
+#include "Guispace.h"
 
 class CGUIView : public ISceneUpdates
 {
@@ -20,6 +21,7 @@ private:
    unsigned int m_width;
    unsigned int m_height;
 
+   CGUISpace* m_space;
    std::vector<CGUIPlanet> m_planets;
    std::list<CGUIFleet> m_fleets;
 

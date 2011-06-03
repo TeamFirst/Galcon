@@ -8,14 +8,12 @@ class CPlayWindow : public QWidget
 public:
     explicit CPlayWindow(QWidget* parent  = 0);
 
-    void CreateWindow(unsigned int x, unsigned int y);
+    void CreateWindow(const unsigned int x, const unsigned int y);
     void DestroyWindow();
     void ShowWindow();
 
     void paintEvent(QPaintEvent *);
-
-    void setView(CGUIView* view);
-    ISceneUpdates* GetView() const;
+    CGUIView* GetView();
 private:
     CGUIView* m_view;
 };
