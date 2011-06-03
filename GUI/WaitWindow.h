@@ -2,7 +2,7 @@
 #define WAITWINDOW_H
 
 #include <QDialog>
-#include "../message/MessageTimeToStartGame.h"
+#include "message/MessageTimeToStartGame.h"
 #include <QTimer>
 namespace Ui {
     class CWaitWindow;
@@ -15,14 +15,17 @@ class CWaitWindow : public QDialog
 public:
     explicit CWaitWindow(QWidget *parent = 0);
     ~CWaitWindow();
-signals:
-    void sStarts();
-public slots:
-    void TakeStartGame(Message::CMessageTimeToStartGamePtr);
+
+   void ShowWindow();
+   void HideWindow();
+
+   void SetSecondToStart(unsigned int second);
+
 private slots:
-    void slTimer();
+    void slotIncremetTimer();
+
 private:
-    unsigned int m_left;
+    unsigned int m_secondToStart;
     QTimer m_timer;
     Ui::CWaitWindow *ui;
 };

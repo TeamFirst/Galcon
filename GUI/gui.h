@@ -1,62 +1,55 @@
-#ifndef GUI_H
-#define GUI_H
+#pragma once
 
 #include <QObject>
-
-
+#include <string>
 
 #include "message/MessageConnectToServer.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
 #include "message/MessageError.h"
 #include "message/MessageAddView.h"
+#include "message/MessageFinishGame.h"
+#include "message/MessageStepPlayer.h"
+
 class CPlayWindow;
 class CWaitWindow;
 class CEnterWindow;
 class ISceneUpdates;
+
 class CGUI : public QObject
 {
-    Q_OBJECT
+   Q_OBJECT
 public:
-    ISceneUpdates * GetScene();
-    explicit CGUI(QObject *parent = 0);
 
-    virtual ~CGUI();
+   explicit CGUI(QObject *parent = 0);
+   virtual ~CGUI();
 
-    void Exec();
-
+   void ShowWindow();
+   void HideWindow();
 
 public slots:
+   void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);
+   void TakeError(Message::CMessageErrorPtr mess);
+   void TakeFinishGame(Message::CMessageFinishGamePtr mess);
+   void TakeStartGame(Message::CMessageTimeToStartGamePtr mess);
+   void TakeTimeStartToGame(Message::CMessageTimeToStartGamePtr mess);
 
-    void TakeError(Message::CMessageErrorPtr mess);
+   void TakeFieldSize(unsigned int X, unsigned int Y);
 
-//    void TakeFinishGame(pIMessage mess);
-
-    void TakeFieldSize(unsigned int X, unsigned int Y);
-
-//    void TakeTimeStartToGame(pIMessage mess);
-    void TakeStartGame(Message::CMessageTimeToStartGamePtr ptr);
-
-    void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);
+   void TakeInError(std::string mess);
 
 signals:
-    void SendClientToServer(Message::CMessageConnectToServerPtr mess);
+   void SendClientToServer(Message::CMessageConnectToServerPtr mess);
+   void SendView(Message::CMessageAddViewPtr mess);
+   void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
 
-    void sInConnectedToServer();
-    void SendScene(Message::CMessageAddViewPtr mess);
-
-private slots:
-
-
-    //void SlotServerError(IMessage );
-    //void slSendClientToServer(Message::CMessageConnectToServerPtr mess);
-    void slGameStarts();
 private:
-    bool m_connected;
-    int m_playerId;
-    CWaitWindow * m_waitWindow;
-    CEnterWindow * m_enterWindow;
-    CPlayWindow * m_playWindow;
-};
+   CWaitWindow * m_waitWindow;
+   CEnterWindow * m_enterWindow;
+   CPlayWindow * m_playWindow;
 
-#endif // GUI_H
+   unsigned int m_playerId;
+
+}; // class CGUI
+
+

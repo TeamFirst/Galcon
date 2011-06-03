@@ -1,15 +1,12 @@
-#ifndef ENTERWINDOW_H
-#define ENTERWINDOW_H
+#pragma once
 
 #include <QDialog>
 
-
-#include "../message/MessageConnectToServer.h"
+#include "message/MessageConnectToServer.h"
 
 namespace Ui {
     class CEnterWindow;
 }
-
 
 class CEnterWindow : public QDialog
 {
@@ -18,24 +15,22 @@ class CEnterWindow : public QDialog
 public:
     explicit CEnterWindow(QWidget *parent = 0);
     ~CEnterWindow();
-public slots:
-    void slConnectedToServer();
+
+   void ShowWindow();
+   void HideWindow();
 
 signals:
     void SendClientToServer(Message::CMessageConnectToServerPtr);
 
+private slots:
+    void on_connectButton_clicked();
 
 private:
-
     //Check connection data and send IMessage to the server if valid
     void CheckAndSend();
 
-
     Ui::CEnterWindow *ui;
 
+}; // class CEnterWindow
 
-private slots:
-    void on_connectButton_clicked();
-};
 
-#endif // ENTERWINDOW_H

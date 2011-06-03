@@ -5,77 +5,70 @@
 #include "WaitWindow.h"
 #include "enterwindow.h"
 #include "criticalmessage.h"
-using namespace Message;
+
 CGUI::CGUI(QObject *parent) :
-    QObject(parent)
+   QObject(parent),
+   m_playerId(0)
 {
-    m_connected = false;
     m_enterWindow = new CEnterWindow();
     m_waitWindow = new CWaitWindow();
     m_playWindow = new CPlayWindow();
+
     connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
             this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
-
-
-    connect(
-                this, SIGNAL(sInConnectedToServer()),
-                m_enterWindow, SLOT(slConnectedToServer())
-            );
-
-    connect(m_waitWindow, SIGNAL(sStarts()), this, SLOT(slGameStarts()));
-
-    connect(m_playWindow, SIGNAL(SendScene(Message::CMessageAddViewPtr)), this, SIGNAL(SendScene(Message::CMessageAddViewPtr)));
-
 }
-void CGUI::Exec()
-{
-    m_enterWindow->exec();
 
-}
-void CGUI::TakeConfirmConnectToServer(CMessageConfirmationConnectToServerPtr mess)
-{
-    m_connected = true;
-    this->m_playerId = mess->m_playerID;
-    //emit sInConnectedToServer();
-    m_enterWindow->slConnectedToServer();
-
-}
 CGUI::~CGUI()
 {
-    m_enterWindow->deleteLater();
+   delete m_enterWindow;
+   delete m_waitWindow;
+   delete m_playWindow;
+}
+
+void CGUI::ShowWindow()
+{
+   m_enterWindow->ShowWindow();
+}
+
+void CGUI::HideWindow()
+{
+   m_enterWindow->HideWindow();
+}
+
+void CGUI::TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess)
+{
+    m_playerId = mess->m_playerID;
+
+    m_enterWindow->HideWindow();
+    m_waitWindow->ShowWindow();
+}
+
+void CGUI::TakeError(Message::CMessageErrorPtr mess)
+{
+   CCriticalMessage::Show("Server error", mess->m_strError.c_str());
+}
+
+void CGUI::TakeTimeStartToGame(Message::CMessageTimeToStartGamePtr mess)
+{
+   m_waitWindow->SetSecondToStart(mess->m_second);
+}
+
+void CGUI::TakeFinishGame(Message::CMessageFinishGamePtr mess)
+{
+}
+
+
+void CGUI::TakeInError(std::string mess)
+{
+   CCriticalMessage::Show("Inside program error", mess.c_str());
 }
 
 void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
-{
-    if (m_connected)
-    {
-        static bool first = true;
-        if (first )
-        {
-            m_waitWindow->show();
-        }
-        m_waitWindow->TakeStartGame(ptr);
+{   
+}
 
-        first = false;
-    }
-}
-void CGUI::TakeError(Message::CMessageErrorPtr mess)
-{
-    CCriticalMessage::Show("Error", "Error");
-}
+
 void CGUI::TakeFieldSize(unsigned int X, unsigned int Y)
-{
-    m_playWindow->TakeFieldSize(X, Y);
+{    
 }
-void CGUI::slGameStarts()
-{
-    qDebug() << "Game starts";
-    m_waitWindow->hide();
-    m_playWindow->show();
-}
-ISceneUpdates * CGUI::GetScene()
-{
-    if (!m_playWindow)
-        return 0;
-    return m_playWindow->GetView();
-}
+

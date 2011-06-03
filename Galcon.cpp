@@ -6,7 +6,7 @@ CGalcon::CGalcon()
    m_manager = new ServerManagerDecl::CServerManager();
    m_game = new CGame();
    connectSendersToTakers();
-   m_gui->Exec();
+   m_gui->ShowWindow();
 }
 
 void CGalcon::connectSendersToTakers()
@@ -21,8 +21,8 @@ void CGalcon::connectSendersToTakers()
    connect(m_manager, SIGNAL(SendConfirmConnect(Message::CMessageConfirmationConnectToServerPtr)),
            m_gui, SLOT(TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr)));
    connect(m_manager, SIGNAL(SendTimeToStart(Message::CMessageTimeToStartGamePtr)),
-           m_gui, SLOT(TakeStartGame(Message::CMessageTimeToStartGamePtr)));
-   //connect(m_manager, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)), m_gui, SLOT());
+           m_gui, SLOT(TakeTimeStartToGame(Message::CMessageTimeToStartGamePtr)));
+   connect(m_manager, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)), m_gui, SLOT());
    connect(m_manager, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)),
            m_game, SLOT(SlotFinishGame(Message::CMessageFinishGamePtr)));
    connect(m_manager, SIGNAL(SendError(Message::CMessageErrorPtr)),

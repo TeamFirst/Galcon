@@ -8,30 +8,40 @@ CWaitWindow::CWaitWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     m_timer.setInterval(1000);
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(slTimer()));
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotIncremetTimer()));
 }
 
 CWaitWindow::~CWaitWindow()
 {
     delete ui;
 }
-void CWaitWindow::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
-{
 
-    this->m_left = ptr->m_second;
-    int left = m_left;
-    ui->lcdNumber->display(left);
-    m_timer.start();
+void CWaitWindow::ShowWindow()
+{
+   show();
 }
 
-void CWaitWindow::slTimer()
+void CWaitWindow::HideWindow()
 {
-    m_left--;
+   m_timer.stop();
+   ui->lcdNumber->hide();
+   hide();
+}
 
-    ui->lcdNumber->display((int)m_left);
-    if (!m_left)
+void CWaitWindow::SetSecondToStart(unsigned int second)
+{
+   m_secondToStart = second;
+   ui->lcdNumber->display((int)m_secondToStart);
+   m_timer.start();
+}
+
+void CWaitWindow::slotIncremetTimer()
+{
+    --m_secondToStart;
+
+    ui->lcdNumber->display((int)m_secondToStart);
+    if (!m_secondToStart)
     {
         m_timer.stop();
-        emit sStarts();
     }
 }

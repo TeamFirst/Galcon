@@ -49,7 +49,7 @@ namespace ServerManagerDecl
       void sendToServer(const Message::IMessagePtr pMessage);
       void parseStrFromServer(const std::string& sMes);
 
-      QTcpSocket * m_tcpSocket;
+      QTcpSocket* m_tcpSocket;
 
       CParser m_parser;
 
