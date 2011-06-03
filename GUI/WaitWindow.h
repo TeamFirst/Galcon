@@ -19,7 +19,7 @@ public:
    void ShowWindow();
    void HideWindow();
 
-   void SetSecondToStart(unsigned int second);
+   void SetSecToStart(const unsigned int seconds);
 
 private slots:
     void slotIncremetTimer();

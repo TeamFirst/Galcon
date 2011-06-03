@@ -62,11 +62,15 @@ HEADERS += Galcon.h \
     Game/Planet.h \
     Game/Player.h \
     Game/Space.h \
+
     GUI/Guifleet.h \
     GUI/Guiplanet.h \
     GUI/Guispace.h \
     GUI/Guiview.h \
     GUI/Playwindow.h
+
+    message/MessageInformation.h
+
 
 FORMS += \
     GUI/waitwindow.ui \

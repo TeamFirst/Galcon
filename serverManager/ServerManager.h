@@ -13,6 +13,7 @@
 #include "message/MessageStateMap.h"
 #include "message/MessageStartMapGame.h"
 #include "message/MessageTimeToStartGame.h"
+#include "message/MessageInformation.h"
 #include "Parser.h"
 
 namespace ServerManagerDecl
@@ -37,7 +38,7 @@ namespace ServerManagerDecl
       void SendStartGame(const Message::CMessageStartMapGamePtr pMessage);
       void SendTimeToStart(const Message::CMessageTimeToStartGamePtr pMessage);
 
-      void SendInError(std::string str);
+      void SendInInformation(const Message::CMessageInformationPtr pMessage);
 
    private slots:
       void slotConnected();
