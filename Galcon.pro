@@ -56,7 +56,8 @@ HEADERS += Galcon.h \
     Game/Game.h \
     Game/Planet.h \
     Game/Player.h \
-    Game/Space.h
+    Game/Space.h \
+    message/MessageInformation.h
 
 FORMS += \
     GUI/waitwindow.ui \

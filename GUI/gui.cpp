@@ -35,7 +35,7 @@ void CGUI::HideWindow()
    m_enterWindow->HideWindow();
 }
 
-void CGUI::TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess)
+void CGUI::TakeConfirmConnectToServer(const Message::CMessageConfirmationConnectToServerPtr mess)
 {
     m_playerId = mess->m_playerID;
 
@@ -43,32 +43,30 @@ void CGUI::TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServ
     m_waitWindow->ShowWindow();
 }
 
-void CGUI::TakeError(Message::CMessageErrorPtr mess)
+void CGUI::TakeError(const Message::CMessageErrorPtr mess)
 {
    CCriticalMessage::Show("Server error", mess->m_strError.c_str());
 }
 
-void CGUI::TakeTimeStartToGame(Message::CMessageTimeToStartGamePtr mess)
+void CGUI::TakeTimeStartToGame(const Message::CMessageTimeToStartGamePtr mess)
 {
-   m_waitWindow->SetSecondToStart(mess->m_second);
+   m_waitWindow->SetSecToStart(mess->m_second);
 }
 
-void CGUI::TakeFinishGame(Message::CMessageFinishGamePtr mess)
+void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
 {
 }
 
-
-void CGUI::TakeInError(std::string mess)
+void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
 {
-   CCriticalMessage::Show("Inside program error", mess.c_str());
+   CCriticalMessage::Show("Inside program error", mess->m_strInformation.c_str());
 }
 
-void CGUI::TakeStartGame(Message::CMessageTimeToStartGamePtr ptr)
+void CGUI::TakeStartGame(const Message::CMessageTimeToStartGamePtr ptr)
 {   
 }
 
-
-void CGUI::TakeFieldSize(unsigned int X, unsigned int Y)
+void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
 {    
 }
 

@@ -63,7 +63,10 @@ namespace ServerManagerDecl
          emit SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
          break;
       case CParser::eUnknown :
-         emit SendInError("Error, Server send unknown message");
+         Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+         ptr->m_typeInformation = Message::CMessageInformation::eMessageFromServer;
+         ptr->m_strInformation = "Error, Server send unknown message";
+         emit SendInInformation(ptr);
          break;
       }
    }
@@ -73,7 +76,10 @@ namespace ServerManagerDecl
    {
       m_connectToServer = true;
 
-      emit SendInError("Connected");
+      Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+      ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
+      ptr->m_strInformation = "Connected";
+      emit SendInInformation(ptr);
    }
 
    void CServerManager::slotReadyRead()
@@ -100,7 +106,10 @@ namespace ServerManagerDecl
 
           nextBlockSize = 0;
 
-          emit SendInError(QString(str).toStdString());
+          Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+          ptr->m_typeInformation = Message::CMessageInformation::eMessageFromServer;
+          ptr->m_strInformation = QString(str).toStdString();
+          emit SendInInformation(ptr);
 
           parseStrFromServer(QString(str).toStdString());
       }
@@ -110,7 +119,10 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
 
-      emit SendInError("Error connection");
+      Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+      ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
+      ptr->m_strInformation = "Error connection";
+      emit SendInInformation(ptr);
    }
 
 /// public slots
@@ -122,8 +134,11 @@ namespace ServerManagerDecl
          sendToServer(pMessage);
       }
       else
-      {         
-        emit SendInError("Error, You again trying connect to server");
+      {
+         Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+         ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
+         ptr->m_strInformation = "Error, You again trying connect to server";
+         emit SendInInformation(ptr);
       }
    }
 
@@ -134,8 +149,11 @@ namespace ServerManagerDecl
          sendToServer(pMessage);
       }
       else
-      {         
-         emit SendInError("Error, No connection to server");
+      {
+         Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+         ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
+         ptr->m_strInformation = "Error, No connection to server";
+         emit SendInInformation(ptr);
       }
    }
 

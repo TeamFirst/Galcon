@@ -28,9 +28,15 @@ void CWaitWindow::HideWindow()
    hide();
 }
 
-void CWaitWindow::SetSecondToStart(unsigned int second)
+void CWaitWindow::SetSecToStart(const unsigned int seconds)
 {
-   m_secondToStart = second;
+   if(seconds <= 0)
+   {
+      return;
+   }
+
+   m_timer.stop();
+   m_secondToStart = seconds;
    ui->lcdNumber->display((int)m_secondToStart);
    m_timer.start();
 }

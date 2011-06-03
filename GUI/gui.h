@@ -10,6 +10,7 @@
 #include "message/MessageAddView.h"
 #include "message/MessageFinishGame.h"
 #include "message/MessageStepPlayer.h"
+#include "message/MessageInformation.h"
 
 class CPlayWindow;
 class CWaitWindow;
@@ -28,20 +29,20 @@ public:
    void HideWindow();
 
 public slots:
-   void TakeConfirmConnectToServer(Message::CMessageConfirmationConnectToServerPtr mess);
-   void TakeError(Message::CMessageErrorPtr mess);
-   void TakeFinishGame(Message::CMessageFinishGamePtr mess);
-   void TakeStartGame(Message::CMessageTimeToStartGamePtr mess);
-   void TakeTimeStartToGame(Message::CMessageTimeToStartGamePtr mess);
+   void TakeConfirmConnectToServer(const Message::CMessageConfirmationConnectToServerPtr mess);
+   void TakeError(const Message::CMessageErrorPtr mess);
+   void TakeFinishGame(const Message::CMessageFinishGamePtr mess);
+   void TakeStartGame(const Message::CMessageTimeToStartGamePtr mess);
+   void TakeTimeStartToGame(const Message::CMessageTimeToStartGamePtr mess);
 
-   void TakeFieldSize(unsigned int X, unsigned int Y);
+   void TakeFieldSize(const unsigned int X, const unsigned int Y);
 
-   void TakeInError(std::string mess);
+   void TakeInInformation(const Message::CMessageInformationPtr mess);
 
 signals:
-   void SendClientToServer(Message::CMessageConnectToServerPtr mess);
+   void SendClientToServer(const Message::CMessageConnectToServerPtr mess);
    void SendView(Message::CMessageAddViewPtr mess);
-   void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
+   void SendStepPlayer(const Message::CMessageStepPlayerPtr mess);
 
 private:
    CWaitWindow * m_waitWindow;
