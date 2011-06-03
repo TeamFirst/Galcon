@@ -52,14 +52,18 @@ namespace ServerManagerDecl
 
    private:
       unsigned int convertStdStrToUInt(const std::string& sMes);
-      void parseVectorUInt(
+
+      void parseSubMesToVectorUInt(
          const std::string& sMes,
          const std::string& separator,
          const size_t posF,
          const size_t posE);
 
+      unsigned int parseMesToUInt(const std::string& sMes);
+
       std::vector< std::pair<std::string, ETypeMessage> > m_vMsgStrEnumType;
-      std::vector<unsigned int> m_vParseSubMes;
+      std::vector<unsigned int> m_vParseSubMesUInt;
+      Message::CStatePlanet m_tempStatePlanet;
 
    }; // class CParser
 

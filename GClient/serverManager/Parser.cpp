@@ -28,7 +28,7 @@ namespace ServerManagerDecl
 
       for(; it != m_vMsgStrEnumType.end(); ++it)
       {
-         if(0 == sMes.find(it->first))
+         if(sMes.find(it->first) == 0)
          {
             return (*it).second;
          }
@@ -39,14 +39,11 @@ namespace ServerManagerDecl
    const Message::CMessageConfirmationConnectToServerPtr
       CParser::ParseMConfirmConnect(const std::string& sMes)
    {      
-      /// SC_CONNID#3##      
-      size_t pos1 = sMes.find('#');
-      size_t pos2 = sMes.find('#', pos1 + 1);
-
+      /// SC_CONNID#3##
       Message::CMessageConfirmationConnectToServerPtr ptr(
          new Message::CMessageConfirmationConnectToServer);
 
-      ptr->m_playerID = convertStdStrToUInt(sMes.substr(pos1 + 1, pos2 - pos1 - 1));
+      ptr->m_playerID = parseMesToUInt(sMes);
 
       return ptr;
    }
@@ -54,14 +51,13 @@ namespace ServerManagerDecl
    const Message::CMessageErrorPtr
       CParser::ParseMError(const std::string& sMes)
    {
-      /// SC_ERR#Player1 disconnected!##
-      // std::string m_strError;
-      size_t pos1 = sMes.find_first_of('#');
-      size_t pos2 = sMes.find_first_of('#', pos1 + 1);
+      /// ERROR_MESSAGE_TYPE#Player1 disconnected!##
+      size_t posBegPart = sMes.find_first_of('#');
+      size_t posEndPart = sMes.find_first_of('#', posBegPart + 1);
 
       Message::CMessageErrorPtr ptr( new Message::CMessageError);
 
-      ptr->m_strError = sMes.substr(pos1 + 1, pos2 - pos1 - 1);
+      ptr->m_strError = sMes.substr(posBegPart + 1, posEndPart - posBegPart - 1);
 
       return ptr;
    }
@@ -70,14 +66,10 @@ namespace ServerManagerDecl
       CParser::ParseMFinishGame(const std::string& sMes)
    {
       /// SC_FINISH#2##
-      // unsigned int m_playerID;
-      size_t pos1 = sMes.find_first_of('#');
-      size_t pos2 = sMes.find_first_of('#', pos1 + 1);
-
       Message::CMessageFinishGamePtr ptr(
          new Message::CMessageFinishGame);
 
-      ptr->m_playerID = QString(sMes.substr(pos1 + 1, pos2 - pos1 - 1).c_str()).toUInt();
+      ptr->m_playerID = parseMesToUInt(sMes);
 
       return ptr;
    }
@@ -85,56 +77,61 @@ namespace ServerManagerDecl
    const Message::CMessageStateMapPtr
       CParser::ParseMStateMap(const std::string& sMes)
    {
-      /// "SC_STATE#(1,1,20)(2,0,15)(3,0,8)(4,4,8)#(1,2,4,2,12,0)(2,2,3,2,24,0)##";
-      Message::CStatePlanet tempPlanet;
-      Message::CStateFleet tempFleet;
-
+      /// SC_STATE#(2,0,15)(3,0,8)(4,4,8)#(1,2,4,2,12,0)(2,2,3,2,24,0)##
       Message::CMessageStateMapPtr ptr(
          new Message::CMessageStateMap);
 
-      size_t posBPart = 0;
-      size_t posEPart = 0;
-      size_t posFBr = 0;
-      size_t posSBr = 0;
-      /// parse planet state
-      posBPart = sMes.find('#', posEPart + 1);
-      posEPart = sMes.find('#', posBPart + 1);
-      posFBr = sMes.find('(', posBPart);
-      posSBr = sMes.find(')', posBPart + 1);
-      for(; posFBr < posEPart;
-          posFBr = sMes.find('(', posSBr),
-          posSBr = sMes.find(')', posFBr + 1))
-      {
-         parseVectorUInt(sMes, ",", posFBr, posSBr);
+      size_t posBegPart = 0;
+      size_t posEndPart = 0;
+      size_t posFrstBkt = 0;
+      size_t posScndBkt = 0;
 
-         tempPlanet.m_planetID = m_vParseSubMes[0];
-         tempPlanet.m_playerID = m_vParseSubMes[1];
-         tempPlanet.m_countFleet = m_vParseSubMes[2];
+      /// parse planet state
+      Message::CStatePlanet tempPlanet;
+
+      posBegPart = sMes.find('#', posEndPart + 1);
+      posEndPart = sMes.find('#', posBegPart + 1);
+      posScndBkt = posBegPart;
+
+      do
+      {
+         posFrstBkt = sMes.find('(', posScndBkt);
+         posScndBkt = sMes.find(')', posFrstBkt + 1);
+
+         parseSubMesToVectorUInt(sMes, ",", posFrstBkt, posScndBkt);
+
+         tempPlanet.m_planetID = m_vParseSubMesUInt[0];
+         tempPlanet.m_playerID = m_vParseSubMesUInt[1];
+         tempPlanet.m_countFleet = m_vParseSubMesUInt[2];
 
          ptr->m_planetState.push_back(tempPlanet);
       }
+      while(posFrstBkt < posEndPart);
 
       /// parse fleet state
-      posBPart = posEPart;
-      posEPart = sMes.find('#', posBPart + 1);
-      posFBr = sMes.find('(', posBPart);
-      posSBr = sMes.find(')', posBPart + 1);
+      Message::CStateFleet tempFleet;
 
-      for(; posFBr < posEPart;
-         posFBr = sMes.find('(', posSBr),
-         posSBr = sMes.find(')', posFBr + 1))
+      posBegPart = posEndPart;
+      posEndPart = sMes.find('#', posBegPart + 1);
+      posScndBkt = posBegPart;
+
+      do
       {
-         parseVectorUInt(sMes, ",", posFBr, posSBr);
+         posFrstBkt = sMes.find('(', posScndBkt);
+         posScndBkt = sMes.find(')', posFrstBkt + 1);
 
-         tempFleet.m_fleetID = m_vParseSubMes[0];
-         tempFleet.m_playerID = m_vParseSubMes[1];
-         tempFleet.m_planetStartID = m_vParseSubMes[2];
-         tempFleet.m_planetFinishID = m_vParseSubMes[3];
-         tempFleet.m_countFleet = m_vParseSubMes[4];
-         tempFleet.m_percentRoute = m_vParseSubMes[5];
+         parseSubMesToVectorUInt(sMes, ",", posFrstBkt, posScndBkt);
 
-         ptr->m_planetState.push_back(tempPlanet);
+         tempFleet.m_fleetID = m_vParseSubMesUInt[0];
+         tempFleet.m_playerID = m_vParseSubMesUInt[1];
+         tempFleet.m_planetStartID = m_vParseSubMesUInt[2];
+         tempFleet.m_planetFinishID = m_vParseSubMesUInt[3];
+         tempFleet.m_countFleet = m_vParseSubMesUInt[4];
+         tempFleet.m_percentRoute = m_vParseSubMesUInt[5];
+
+         ptr->m_fleetState.push_back(tempFleet);
       }
+      while(posFrstBkt < posEndPart);
 
       return ptr;
    }
@@ -142,81 +139,71 @@ namespace ServerManagerDecl
    const Message::CMessageStartMapGamePtr
       CParser::ParseMStartMapGame(const std::string& sMes)
    {
-      // SC_START#100#80#2#25#
-      // (1,1,20,40,12,20)(2,0,40,20,10,15)(3,0,50,70,45,8)(4,2,80,60,12,20)
-      // #(1,Red Fox)(2,Star_123456)##";
+      /// SC_START#100#80#2#25#(3,0,50,70,45,8)(4,2,80,60,12,20)#(1,Red Fox)(2,Star_123456)##
       Message::CMessageStartMapGamePtr ptr(
          new Message::CMessageStartMapGame);
 
-      size_t posBPart = 0;
-      size_t posEPart = 0;
-      size_t posFBr = 0;
-      size_t posSBr = 0;
+      size_t posBegPart = 0;
+      size_t posEndPart = 0;
+      size_t posFrstBkt = 0;
+      size_t posScndBkt = 0;
 
-      // unsigned int m_mapX;
-      posBPart = sMes.find('#');
-      posEPart = sMes.find('#', posBPart + 1);
-      ptr->m_mapX = convertStdStrToUInt(
-               sMes.substr(posBPart +1, posEPart - posBPart -1));
-      // unsigned int m_mapY;
-      posBPart = posEPart;
-      posEPart = sMes.find('#', posBPart + 1);
-      ptr->m_mapY = convertStdStrToUInt(
-               sMes.substr(posBPart +1, posEPart - posBPart -1));
-      // unsigned int m_growV;
-      posBPart = posEPart;
-      posEPart = sMes.find('#', posBPart + 1);
-      ptr->m_growV = convertStdStrToUInt(
-               sMes.substr(posBPart +1, posEPart - posBPart -1));
-      // unsigned int m_flyV;
-      posBPart = posEPart;
-      posEPart = sMes.find('#', posBPart + 1);
-      ptr->m_flyV = convertStdStrToUInt(
-               sMes.substr(posBPart +1, posEPart - posBPart -1));
+      posBegPart = sMes.find('#');
+      posEndPart = sMes.find('(', posBegPart + 1);
+      --posEndPart;
 
-      // std::vector<CPlanetStartData> m_planetData;
+      parseSubMesToVectorUInt(sMes, "#", posBegPart, posEndPart);
+      ptr->m_mapX = m_vParseSubMesUInt[0];
+      ptr->m_mapY = m_vParseSubMesUInt[1];
+      ptr->m_growV = m_vParseSubMesUInt[2];
+      ptr->m_flyV = m_vParseSubMesUInt[3];
+
+      /// parse planet start data
       Message::CPlanetStartData tempPlanet;
 
-      posBPart = posEPart;
-      posEPart = sMes.find('#', posBPart + 1);
-      posFBr = sMes.find('(', posBPart);
-      posSBr = sMes.find(')', posBPart + 1);
+      posBegPart = posEndPart;
+      posEndPart = sMes.find('#', posBegPart + 1);
+      posScndBkt = posBegPart;
 
-      for(; posFBr < posEPart;
-         posFBr = sMes.find('(', posSBr),
-         posSBr = sMes.find(')', posFBr + 1))
+      do
       {
-         parseVectorUInt(sMes, ",", posFBr, posSBr);
-         tempPlanet.m_planetID = m_vParseSubMes[0];
-         tempPlanet.m_playerID = m_vParseSubMes[1];
-         tempPlanet.m_planetX = m_vParseSubMes[2];
-         tempPlanet.m_planetY = m_vParseSubMes[3];
-         tempPlanet.m_planetR = m_vParseSubMes[4];
-         tempPlanet.m_countFleet = m_vParseSubMes[5];
+         posFrstBkt = sMes.find('(', posScndBkt);
+         posScndBkt = sMes.find(')', posFrstBkt + 1);
+
+         parseSubMesToVectorUInt(sMes, ",", posFrstBkt, posScndBkt);
+
+         tempPlanet.m_planetID = m_vParseSubMesUInt[0];
+         tempPlanet.m_playerID = m_vParseSubMesUInt[1];
+         tempPlanet.m_planetX = m_vParseSubMesUInt[2];
+         tempPlanet.m_planetY = m_vParseSubMesUInt[3];
+         tempPlanet.m_planetR = m_vParseSubMesUInt[4];
+         tempPlanet.m_countFleet = m_vParseSubMesUInt[5];
 
          ptr->m_planetData.push_back(tempPlanet);
       }
+      while(posFrstBkt < posEndPart);
 
-      // std::vector<CPlayerStartData> m_playerData;
-         // unsigned int m_playerID;
-         // std::string m_playerName;
+      /// parse player start data
       Message::CPlayerStartData tempPlayer;
 
-      posBPart = posEPart;
-      posEPart = sMes.find('#', posBPart + 1);
-      posFBr = sMes.find('(', posBPart);
-      posSBr = sMes.find(')', posBPart + 1);
+      posBegPart = posEndPart;
+      posEndPart = sMes.find('#', posBegPart + 1);
+      posScndBkt = posBegPart;
+      size_t posSep = 0;
 
-      for(; posFBr < posEPart;
-         posFBr = sMes.find('(', posSBr),
-         posSBr = sMes.find(')', posFBr + 1))
+      do
       {
-         parseVectorUInt(sMes, ",", posFBr, posSBr);
-         tempPlayer.m_playerID = m_vParseSubMes[0];
-         //tempPlayer.m_playerID = m_vParseSubMes[1];
+         posFrstBkt = sMes.find('(', posScndBkt);
+         posScndBkt = sMes.find(')', posFrstBkt + 1);
+         posSep = sMes.find(',', posFrstBkt);
+
+         tempPlayer.m_playerID =
+            convertStdStrToUInt(sMes.substr(posFrstBkt + 1, posSep - posFrstBkt - 1));
+         tempPlayer.m_playerName = sMes.substr(posSep + 1, posScndBkt - posSep - 1);
 
          ptr->m_playerData.push_back(tempPlayer);
       }
+      while(posFrstBkt < posEndPart);
 
       return ptr;
    }
@@ -225,14 +212,10 @@ namespace ServerManagerDecl
       CParser::ParseMTimeToStartGame(const std::string& sMes)
    {
       /// SC_TIMETOSTART#9##
-      // unsigned int m_second;
-      size_t pos1 = sMes.find_first_of('#');
-      size_t pos2 = sMes.find_first_of('#', pos1 + 1);
-
       Message::CMessageTimeToStartGamePtr ptr(
          new Message::CMessageTimeToStartGame);
 
-      ptr->m_second = convertStdStrToUInt(sMes.substr(pos1 + 1, pos2 - pos1 - 1));
+      ptr->m_second = parseMesToUInt(sMes);
 
       return ptr;
    }
@@ -242,24 +225,32 @@ namespace ServerManagerDecl
       return QString(str.c_str()).toUInt();
    }
 
-   void CParser::parseVectorUInt(
+   void CParser::parseSubMesToVectorUInt(
       const std::string& sMes,
       const std::string& separator,
       const size_t posF,
       const size_t posE)
    {
-      m_vParseSubMes.clear();
+      m_vParseSubMesUInt.clear();
       size_t posFB = posF;
       size_t posSB = sMes.find(separator, posFB + 1);
       for(; (posSB != std::string::npos) && (posSB < posE);
           posFB = posSB , posSB = sMes.find(separator, posFB + 1))
       {
-         m_vParseSubMes.push_back(
-                  convertStdStrToUInt(sMes.substr(posFB + 1, posSB - posFB - 1)));
+         m_vParseSubMesUInt.push_back(
+            convertStdStrToUInt(sMes.substr(posFB + 1, posSB - posFB - 1)));
       }
 
-      m_vParseSubMes.push_back(
-               convertStdStrToUInt(sMes.substr(posFB + 1, posE - posFB - 1)));
+      m_vParseSubMesUInt.push_back(
+         convertStdStrToUInt(sMes.substr(posFB + 1, posE - posFB - 1)));
+   }
+
+   unsigned int CParser::parseMesToUInt(const std::string& sMes)
+   {
+      size_t posBegPart = sMes.find_first_of('#');
+      size_t posEndPart = sMes.find_first_of('#', posBegPart + 1);
+
+      return convertStdStrToUInt(sMes.substr(posBegPart + 1, posEndPart - posBegPart - 1));
    }
 
 } //namespace ServerManagerDecl

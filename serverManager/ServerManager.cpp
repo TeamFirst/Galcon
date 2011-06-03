@@ -73,7 +73,7 @@ namespace ServerManagerDecl
    {
       m_connectToServer = true;
 
-      SendInError("Connected");
+      emit SendInError("Connected");
    }
 
    void CServerManager::slotReadyRead()
@@ -83,7 +83,7 @@ namespace ServerManagerDecl
       qint16 nextBlockSize = 0;
       for (;;)
       {
-          if (m_tcpSocket->bytesAvailable() < sizeof(quint8))
+          if (m_tcpSocket->bytesAvailable() < sizeof(quint16))
           {
               break;
           }
@@ -100,7 +100,7 @@ namespace ServerManagerDecl
 
           nextBlockSize = 0;
 
-          SendInError(QString(str).toStdString());
+          emit SendInError(QString(str).toStdString());
 
           parseStrFromServer(QString(str).toStdString());
       }
@@ -110,7 +110,7 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
 
-      SendInError("Error connection");
+      emit SendInError("Error connection");
    }
 
 /// public slots
@@ -123,7 +123,7 @@ namespace ServerManagerDecl
       }
       else
       {         
-        SendInError("Error, You again trying connect to server");
+        emit SendInError("Error, You again trying connect to server");
       }
    }
 
@@ -135,7 +135,7 @@ namespace ServerManagerDecl
       }
       else
       {         
-         SendInError("Error, No connection to server");
+         emit SendInError("Error, No connection to server");
       }
    }
 
