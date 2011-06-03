@@ -51,7 +51,7 @@ namespace ServerManagerDecl
    const Message::CMessageErrorPtr
       CParser::ParseMError(const std::string& sMes)
    {
-      /// ERROR_MESSAGE_TYPE#Player1 disconnected!##
+      /// SC_ERR#Player1 disconnected!##
       size_t posBegPart = sMes.find_first_of('#');
       size_t posEndPart = sMes.find_first_of('#', posBegPart + 1);
 

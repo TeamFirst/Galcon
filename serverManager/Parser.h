@@ -63,7 +63,6 @@ namespace ServerManagerDecl
 
       std::vector< std::pair<std::string, ETypeMessage> > m_vMsgStrEnumType;
       std::vector<unsigned int> m_vParseSubMesUInt;
-      Message::CStatePlanet m_tempStatePlanet;
 
    }; // class CParser
 
