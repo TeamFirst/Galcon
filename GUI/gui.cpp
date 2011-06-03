@@ -67,6 +67,13 @@ void CGUI::TakeStartGame(const Message::CMessageTimeToStartGamePtr ptr)
 }
 
 void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
-{    
+{
+   m_playWindow->CreateWindow(X, Y);
+   m_waitWindow->HideWindow();
+   m_playWindow->ShowWindow();
+
+   Message::CMessageAddViewPtr ptr(new Message::CMessageAddView);
+   ptr->m_view = m_playWindow->GetView();
+   SendView(ptr);
 }
 

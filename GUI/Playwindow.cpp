@@ -10,9 +10,9 @@ void CPlayWindow::paintEvent(QPaintEvent *)
    m_view->Draw(&painter);
 }
 
-void CPlayWindow::setView(CGUIView *view)
+void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
 {
-   m_view = view;
+   m_view = new CGUIView(x, y, this);
 }
 
 void CPlayWindow::ShowWindow()
@@ -23,5 +23,11 @@ void CPlayWindow::ShowWindow()
 void CPlayWindow::DestroyWindow()
 {
    hide();
+   delete m_view;
+}
+
+CGUIView* CPlayWindow::GetView()
+{
+   return m_view;
 }
 
