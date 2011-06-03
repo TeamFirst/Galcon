@@ -64,9 +64,17 @@ void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
 
 void CGUI::TakeStartGame(const Message::CMessageTimeToStartGamePtr ptr)
 {   
+
 }
 
 void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
 {    
+   qDebug("Taken field Size");
+   m_playWindow->CreateWindow(X, Y);
+   qDebug("Writing message");
+   Message::CMessageAddViewPtr mess;
+   mess->m_view = m_playWindow->GetView();
+   qDebug("Emit sendview");
+   emit SendView(mess);
 }
 

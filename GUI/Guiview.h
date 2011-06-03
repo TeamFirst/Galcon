@@ -10,6 +10,7 @@ class CGUIView : public ISceneUpdates
 {
 public:
     explicit CGUIView(unsigned int x, unsigned int y, QWidget* parent);
+    ~CGUIView();
     void OnShowView();
     void OnHideView();
     void OnUpdate(const std::vector<CPlanet *> &, const std::list<CFleet *> &);

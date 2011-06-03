@@ -7,6 +7,12 @@ CGUIView::CGUIView(unsigned int x, unsigned int y, QWidget* parent) :
    m_height(y),
    m_parent(parent)
 {
+   qDebug("Creating view");
+}
+
+CGUIView::~CGUIView()
+{
+   qDebug("Destructor of CGUIView");
 }
 
 
@@ -23,6 +29,7 @@ void CGUIView::OnShowView()
 
 void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<CFleet *>& fleets)
 {
+   qDebug("Started updating");
    if (m_planets.empty())
    {
       for (unsigned int i = 0; i < planets.size(); ++i)
@@ -43,6 +50,7 @@ void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<C
 
 void CGUIView::Draw(QPainter* painter)
 {
+   qDebug("Started drawing");
    painter->setBrush(Qt::green);
    CGUIPlanet currPl;
    foreach (currPl, m_planets)
