@@ -11,31 +11,36 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     GUI/Waitwindow.cpp \
-    GUI/PlayWindow.cpp \
-    GUI/PlayArea.cpp \
-    GUI/GUIView.cpp \
-    GUI/GUIPlanet.cpp \
-    GUI/GUIFleet.cpp \
+#    GUI/PlayWindow.cpp \
+#    GUI/PlayArea.cpp \
+#    GUI/GUIView.cpp \
+#    GUI/GUIPlanet.cpp \
+#    GUI/GUIFleet.cpp \
     GUI/gui.cpp \
     GUI/enterwindow.cpp \
     GUI/criticalmessage.cpp \
     serverManager/ServerManager.cpp \
     serverManager/Parser.cpp \
     Galcon.cpp \
-    GUI/GUISky.cpp \
+#    GUI/GUISky.cpp \
     Game/Fleet.cpp \
     Game/Game.cpp \
     Game/Planet.cpp \
     Game/Player.cpp \
-    Game/Space.cpp
+    Game/Space.cpp \
+    GUI/Guifleet.cpp \
+    GUI/Guiplanet.cpp \
+    GUI/Guispace.cpp \
+    GUI/Guiview.cpp \
+    GUI/Playwindow.cpp
 
 HEADERS += Galcon.h \
     GUI/WaitWindow.h \
-    GUI/PlayWindow.h \
-    GUI/PlayArea.h \
-    GUI/GUIView.h \
-    GUI/GUIPlanet.h \
-    GUI/GUIFleet.h \
+#    GUI/PlayWindow.h \
+#    GUI/PlayArea.h \
+#    GUI/GUIView.h \
+#    GUI/GUIPlanet.h \
+#    GUI/GUIFleet.h \
     GUI/gui.h \
     GUI/enterwindow.h \
     GUI/criticalmessage.h \
@@ -51,16 +56,21 @@ HEADERS += Galcon.h \
     message/MessageStateMap.h \
     message/MessageStepPlayer.h \
     message/MessageTimeToStartGame.h \
-    GUI/GUISky.h \
+#    GUI/GUISky.h \
     Game/Fleet.h \
     Game/Game.h \
     Game/Planet.h \
     Game/Player.h \
-    Game/Space.h
+    Game/Space.h \
+    GUI/Guifleet.h \
+    GUI/Guiplanet.h \
+    GUI/Guispace.h \
+    GUI/Guiview.h \
+    GUI/Playwindow.h
 
 FORMS += \
     GUI/waitwindow.ui \
-    GUI/playwindow.ui \
+#    GUI/playwindow.ui \
     GUI/enterwindow.ui
 
 

@@ -1,7 +1,7 @@
 #include <QDialog>
 #include <QDebug>
 #include "gui.h"
-#include "PlayWindow.h"
+#include "Playwindow.h"
 #include "WaitWindow.h"
 #include "enterwindow.h"
 #include "criticalmessage.h"
