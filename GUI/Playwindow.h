@@ -1,43 +1,46 @@
-#ifndef PLAYWINDOW_H
-#define PLAYWINDOW_H
-#include "Guiview.h"
+#pragma once
+
+#include <QWidget>
 #include "message/MessageStepPlayer.h"
 
-class CPlayWindow : public QWidget
+namespace GUI
 {
-    Q_OBJECT
-public:
-    explicit CPlayWindow(QWidget* parent  = 0);
+   class CGUIView;
 
-    void CreateWindow(const unsigned int x, const unsigned int y);
-    void DestroyWindow();
-    void ShowWindow();
+   class CPlayWindow : public QWidget
+   {
+       Q_OBJECT
+   public:
+       explicit CPlayWindow(QWidget* parent  = 0);
 
-    void paintEvent(QPaintEvent *);
+       void CreateWindow(const unsigned int x, const unsigned int y);
+       void DestroyWindow();
+       void ShowWindow();
 
-    void mousePressEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    void wheelEvent(QWheelEvent *);
+       void paintEvent(QPaintEvent *);
 
-    void mouseClick();
+       void mousePressEvent(QMouseEvent *);
+       void mouseMoveEvent(QMouseEvent *);
+       void mouseReleaseEvent(QMouseEvent *);
+       void wheelEvent(QWheelEvent *);
 
-    CGUIView* GetView();
+       void mouseClick();
 
-    void SetPlayerId(unsigned int id);
+       CGUIView* GetView();
 
-signals:
-    void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
-private:
-    CGUIView* m_view;
-    unsigned int m_playerId;
+       void SetPlayerId(unsigned int id);
 
-    bool m_mouseSelection;
-    bool m_mouseActive;
-    int m_mousePressedX;
-    int m_mousePressedY;
-    int m_mouseCurrentX;
-    int m_mouseCurrentY;
-};
+   signals:
+       void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
+   private:
+       CGUIView* m_view;
+       unsigned int m_playerId;
 
-#endif // PLAYWINDOW_H
+       bool m_mouseSelection;
+       bool m_mouseActive;
+       int m_mousePressedX;
+       int m_mousePressedY;
+       int m_mouseCurrentX;
+       int m_mouseCurrentY;
+   };
+} // Namespace GUI

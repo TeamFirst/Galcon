@@ -2,7 +2,7 @@
 
 CGalcon::CGalcon()
 {
-   m_gui = new CGUI();
+   m_gui = new GUI::CGUI();
    m_manager = new ServerManagerDecl::CServerManager();
    m_game = new Game::CGame();
    m_singleGame = new SingleGame::CSingleGameManager();

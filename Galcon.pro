@@ -21,14 +21,14 @@ SOURCES += main.cpp \
     GUI/Guispace.cpp \
     GUI/Guiplanet.cpp \
     GUI/Guifleet.cpp \
-    GUI/gui.cpp \
-    GUI/enterwindow.cpp \
-    GUI/criticalmessage.cpp \
     serverManager/ServerManager.cpp \
     serverManager/Parser.cpp \    
     Galcon.cpp \
     SingleGame/SingleGameManager.cpp \
-    SingleGame/MapGame.cpp
+    SingleGame/MapGame.cpp \
+    GUI/Enterwindow.cpp \
+    GUI/Gui.cpp \
+    GUI/Errorwindow.cpp
 
 
 HEADERS += \
@@ -37,15 +37,11 @@ HEADERS += \
     Game/Planet.h \
     Game/Game.h \
     Game/Fleet.h \
-    GUI/WaitWindow.h \
     GUI/Playwindow.h \
     GUI/Guiview.h \
     GUI/Guispace.h \
     GUI/Guiplanet.h \
     GUI/Guifleet.h \
-    GUI/gui.h \
-    GUI/enterwindow.h \
-    GUI/criticalmessage.h \
     message/MessageTimeToStartGame.h \
     message/MessageStepPlayer.h \
     message/MessageStateMap.h \
@@ -62,7 +58,12 @@ HEADERS += \
     Galcon.h \
     SingleGame/SingleGameManager.h \
     SingleGame/MapGame.h \
-    SingleGame/GameMapObject.h
+    SingleGame/GameMapObject.h \
+    GUI/Gui.h \
+    GUI/Enterwindow.h \
+    GUI/Errorwindow.h \
+    GUI/Waitwindow.h \
+    GUI/SceneUpdates.h
 
 
 FORMS += \

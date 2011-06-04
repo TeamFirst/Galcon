@@ -4,7 +4,7 @@
 
 #include <QObject>
 
-#include "GUI/gui.h"
+#include "GUI/Gui.h"
 #include "serverManager/ServerManager.h"
 #include "Game/Game.h"
 #include "SingleGame/SingleGameManager.h"
@@ -20,7 +20,7 @@ public:
 private:
    void connectSendersToTakers();
 
-   CGUI* m_gui;
+   GUI::CGUI* m_gui;
    Game::CGame* m_game;
    ServerManagerDecl::CServerManager* m_manager;
    SingleGame::CSingleGameManager* m_singleGame;

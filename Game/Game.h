@@ -3,21 +3,20 @@
 #include <QObject>
 #include <QTimer>
 
-#include "SceneUpdates.h"
+#include "GUI/SceneUpdates.h"
 #include "Space.h"
 #include "message/MessageAddView.h"
 #include "message/MessageFinishGame.h"
 
 namespace Game
 {
-
    class CGame : public QObject
    {
       Q_OBJECT
 
    public:
       CGame();
-      static const unsigned long m_timeTick = 1000;
+      static const unsigned long m_timeTick = 100;
 
    signals:
       void SendStartGame(unsigned int mapX, unsigned int mapY);
@@ -34,7 +33,7 @@ namespace Game
 
    private:
 
-      ISceneUpdates* m_view;
+      GUI::ISceneUpdates* m_view;
       CSpace* m_space;
       QTimer* m_timer;
    };

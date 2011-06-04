@@ -1,46 +1,49 @@
-#ifndef GUIVIEW_H
-#define GUIVIEW_H
+#pragma once
 
-#include <QWidget>
-#include "Guiplanet.h"
-#include "Guifleet.h"
 #include "SceneUpdates.h"
-#include "Guispace.h"
 #include "message/MessageStepPlayer.h"
 
-class CGUIView : public ISceneUpdates
+namespace GUI
 {
-public:
-    explicit CGUIView(unsigned int x, unsigned int y, QWidget* parent);
-    ~CGUIView();
-    void OnShowView();
-    void OnHideView();
-    void OnUpdate(const std::vector<Game::CPlanet *> &, const std::list<Game::CFleet *> &);
+   class CGUIPlanet;
 
-    void Draw(QPainter* painter);
+   class CGUIFleet;
 
-    void Selection(unsigned int beginX, unsigned int beginY,
-                   unsigned int endX, unsigned int endY);
+   class CGUISpace;
 
-    Message::CMessageStepPlayerPtr Target(unsigned int clickX, unsigned int clickY);
+   class CGUIView : public ISceneUpdates
+   {
+   public:
+       explicit CGUIView(unsigned int x, unsigned int y, QWidget* parent);
+       ~CGUIView();
 
-    unsigned int GetPlayerId() const;
-    unsigned int GetPercent() const;
+       void OnShowView();
+       void OnHideView();
+       void OnUpdate(const std::vector<Game::CPlanet *> &, const std::list<Game::CFleet *> &);
 
-    void SetPlayerId(unsigned int id);
-    void SetPercent(unsigned int percent);
+       void Draw(QPainter* painter);
 
-private:
-   unsigned int m_width;
-   unsigned int m_height;
-   unsigned int m_percent;
-   unsigned int m_playerId;
+       void Selection(unsigned int beginX, unsigned int beginY,
+                      unsigned int endX, unsigned int endY);
 
-   std::vector<CGUIPlanet*> m_planets;
-   std::list<CGUIFleet*> m_fleets;
-   CGUISpace* m_space;
+       Message::CMessageStepPlayerPtr Target(unsigned int clickX, unsigned int clickY);
 
-   QWidget* m_parent;
-};
+       unsigned int GetPlayerId() const;
+       unsigned int GetPercent() const;
 
-#endif // GUIVIEW_H
+       void SetPlayerId(unsigned int id);
+       void SetPercent(unsigned int percent);
+
+   private:
+      unsigned int m_width;
+      unsigned int m_height;
+      unsigned int m_percent;
+      unsigned int m_playerId;
+
+      std::vector<CGUIPlanet*> m_planets;
+      std::list<CGUIFleet*> m_fleets;
+      CGUISpace* m_space;
+
+      QWidget* m_parent;
+   };
+} // Namespace GUI

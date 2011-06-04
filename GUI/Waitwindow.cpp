@@ -1,53 +1,55 @@
-#include <QTimer>
-#include "WaitWindow.h"
+#include "Waitwindow.h"
 #include "ui_waitwindow.h"
 
-CWaitWindow::CWaitWindow(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::CWaitWindow)
+namespace GUI
 {
-    ui->setupUi(this);
-    m_timer.setInterval(1000);
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotIncremetTimer()));
-}
-
-CWaitWindow::~CWaitWindow()
-{
-    delete ui;
-}
-
-void CWaitWindow::ShowWindow()
-{
-   show();
-}
-
-void CWaitWindow::DestroyWindow()
-{
-   m_timer.stop();
-   ui->lcdNumber->hide();
-   hide();
-}
-
-void CWaitWindow::SetSecToStart(const unsigned int seconds)
-{
-   if(seconds <= 0)
+   CWaitWindow::CWaitWindow(QWidget *parent) :
+       QDialog(parent),
+       ui(new Ui::CWaitWindow)
    {
-      return;
+       ui->setupUi(this);
+       m_timer.setInterval(1000);
+       connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotIncremetTimer()));
    }
 
-   m_timer.stop();
-   m_secondToStart = seconds;
-   ui->lcdNumber->display((int)m_secondToStart);
-   m_timer.start();
-}
+   CWaitWindow::~CWaitWindow()
+   {
+       delete ui;
+   }
 
-void CWaitWindow::slotIncremetTimer()
-{
-    --m_secondToStart;
+   void CWaitWindow::ShowWindow()
+   {
+      show();
+   }
 
-    ui->lcdNumber->display((int)m_secondToStart);
-    if (!m_secondToStart)
-    {
-        m_timer.stop();
-    }
-}
+   void CWaitWindow::DestroyWindow()
+   {
+      m_timer.stop();
+      ui->lcdNumber->hide();
+      hide();
+   }
+
+   void CWaitWindow::SetSecToStart(const unsigned int seconds)
+   {
+      if (seconds <= 0)
+      {
+         return;
+      }
+
+      m_timer.stop();
+      m_secondToStart = seconds;
+      ui->lcdNumber->display((int)m_secondToStart);
+      m_timer.start();
+   }
+
+   void CWaitWindow::slotIncremetTimer()
+   {
+       --m_secondToStart;
+
+       ui->lcdNumber->display((int)m_secondToStart);
+       if (!m_secondToStart)
+       {
+           m_timer.stop();
+       }
+   }
+} //Namespace GUI

@@ -1,18 +1,19 @@
-#ifndef GUIFLEET_H
-#define GUIFLEET_H
+#pragma once
+
 #include <QPainter>
 #include "Game/Fleet.h"
 
-class CGUIFleet
+namespace GUI
 {
-public:
-    CGUIFleet(){};
-    CGUIFleet(Game::CFleet*);
+   class CGUIFleet
+   {
+   public:
+       CGUIFleet(){};
+       CGUIFleet(Game::CFleet*);
 
-    void Draw(QPainter*);
+       void Draw(QPainter*);
 
-private:
-    Game::CFleet* m_fleet;
-};
-
-#endif // GUIFLEET_H
+   private:
+       Game::CFleet* m_fleet;
+   };
+} // Namespace GUI
