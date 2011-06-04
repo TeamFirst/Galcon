@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QObject>
+
 #include <string>
 #include <vector>
 
@@ -9,6 +11,7 @@
 #include "message/MessageStateMap.h"
 #include "message/MessageStartMapGame.h"
 #include "message/MessageTimeToStartGame.h"
+#include "message/MessageInformation.h"
 
 namespace ServerManagerDecl
 {
@@ -60,6 +63,8 @@ namespace ServerManagerDecl
          const size_t posE);
 
       unsigned int parseMesToUInt(const std::string& sMes);
+
+      void SendParseMessage(const std::string& str);
 
       std::vector< std::pair<std::string, ETypeMessage> > m_vMsgStrEnumType;
       std::vector<unsigned int> m_vParseSubMesUInt;
