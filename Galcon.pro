@@ -26,7 +26,9 @@ SOURCES += main.cpp \
     GUI/criticalmessage.cpp \
     serverManager/ServerManager.cpp \
     serverManager/Parser.cpp \    
-    Galcon.cpp
+    Galcon.cpp \
+    SingleGame/SingleGameManager.cpp \
+    SingleGame/MapGame.cpp
 
 
 HEADERS += \
@@ -57,7 +59,10 @@ HEADERS += \
     serverManager/ServerManager.h \
     serverManager/Parser.h \
     SceneUpdates.h \
-    Galcon.h
+    Galcon.h \
+    SingleGame/SingleGameManager.h \
+    SingleGame/MapGame.h \
+    SingleGame/GameMapObject.h
 
 
 FORMS += \
