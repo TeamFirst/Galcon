@@ -31,8 +31,8 @@ namespace SingleGame
 
    void CMapGame::createPlanet()
    {
-      unsigned int countPlanetX = m_widthMap / (2 * m_cMaxPlanetRadius);
-      unsigned int countPlanetY = m_heigthMap / (2 * m_cMaxPlanetRadius);
+      unsigned int countPlanetX = m_widthMap / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
+      unsigned int countPlanetY = m_heigthMap / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
       unsigned int countPlanet = countPlanetX * countPlanetY;
 
       CPlanet tempPlanet;
@@ -41,8 +41,10 @@ namespace SingleGame
       {
          tempPlanet.GenerationID();
          tempPlanet.m_radius = m_cMaxPlanetRadius;
-         tempPlanet.m_coordinates.x = ( m_cMaxPlanetRadius * ( 1 + i * 2) ) % m_widthMap;
-         tempPlanet.m_coordinates.y = ( m_cMaxPlanetRadius * ( 1 + (i % countPlanetX) * 2) ) % m_heigthMap;
+         tempPlanet.m_coordinates.x = m_cMaxPlanetRadius
+               * ( m_cCoefDispersionPlanets + (i % countPlanetX) * m_cCoefDispersionPlanets);
+         tempPlanet.m_coordinates.y = m_cMaxPlanetRadius
+               * ( m_cCoefDispersionPlanets + (i / countPlanetX) * m_cCoefDispersionPlanets) ;
          tempPlanet.m_countFleet = m_cMaxFleetCount;
          tempPlanet.m_pPlayer = &m_neutralPlayer;
 

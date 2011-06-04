@@ -19,8 +19,8 @@ namespace SingleGame
    void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage)
    {
       startGame(
-               2, //< time to start
-               500, //< width map
+               0, //< time to start
+               1000, //< width map
                500, //< heigth map
                1, //< fly speed
                1, //< grow spped
@@ -56,12 +56,20 @@ namespace SingleGame
 
       /// start timer Wait
       m_timeToStart = timeToStart;
-      slotWaitTime();
-      m_timerWaitStart.start();
+      if(m_timeToStart)
+      {
+         slotWaitTime();
+         m_timerWaitStart.start();
+      }
 
       /// generation play map
       m_mapGame.GenerationMap(widthMap, heigthMap, flySpeed, growSpeed);
       m_mapGame.SetPlayers(m_vPlayer);
+
+      if(!m_timeToStart)
+      {
+         runPlay();
+      }
    }
 
 /// timers
@@ -90,56 +98,41 @@ namespace SingleGame
 /// run play
    void CSingleGameManager::runPlay()
    {
-      //void SendStartGame(const Message::CMessageStartMapGamePtr pMessage);
       Message::CMessageStartMapGamePtr ptr(
                new Message::CMessageStartMapGame);
 
-      //unsigned int m_flyV;
       ptr->m_flyV = m_mapGame.GetFlySpeed();
-      //unsigned int m_growV;
       ptr->m_growV = m_mapGame.GetGrowSpeed();
-      //unsigned int m_mapX;
       ptr->m_mapX = m_mapGame.GetWidthMap();
-      //unsigned int m_mapY;
       ptr->m_mapY = m_mapGame.GetHeigthMap();
-      //std::vector<CPlanetStartData> m_planetData;
+
       Message::CPlanetStartData tempPlanet;
       std::vector<CPlanet>::const_iterator itB = m_mapGame.GetPlanets().begin();
       std::vector<CPlanet>::const_iterator itE = m_mapGame.GetPlanets().end();
       for(; itB != itE; ++itB)
       {
-         //   unsigned int m_countFleet;
          tempPlanet.m_countFleet = itB->m_countFleet;
-         //   unsigned int m_planetID;
          tempPlanet.m_planetID = itB->GetID();
-         //   unsigned int m_planetR;
          tempPlanet.m_planetR = itB->m_radius;
-         //   unsigned int m_planetX;
          tempPlanet.m_planetX = itB->m_coordinates.x;
-         //   unsigned int m_planetY;
          tempPlanet.m_planetY = itB->m_coordinates.y;
-         //   unsigned int m_playerID;
          tempPlanet.m_playerID = itB->m_pPlayer->GetID();
 
          ptr->m_planetData.push_back(tempPlanet);
       }
 
-      //std::vector<CPlayerStartData> m_playerData;
       Message::CPlayerStartData tempPlayer;
       std::vector<CPlayer>::const_iterator itBPl = m_vPlayer.begin();
       std::vector<CPlayer>::const_iterator itEPl = m_vPlayer.end();
       for(; itBPl != itEPl; ++itBPl)
       {
-         //   unsigned int m_playerID;
          tempPlayer.m_playerID = itBPl->GetID();
-         //   std::string m_playerName;
          tempPlayer.m_playerName = itBPl->m_name;
 
          ptr->m_playerData.push_back(tempPlayer);
       }
 
       SendStartGame(ptr);
-
    }
 
 } // namespace SingleGame
