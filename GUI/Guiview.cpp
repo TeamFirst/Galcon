@@ -1,6 +1,9 @@
-#include "Guiview.h"
 #include <QVariant>
 #include <QPainter>
+
+#include "Guiview.h"
+
+
 
 CGUIView::CGUIView(unsigned int x, unsigned int y, QWidget* parent) :
    m_width(x),
@@ -27,7 +30,7 @@ void CGUIView::OnShowView()
 }
 
 
-void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<CFleet *>& fleets)
+void CGUIView::OnUpdate(const std::vector<Game::CPlanet *>& planets, const std::list<Game::CFleet *>& fleets)
 {
    if (m_planets.empty())
    {
@@ -38,7 +41,7 @@ void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<C
       }
    }
    m_fleets.erase(m_fleets.begin(), m_fleets.end());
-   CFleet* iterfl;
+   Game::CFleet* iterfl;
    foreach( iterfl, fleets)
    {
       CGUIFleet* currFl = new CGUIFleet(iterfl);
@@ -76,7 +79,7 @@ void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
    unsigned int x(0), y(0);
    foreach(currPl, m_planets)
    {
-      CPlanet* pl = currPl->GetPlanet();
+      Game::CPlanet* pl = currPl->GetPlanet();
       pl->GetPosition(x,y);
       if ((x >= std::min(beginX, endX)) && (x <= std::max(beginX, endX))
             && (y >= std::min(beginY, endY)) && (y <= std::max(beginY,endY))
@@ -91,11 +94,12 @@ void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
    }
 }
 
-void CGUIView::Target(unsigned int clickX, unsigned int clickY)
+Message::CMessageStepPlayerPtr CGUIView::Target(unsigned int clickX, unsigned int clickY)
 {
    std::vector<unsigned int> departure;
    unsigned int destination;
-   unsigned int playerId;
+
+   bool flagDest = false;
    CGUIPlanet* currPl;
    foreach(currPl, m_planets)
    {
@@ -109,10 +113,21 @@ void CGUIView::Target(unsigned int clickX, unsigned int clickY)
             (abs(clickY - y) < currPl->GetPlanet()->GetRadius()))
       {
             destination = currPl->GetPlanet()->GetId();
+            flagDest = true;
       }
    }
-   playerId = m_playerId;
-
+   Message::CMessageStepPlayerPtr mess (new Message::CMessageStepPlayer);
+   mess->m_finishPlanetID = destination;
+   mess->m_startPlanetID = departure;
+   if((!flagDest) || (departure.empty()))
+   {
+      mess->m_percent = 0;
+   }
+   else
+   {
+      mess->m_percent = m_percent;
+   }
+   return mess;
 }
 
 unsigned int CGUIView::GetPercent() const

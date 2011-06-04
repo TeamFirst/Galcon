@@ -21,7 +21,7 @@ private:
    void connectSendersToTakers();
 
    CGUI* m_gui;
-   CGame* m_game;
+   Game::CGame* m_game;
    ServerManagerDecl::CServerManager* m_manager;
    SingleGame::CSingleGameManager* m_singleGame;
 };

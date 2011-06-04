@@ -16,6 +16,8 @@ CGUI::CGUI(QObject *parent) :
 
     connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
             this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
+    connect(m_playWindow, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
+            this, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)));
 }
 
 CGUI::~CGUI()

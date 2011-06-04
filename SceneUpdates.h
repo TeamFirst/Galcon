@@ -19,7 +19,7 @@ public:
    virtual void OnShowView() = 0;
    virtual void OnHideView() = 0;
 
-   virtual void OnUpdate(const std::vector<CPlanet* >&, const std::list<CFleet* >&) = 0;
+   virtual void OnUpdate(const std::vector<Game::CPlanet* >&, const std::list<Game::CFleet* >&) = 0;
 };
 
 #endif // SCENEUPDATE_H

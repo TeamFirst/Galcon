@@ -1,6 +1,7 @@
 #ifndef PLAYWINDOW_H
 #define PLAYWINDOW_H
 #include "Guiview.h"
+#include "message/MessageStepPlayer.h"
 
 class CPlayWindow : public QWidget
 {
@@ -24,16 +25,19 @@ public:
     CGUIView* GetView();
 
     void SetPlayerId(unsigned int id);
+
+signals:
+    void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
 private:
     CGUIView* m_view;
     unsigned int m_playerId;
 
     bool m_mouseSelection;
     bool m_mouseActive;
-    unsigned int m_mousePressedX;
-    unsigned int m_mousePressedY;
-    unsigned int m_mouseCurrentX;
-    unsigned int m_mouseCurrentY;
+    int m_mousePressedX;
+    int m_mousePressedY;
+    int m_mouseCurrentX;
+    int m_mouseCurrentY;
 };
 
 #endif // PLAYWINDOW_H

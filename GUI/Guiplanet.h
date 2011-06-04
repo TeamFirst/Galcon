@@ -7,16 +7,16 @@ class CGUIPlanet
 {
 public:
    CGUIPlanet(){}
-    CGUIPlanet(CPlanet* planet);
+   CGUIPlanet(Game::CPlanet* planet);
 
     void Draw(QPainter*);
-    CPlanet* GetPlanet() const;
+    Game::CPlanet* GetPlanet() const;
     void MakeActive();
     void ReleaseActive();
     bool IsActive() const;
 
 private:
-    CPlanet* m_planet;
+    Game::CPlanet* m_planet;
     bool m_active;
 };
 

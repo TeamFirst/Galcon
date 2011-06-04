@@ -1,5 +1,5 @@
-#ifndef CGAME_H
-#define CGAME_H
+#pragma once
+
 #include <QObject>
 #include <QTimer>
 
@@ -8,34 +8,35 @@
 #include "message/MessageAddView.h"
 #include "message/MessageFinishGame.h"
 
-typedef int IMessage;
-
-class CGame : public QObject
+namespace Game
 {
-   Q_OBJECT
 
-public:
-   CGame();
-   static const unsigned long m_timeTick = 1000;
+   class CGame : public QObject
+   {
+      Q_OBJECT
 
-signals:
-   void SendStartGame(unsigned int mapX, unsigned int mapY);
-   void signalTimer();
+   public:
+      CGame();
+      static const unsigned long m_timeTick = 1000;
 
-public slots:
-   void SlotStartData(Message::CMessageStartMapGamePtr data);
-   void SlotStateMap(Message::CMessageStateMapPtr data);
-   void SlotFinishGame(Message::CMessageFinishGamePtr mes);
+   signals:
+      void SendStartGame(unsigned int mapX, unsigned int mapY);
+      void signalTimer();
 
-   void AddView(Message::CMessageAddViewPtr mes);
-   void DeleteGame();
-   void slotTimer();
+   public slots:
+      void SlotStartData(Message::CMessageStartMapGamePtr data);
+      void SlotStateMap(Message::CMessageStateMapPtr data);
+      void SlotFinishGame(Message::CMessageFinishGamePtr mes);
 
-private:
+      void AddView(Message::CMessageAddViewPtr mes);
+      void DeleteGame();
+      void slotTimer();
 
-   ISceneUpdates* m_view;
-   CSpace* m_space;
-   QTimer* m_timer;
-};
+   private:
 
-#endif // CGAME_H
+      ISceneUpdates* m_view;
+      CSpace* m_space;
+      QTimer* m_timer;
+   };
+} // Namespace Game
+

@@ -5,6 +5,25 @@ CPlayWindow::CPlayWindow(QWidget *parent):QWidget(parent)
 {
 }
 
+void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
+{
+   m_view = new CGUIView(x, y, this);
+   m_view->SetPlayerId(m_playerId);
+   resize(x,y);
+}
+
+
+void CPlayWindow::ShowWindow()
+{
+   show();
+}
+
+void CPlayWindow::DestroyWindow()
+{
+   hide();
+   delete m_view;
+}
+
 void CPlayWindow::paintEvent(QPaintEvent *)
 {
    QPainter painter(this);
@@ -23,25 +42,6 @@ void CPlayWindow::paintEvent(QPaintEvent *)
       lines.push_back(l4);
       painter.drawLines(lines);
    }
-}
-
-void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
-{
-   m_view = new CGUIView(x, y, this);
-   m_view->SetPlayerId(m_playerId);
-   resize(x,y);
-}
-
-
-void CPlayWindow::ShowWindow()
-{
-   show();
-}
-
-void CPlayWindow::DestroyWindow()
-{
-   hide();
-   delete m_view;
 }
 
 void CPlayWindow::SetPlayerId(unsigned int id)
@@ -104,7 +104,11 @@ void CPlayWindow::mouseClick()
 {
    if(m_mouseActive)
    {
-      //emit send fleet to planet
+      Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
+      if (mess->m_percent != 0)
+      {
+         emit SendStepPlayer(mess);
+      }
    }
 
    m_mouseActive = false;

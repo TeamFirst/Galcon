@@ -6,6 +6,7 @@
 #include "Guifleet.h"
 #include "SceneUpdates.h"
 #include "Guispace.h"
+#include "message/MessageStepPlayer.h"
 
 class CGUIView : public ISceneUpdates
 {
@@ -14,20 +15,21 @@ public:
     ~CGUIView();
     void OnShowView();
     void OnHideView();
-    void OnUpdate(const std::vector<CPlanet *> &, const std::list<CFleet *> &);
+    void OnUpdate(const std::vector<Game::CPlanet *> &, const std::list<Game::CFleet *> &);
 
     void Draw(QPainter* painter);
 
     void Selection(unsigned int beginX, unsigned int beginY,
                    unsigned int endX, unsigned int endY);
 
-    void Target(unsigned int clickX, unsigned int clickY);
+    Message::CMessageStepPlayerPtr Target(unsigned int clickX, unsigned int clickY);
 
     unsigned int GetPlayerId() const;
     unsigned int GetPercent() const;
 
     void SetPlayerId(unsigned int id);
     void SetPercent(unsigned int percent);
+
 private:
    unsigned int m_width;
    unsigned int m_height;

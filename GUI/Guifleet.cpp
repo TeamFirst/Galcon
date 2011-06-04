@@ -1,6 +1,6 @@
 #include "Guifleet.h"
 
-CGUIFleet::CGUIFleet(CFleet* fleet):m_fleet(fleet)
+CGUIFleet::CGUIFleet(Game::CFleet* fleet):m_fleet(fleet)
 {
 
 }

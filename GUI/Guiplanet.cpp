@@ -1,7 +1,7 @@
 #include "Guiplanet.h"
 #include <QVariant>
 
-CGUIPlanet::CGUIPlanet(CPlanet* planet)
+CGUIPlanet::CGUIPlanet(Game::CPlanet* planet)
    : m_planet(planet),
      m_active(false)
 {
@@ -75,7 +75,7 @@ bool CGUIPlanet::IsActive() const
    return m_active;
 }
 
-CPlanet* CGUIPlanet::GetPlanet() const
+Game::CPlanet* CGUIPlanet::GetPlanet() const
 {
    return m_planet;
 }

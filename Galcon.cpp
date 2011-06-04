@@ -4,7 +4,7 @@ CGalcon::CGalcon()
 {
    m_gui = new CGUI();
    m_manager = new ServerManagerDecl::CServerManager();
-   m_game = new CGame();
+   m_game = new Game::CGame();
    m_singleGame = new SingleGame::CSingleGameManager();
    connectSendersToTakers();
    m_gui->ShowWindow();
@@ -14,7 +14,7 @@ void CGalcon::connectSendersToTakers()
 {
    bool typeGame; // true - network, false - local
 
-   typeGame = false;
+   typeGame = true;
 
    if(typeGame)
    {

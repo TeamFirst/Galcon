@@ -7,12 +7,12 @@ class CGUIFleet
 {
 public:
     CGUIFleet(){};
-    CGUIFleet(CFleet*);
+    CGUIFleet(Game::CFleet*);
 
     void Draw(QPainter*);
 
 private:
-    CFleet* m_fleet;
+    Game::CFleet* m_fleet;
 };
 
 #endif // GUIFLEET_H
