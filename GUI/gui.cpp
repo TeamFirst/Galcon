@@ -67,6 +67,7 @@ void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
 void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
 {
    m_playWindow->CreateWindow(X, Y);
+   m_playWindow->SetPlayerId(m_playerId);
    m_waitWindow->DestroyWindow();
    m_playWindow->ShowWindow();
 

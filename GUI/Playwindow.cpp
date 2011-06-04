@@ -28,6 +28,7 @@ void CPlayWindow::paintEvent(QPaintEvent *)
 void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
 {
    m_view = new CGUIView(x, y, this);
+   m_view->SetPlayerId(m_playerId);
 }
 
 
