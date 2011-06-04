@@ -91,6 +91,30 @@ void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
    }
 }
 
+void CGUIView::Target(unsigned int clickX, unsigned int clickY)
+{
+   std::vector<unsigned int> departure;
+   unsigned int destination;
+   unsigned int playerId;
+   CGUIPlanet* currPl;
+   foreach(currPl, m_planets)
+   {
+      if (currPl->IsActive())
+      {
+         departure.push_back(currPl->GetPlanet()->GetId());
+      }
+      unsigned int x(0), y(0);
+      currPl->GetPlanet()->GetPosition(x,y);
+      if ((abs(clickX - x) < currPl->GetPlanet()->GetRadius()) &&
+            (abs(clickY - y) < currPl->GetPlanet()->GetRadius()))
+      {
+            destination = currPl->GetPlanet()->GetId();
+      }
+   }
+   playerId = m_playerId;
+
+}
+
 unsigned int CGUIView::GetPercent() const
 {
    return m_percent;

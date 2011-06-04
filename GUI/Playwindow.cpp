@@ -58,6 +58,8 @@ void CPlayWindow::mousePressEvent(QMouseEvent* event)
    m_mouseSelection = true;
    m_mousePressedX = event->pos().x();
    m_mousePressedY = event->pos().y();
+   m_mouseCurrentX = event->pos().x();
+   m_mouseCurrentY = event->pos().y();
 
    m_mouseActive = !m_mouseActive;
 }
@@ -65,7 +67,12 @@ void CPlayWindow::mousePressEvent(QMouseEvent* event)
 void CPlayWindow::mouseReleaseEvent(QMouseEvent* event)
 {
    m_mouseSelection = false;
-   m_mouseActive = !m_mouseActive;
+   //m_mouseActive = !m_mouseActive;
+   if ((m_mousePressedX == event->pos().x()) &&
+         (m_mousePressedY == event->pos().y()))
+   {
+      mouseClick();
+   }
    update();
 }
 
@@ -82,7 +89,6 @@ void CPlayWindow::mouseMoveEvent(QMouseEvent* event)
       }
       update();
    }
-
 }
 
 void CPlayWindow::wheelEvent(QWheelEvent* event)
@@ -91,6 +97,19 @@ void CPlayWindow::wheelEvent(QWheelEvent* event)
    int numSteps = numDegrees / 15;
    m_view->SetPercent(m_view->GetPercent() + numSteps);
    update();
+}
+
+void CPlayWindow::mouseClick()
+{
+   if(m_mouseActive)
+   {
+      //emit send fleet to planet
+   }
+
+   m_mouseActive = false;
+   m_mouseSelection = false;
+   m_view->Selection(m_mousePressedX, m_mousePressedY,
+                     m_mousePressedX, m_mousePressedY);
 }
 
 

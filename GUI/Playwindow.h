@@ -19,6 +19,8 @@ public:
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
 
+    void mouseClick();
+
     CGUIView* GetView();
 
     void SetPlayerId(unsigned int id);

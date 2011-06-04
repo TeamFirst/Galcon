@@ -70,6 +70,11 @@ void CGUIPlanet::ReleaseActive()
    m_active = false;
 }
 
+bool CGUIPlanet::IsActive() const
+{
+   return m_active;
+}
+
 CPlanet* CGUIPlanet::GetPlanet() const
 {
    return m_planet;

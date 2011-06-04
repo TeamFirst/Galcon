@@ -13,6 +13,7 @@ public:
     CPlanet* GetPlanet() const;
     void MakeActive();
     void ReleaseActive();
+    bool IsActive() const;
 
 private:
     CPlanet* m_planet;

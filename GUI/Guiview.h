@@ -21,6 +21,8 @@ public:
     void Selection(unsigned int beginX, unsigned int beginY,
                    unsigned int endX, unsigned int endY);
 
+    void Target(unsigned int clickX, unsigned int clickY);
+
     unsigned int GetPlayerId() const;
     unsigned int GetPercent() const;
 
