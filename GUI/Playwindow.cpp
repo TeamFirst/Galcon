@@ -42,11 +42,9 @@ void CPlayWindow::DestroyWindow()
    delete m_view;
 }
 
-void CPlayWindow::mousePressEvent(QMouseEvent* event)
+void CPlayWindow::SetPlayerId(unsigned int id)
 {
-   m_mouseSelection = true;
-   m_mousePressedX = event->pos().x();
-   m_mousePressedX = event->pos().y();
+   m_playerId = id;
 }
 
 CGUIView* CPlayWindow::GetView()
@@ -54,6 +52,14 @@ CGUIView* CPlayWindow::GetView()
    return m_view;
 }
 
+void CPlayWindow::mousePressEvent(QMouseEvent* event)
+{
+   m_mouseSelection = true;
+   m_mousePressedX = event->pos().x();
+   m_mousePressedY = event->pos().y();
+
+   m_mouseActive = !m_mouseActive;
+}
 
 void CPlayWindow::mouseReleaseEvent(QMouseEvent* event)
 {
@@ -78,7 +84,12 @@ void CPlayWindow::mouseMoveEvent(QMouseEvent* event)
 
 }
 
-void CPlayWindow::SetPlayerId(unsigned int id)
+void CPlayWindow::wheelEvent(QWheelEvent* event)
 {
-   m_playerId = id;
+   int numDegrees = event->delta() / 8;
+   int numSteps = numDegrees / 15;
+   m_view->SetPercent(m_view->GetPercent() + numSteps);
+   update();
 }
+
+

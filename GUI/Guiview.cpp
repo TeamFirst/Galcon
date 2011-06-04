@@ -8,7 +8,7 @@ CGUIView::CGUIView(unsigned int x, unsigned int y, QWidget* parent) :
    m_parent(parent),
    m_percent(50)
 {
-   m_space = new CGUISpace(x,y);
+   m_space = new CGUISpace(m_width,m_height);
 }
 
 CGUIView::~CGUIView()
@@ -61,6 +61,12 @@ void CGUIView::Draw(QPainter* painter)
    {
       currFl->Draw(painter);
    }
+   //Draw percents
+   painter->setPen(Qt::white);
+   QString percentStr("Perc:");
+   percentStr.append(QVariant(quint16(m_percent)).toString());
+   percentStr.append("%");
+   painter->drawText(m_width - 80, 30, percentStr);
 }
 
 void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
@@ -73,7 +79,8 @@ void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
       CPlanet* pl = currPl->GetPlanet();
       pl->GetPosition(x,y);
       if ((x >= std::min(beginX, endX)) && (x <= std::max(beginX, endX))
-            && (y >= std::min(beginY, endY)) && (y <= std::max(beginY,endY)))
+            && (y >= std::min(beginY, endY)) && (y <= std::max(beginY,endY))
+            && (pl->GetPlayerId() == m_playerId))
       {
          currPl->MakeActive();
       }
@@ -82,4 +89,24 @@ void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
          currPl->ReleaseActive();
       }
    }
+}
+
+unsigned int CGUIView::GetPercent() const
+{
+   return m_percent;
+}
+
+unsigned int CGUIView::GetPlayerId() const
+{
+   return m_playerId;
+}
+
+void CGUIView::SetPercent(unsigned int percent)
+{
+   m_percent = percent;
+}
+
+void CGUIView::SetPlayerId(unsigned int id)
+{
+   m_playerId = id;
 }

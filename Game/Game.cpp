@@ -10,7 +10,6 @@ void CGame::AddView(Message::CMessageAddViewPtr mes)
 {
    m_view = mes->m_view;
    m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
-   qDebug("Recieved view");
    m_timer->start(m_timeTick);
 }
 
@@ -24,7 +23,6 @@ void CGame::DeleteGame()
 void CGame::slotTimer()
 {
    m_space->Update(1.0*(double)m_timeTick/1000);
-   qDebug("Timer ticked");
    m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
 }
 

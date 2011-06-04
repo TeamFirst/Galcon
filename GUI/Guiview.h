@@ -20,10 +20,17 @@ public:
 
     void Selection(unsigned int beginX, unsigned int beginY,
                    unsigned int endX, unsigned int endY);
+
+    unsigned int GetPlayerId() const;
+    unsigned int GetPercent() const;
+
+    void SetPlayerId(unsigned int id);
+    void SetPercent(unsigned int percent);
 private:
    unsigned int m_width;
    unsigned int m_height;
    unsigned int m_percent;
+   unsigned int m_playerId;
 
    std::vector<CGUIPlanet*> m_planets;
    std::list<CGUIFleet*> m_fleets;
