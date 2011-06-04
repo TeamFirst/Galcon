@@ -10,10 +10,13 @@ public:
     CGUIPlanet(CPlanet* planet);
 
     void Draw(QPainter*);
+    CPlanet* GetPlanet() const;
+    void MakeActive();
+    void ReleaseActive();
 
 private:
     CPlanet* m_planet;
-    bool is_active;
+    bool m_active;
 };
 
 #endif // GUIPLANET_H

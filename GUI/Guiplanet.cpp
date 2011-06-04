@@ -3,7 +3,7 @@
 
 CGUIPlanet::CGUIPlanet(CPlanet* planet)
    : m_planet(planet),
-     is_active(false)
+     m_active(false)
 {
 
 }
@@ -13,7 +13,12 @@ void CGUIPlanet::Draw(QPainter* painter)
    QBrush br(Qt::lightGray);
    unsigned x(0), y(0);
    m_planet->GetPosition(x,y);
-   switch (m_planet->GetPlayerId())
+   if(m_active)
+   {
+      painter->setBrush(Qt::blue);
+      painter->drawEllipse(x - m_planet->GetRadius()/2 - 5, y - m_planet->GetRadius()/2 - 5,
+                          m_planet->GetRadius() + 10, m_planet->GetRadius() + 10);
+   }   switch (m_planet->GetPlayerId())
    {
       case 0:
          br.setColor(Qt::gray);
@@ -53,4 +58,19 @@ void CGUIPlanet::Draw(QPainter* painter)
                        m_planet->GetRadius(), m_planet->GetRadius());
    painter->drawText(x - m_planet->GetRadius()/2, y - m_planet->GetRadius()/2,
                      QVariant(quint32(m_planet->GetArmy())).toString());
+}
+
+void CGUIPlanet::MakeActive()
+{
+   m_active = true;
+}
+
+void CGUIPlanet::ReleaseActive()
+{
+   m_active = false;
+}
+
+CPlanet* CGUIPlanet::GetPlanet() const
+{
+   return m_planet;
 }

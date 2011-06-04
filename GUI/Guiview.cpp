@@ -5,7 +5,8 @@
 CGUIView::CGUIView(unsigned int x, unsigned int y, QWidget* parent) :
    m_width(x),
    m_height(y),
-   m_parent(parent)
+   m_parent(parent),
+   m_percent(50)
 {
    m_space = new CGUISpace(x,y);
 }
@@ -32,7 +33,7 @@ void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<C
    {
       for (unsigned int i = 0; i < planets.size(); ++i)
       {
-         CGUIPlanet currPl(planets[i]);
+         CGUIPlanet* currPl = new CGUIPlanet(planets[i]);
          m_planets.push_back(currPl);
       }
    }
@@ -40,7 +41,7 @@ void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<C
    CFleet* iterfl;
    foreach( iterfl, fleets)
    {
-      CGUIFleet currFl(iterfl);
+      CGUIFleet* currFl = new CGUIFleet(iterfl);
       m_fleets.push_back(currFl);
    }
    m_parent->update();
@@ -48,18 +49,37 @@ void CGUIView::OnUpdate(const std::vector<CPlanet *>& planets, const std::list<C
 
 void CGUIView::Draw(QPainter* painter)
 {
-   m_space->Draw(painter);
    painter->setBrush(Qt::green);
-   CGUIPlanet currPl;
+   m_space->Draw(painter);
+   CGUIPlanet* currPl;
    foreach (currPl, m_planets)
    {
-      currPl.Draw(painter);
+      currPl->Draw(painter);
    }
-   CGUIFleet currFl;
+   CGUIFleet* currFl;
    foreach(currFl, m_fleets)
    {
-      currFl.Draw(painter);
+      currFl->Draw(painter);
    }
+}
 
-
+void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
+                         unsigned int endX, unsigned int endY)
+{
+   CGUIPlanet* currPl;
+   unsigned int x(0), y(0);
+   foreach(currPl, m_planets)
+   {
+      CPlanet* pl = currPl->GetPlanet();
+      pl->GetPosition(x,y);
+      if ((x >= std::min(beginX, endX)) && (x <= std::max(beginX, endX))
+            && (y >= std::min(beginY, endY)) && (y <= std::max(beginY,endY)))
+      {
+         currPl->MakeActive();
+      }
+      else
+      {
+         currPl->ReleaseActive();
+      }
+   }
 }

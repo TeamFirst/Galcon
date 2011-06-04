@@ -17,13 +17,17 @@ public:
     void OnUpdate(const std::vector<CPlanet *> &, const std::list<CFleet *> &);
 
     void Draw(QPainter* painter);
+
+    void Selection(unsigned int beginX, unsigned int beginY,
+                   unsigned int endX, unsigned int endY);
 private:
    unsigned int m_width;
    unsigned int m_height;
+   unsigned int m_percent;
 
+   std::vector<CGUIPlanet*> m_planets;
+   std::list<CGUIFleet*> m_fleets;
    CGUISpace* m_space;
-   std::vector<CGUIPlanet> m_planets;
-   std::list<CGUIFleet> m_fleets;
 
    QWidget* m_parent;
 };
