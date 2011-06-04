@@ -117,8 +117,8 @@ void CGalconServer::on_pBSC_TIMETOSTART_clicked()
 void CGalconServer::on_pBSC_START_clicked()
 {
    m_mesStr.clear();
-   m_mesStr.append("SC_START#1=500#400#2#25#(1,1,120,140,12,20)(2,0,40,20,10,15)(3,0,250,270,45,8)");
-   m_mesStr.append("(4,2,180,360,12,20)#(1,Red Fox)(2,Star_123456)##");
+   m_mesStr.append("SC_START#100#80#2#25#(1,1,20,40,12,20)(2,0,40,20,10,15)(3,0,50,70,45,8)");
+   m_mesStr.append("(4,2,80,60,12,20)#(1,Red Fox)(2,Star_123456)##");
    ui->lESend->setText(m_mesStr);
 }
 
