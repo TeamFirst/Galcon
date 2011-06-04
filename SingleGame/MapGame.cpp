@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <algorithm>
 
 #include "MapGame.h"
 
@@ -31,8 +32,10 @@ namespace SingleGame
 
    void CMapGame::createPlanet()
    {
-      unsigned int countPlanetX = m_widthMap / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
-      unsigned int countPlanetY = m_heigthMap / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
+      unsigned int countPlanetX = m_widthMap
+            / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
+      unsigned int countPlanetY = m_heigthMap
+            / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
       unsigned int countPlanet = countPlanetX * countPlanetY;
 
       CPlanet tempPlanet;
@@ -42,11 +45,14 @@ namespace SingleGame
          tempPlanet.GenerationID();
          tempPlanet.m_radius = m_cMaxPlanetRadius;
          tempPlanet.m_coordinates.x = m_cMaxPlanetRadius
-               * ( m_cCoefDispersionPlanets + (i % countPlanetX) * m_cCoefDispersionPlanets);
+               * m_cCoefDispersionPlanets
+               * (1 + (i % countPlanetX));
          tempPlanet.m_coordinates.y = m_cMaxPlanetRadius
-               * ( m_cCoefDispersionPlanets + (i / countPlanetX) * m_cCoefDispersionPlanets) ;
+               *  m_cCoefDispersionPlanets
+               * (1 + (i / countPlanetX));
          tempPlanet.m_countFleet = m_cMaxFleetCount;
          tempPlanet.m_pPlayer = &m_neutralPlayer;
+         tempPlanet.m_timeLastUpdate = QDateTime::currentDateTime();
 
          m_vPlanet.push_back(tempPlanet);
       }
@@ -91,6 +97,80 @@ namespace SingleGame
    const unsigned int CMapGame::GetGrowSpeed() const
    {
       return m_growSpeed;
+   }
+
+/// update data
+   void CMapGame::UpdateStateMap()
+   {
+      updateFleet();
+      updatePlanet(QDateTime::currentDateTime());
+   }
+
+   void CMapGame::UpdateStateMap(
+      const unsigned int finishPlanetID,
+      const unsigned int percent,
+      const std::vector<unsigned int>& startPlanetID)
+   {
+      UpdateStateMap();
+      addFleet(finishPlanetID, percent, startPlanetID);
+   }
+
+   void CMapGame::updateFleet()
+   {
+   }
+
+   void CMapGame::updatePlanet(QDateTime time)
+   {
+      std::vector<CPlanet>::iterator itB = m_vPlanet.begin();
+      std::vector<CPlanet>::iterator itE = m_vPlanet.end();
+      for(; itB != itE; ++itB)
+      {
+         if(itB->GetID())
+         {
+            itB->UpdatePlanet(time, m_growSpeed);
+         }
+      }
+   }
+
+   void CMapGame::addFleet(
+      const unsigned int finishPlanetID,
+      const unsigned int percent,
+      const std::vector<unsigned int>& startPlanetID)
+   {
+      CFleet tempFleet;
+
+      std::vector<unsigned int>::const_iterator itB = startPlanetID.begin();
+      std::vector<unsigned int>::const_iterator itE = startPlanetID.end();
+
+      CPlanet* finishPlanet = getPlanet(finishPlanetID);
+
+      for(; itB != itE; ++itB)
+      {
+         tempFleet.m_fromPlanet = getPlanet(*itB);
+         tempFleet.m_countFleet = getPlanet(*itB)->m_countFleet * percent / 100;
+         tempFleet.m_fromPlanet->m_countFleet -= tempFleet.m_countFleet;
+         tempFleet.m_toPlanet = finishPlanet;
+         tempFleet.GetID();
+         tempFleet.m_timeStartMove = QDateTime::currentDateTime();
+
+         m_vFleet.push_back(tempFleet);
+      }
+   }
+
+   CPlanet* CMapGame::getPlanet(const unsigned int ID)
+   {
+      std::vector<CPlanet>::iterator itB = m_vPlanet.begin();
+      std::vector<CPlanet>::iterator itE = m_vPlanet.end();
+
+      for(; itB != itE; ++itB)
+      {
+         if(itB->GetID() == ID)
+         {
+            return &(*itB);
+         }
+      }
+
+      return &(*itE); /// if this case - error program
    }
 
 } // namespace SingleGame

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <list>
+#include <QTime>
 
 #include "GameMapObject.h"
 
@@ -29,8 +30,24 @@ namespace SingleGame
       const unsigned int GetFlySpeed() const;
       const unsigned int GetGrowSpeed() const;
 
+      void UpdateStateMap(
+         const unsigned int finishPlanetID,
+         const unsigned int percent,
+         const std::vector<unsigned int>& startPlanetID);
+      void UpdateStateMap();
+
    private:
       void createPlanet();
+
+      void updateFleet();
+      void updatePlanet(QDateTime time);
+
+      void addFleet(
+         const unsigned int finishPlanetID,
+         const unsigned int percent,
+         const std::vector<unsigned int>& startPlanetID);
+
+      CPlanet* getPlanet(const unsigned int ID);
 
       unsigned int m_widthMap;
       unsigned int m_heigthMap;

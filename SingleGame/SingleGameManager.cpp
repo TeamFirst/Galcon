@@ -29,6 +29,11 @@ namespace SingleGame
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
+      /*
+      unsigned int m_finishPlanetID;
+      unsigned int m_percent;
+      std::vector<unsigned int> m_startPlanetID;
+      */
    }
 
 /// generation start data
@@ -68,6 +73,7 @@ namespace SingleGame
 
       if(!m_timeToStart)
       {
+         m_timerWaitStart.stop();
          runPlay();
       }
    }
@@ -93,6 +99,7 @@ namespace SingleGame
 
    void CSingleGameManager::slotRunTime()
    {
+
    }
 
 /// run play

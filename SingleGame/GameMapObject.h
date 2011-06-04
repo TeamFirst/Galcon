@@ -2,6 +2,7 @@
 
 #include <string>
 #include <QTime>
+#include <math.h>
 
 namespace SingleGame
 {
@@ -51,7 +52,16 @@ namespace SingleGame
       unsigned int m_radius;
       double m_countFleet;
 
-      QTime m_timeLastUpdate;
+      QDateTime m_timeLastUpdate;
+
+      void UpdatePlanet(const QDateTime& time, const unsigned int v)
+      {
+         if(m_timeLastUpdate < time)
+         {
+            m_countFleet += ( (time.toMSecsSinceEpoch() - m_timeLastUpdate.toMSecsSinceEpoch()) / 1000) * v;
+            m_timeLastUpdate = time;
+         }
+      }
    }; // struct CPlanet
 
    struct CFleet : public CGameObject
@@ -59,8 +69,23 @@ namespace SingleGame
       CPlayer* m_pPlayer;
       CPlanet* m_fromPlanet;
       CPlanet* m_toPlanet;
+      unsigned int m_countFleet;
 
-      QTime m_timeStartMove;
+      QDateTime m_timeStartMove;
+
+      QDateTime GetTimeFinish(const unsigned int v) const
+      {
+         double distance = sqrt(
+            (m_fromPlanet->m_coordinates.x - m_toPlanet->m_coordinates.x)
+            * (m_fromPlanet->m_coordinates.x - m_toPlanet->m_coordinates.x)
+            + (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y)
+            * (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y));
+
+         QDateTime tempTime = m_timeStartMove;
+         tempTime.addMSecs((distance / v) * 1000);
+
+         return tempTime;
+      }
    }; // struct CFleet
 
 } // namespace SingleGame
