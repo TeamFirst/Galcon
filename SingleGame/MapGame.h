@@ -49,13 +49,16 @@ namespace SingleGame
 
       CPlanet* getPlanet(const unsigned int ID);
 
+      /// find position fleet with time finish more than parametres fleet
+      std::list<CFleet>::iterator findInsertFleetPosition(const CFleet& fleet);
+
       unsigned int m_widthMap;
       unsigned int m_heigthMap;
       unsigned int m_flySpeed;
       unsigned int m_growSpeed;
 
       std::vector<CPlanet> m_vPlanet;
-      std::list<CFleet> m_vFleet;
+      std::list<CFleet> m_vFleet; ///< sorted for time finish
       CPlayer m_neutralPlayer;
 
       static const unsigned int m_cMaxPlanetRadius = 20;

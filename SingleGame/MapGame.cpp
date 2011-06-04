@@ -117,6 +117,37 @@ namespace SingleGame
 
    void CMapGame::updateFleet()
    {
+      QDateTime currentTime = QDateTime::currentDateTime();
+      QDateTime timeFinish;
+
+      std::list<CFleet>::iterator itB = m_vFleet.begin();
+      std::list<CFleet>::iterator itE = m_vFleet.end();
+
+      for(; itB != itE;)
+      {
+         timeFinish = itB->GetTimeFinish(m_flySpeed);
+
+         if(timeFinish < currentTime)
+         {
+            itB->m_toPlanet->UpdatePlanet(timeFinish, m_growSpeed);
+            if(itB->m_countFleet <= itB->m_toPlanet->m_countFleet)
+            {
+               itB->m_toPlanet->m_countFleet -= itB->m_countFleet;
+            }
+            else
+            {
+               itB->m_toPlanet->m_countFleet = itB->m_countFleet
+                  - itB->m_toPlanet->m_countFleet;
+               itB->m_toPlanet->m_pPlayer = itB->m_pPlayer;
+            }
+
+            m_vFleet.erase(itB);
+         }
+         else
+         {
+            break;
+         }
+      }
    }
 
    void CMapGame::updatePlanet(QDateTime time)
@@ -125,7 +156,7 @@ namespace SingleGame
       std::vector<CPlanet>::iterator itE = m_vPlanet.end();
       for(; itB != itE; ++itB)
       {
-         if(itB->GetID())
+         if(itB->m_pPlayer->GetID())
          {
             itB->UpdatePlanet(time, m_growSpeed);
          }
@@ -153,7 +184,7 @@ namespace SingleGame
          tempFleet.GetID();
          tempFleet.m_timeStartMove = QDateTime::currentDateTime();
 
-         m_vFleet.push_back(tempFleet);
+         m_vFleet.insert(findInsertFleetPosition(tempFleet), tempFleet);
       }
    }
 
@@ -171,6 +202,22 @@ namespace SingleGame
       }
 
       return &(*itE); /// if this case - error program
+   }
+
+   std::list<CFleet>::iterator CMapGame::findInsertFleetPosition(const CFleet& fleet)
+   {
+      std::list<CFleet>::iterator itB = m_vFleet.begin();
+      std::list<CFleet>::iterator itE = m_vFleet.end();
+
+      for(; itB != itE; ++itB)
+      {
+         if(itB->GetTimeFinish(m_flySpeed) < fleet.GetTimeFinish(m_flySpeed))
+         {
+            return itB;
+         }
+      }
+
+      return itE;
    }
 
 } // namespace SingleGame
