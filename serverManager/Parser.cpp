@@ -100,6 +100,12 @@ namespace ServerManagerDecl
 
          parseSubMesToVectorUInt(sMes, ",", posFrstBkt, posScndBkt);
 
+         if(m_vParseSubMesUInt.size() < 3)
+         {
+            SendParseMessage("Error, bad message");
+            return ptr;
+         }
+
          tempPlanet.m_planetID = m_vParseSubMesUInt[0];
          tempPlanet.m_playerID = m_vParseSubMesUInt[1];
          tempPlanet.m_countFleet = m_vParseSubMesUInt[2];
@@ -121,6 +127,12 @@ namespace ServerManagerDecl
          posScndBkt = sMes.find(')', posFrstBkt + 1);
 
          parseSubMesToVectorUInt(sMes, ",", posFrstBkt, posScndBkt);
+
+         if(m_vParseSubMesUInt.size() < 6)
+         {
+            SendParseMessage("Error, bad message");
+            return ptr;
+         }
 
          tempFleet.m_fleetID = m_vParseSubMesUInt[0];
          tempFleet.m_playerID = m_vParseSubMesUInt[1];
@@ -153,6 +165,13 @@ namespace ServerManagerDecl
       --posEndPart;
 
       parseSubMesToVectorUInt(sMes, "#", posBegPart, posEndPart);
+
+      if(m_vParseSubMesUInt.size() < 4)
+      {
+         SendParseMessage("Error, bad message");
+         return ptr;
+      }
+
       ptr->m_mapX = m_vParseSubMesUInt[0];
       ptr->m_mapY = m_vParseSubMesUInt[1];
       ptr->m_growV = m_vParseSubMesUInt[2];
@@ -171,6 +190,12 @@ namespace ServerManagerDecl
          posScndBkt = sMes.find(')', posFrstBkt + 1);
 
          parseSubMesToVectorUInt(sMes, ",", posFrstBkt, posScndBkt);
+
+         if(m_vParseSubMesUInt.size() < 6)
+         {
+            SendParseMessage("Error, bad message");
+            return ptr;
+         }
 
          tempPlanet.m_planetID = m_vParseSubMesUInt[0];
          tempPlanet.m_playerID = m_vParseSubMesUInt[1];
@@ -251,6 +276,10 @@ namespace ServerManagerDecl
       size_t posEndPart = sMes.find_first_of('#', posBegPart + 1);
 
       return convertStdStrToUInt(sMes.substr(posBegPart + 1, posEndPart - posBegPart - 1));
+   }
+
+   void CParser::SendParseMessage(const std::string& str)
+   {
    }
 
 } //namespace ServerManagerDecl

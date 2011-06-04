@@ -6,7 +6,8 @@ namespace ServerManagerDecl
 {
 /// constructor
    CServerManager::CServerManager():
-      m_connectToServer(false)
+      m_connectToServer(false),
+      m_parser()
    {
    }
 
