@@ -62,10 +62,7 @@ HEADERS += \
     Galcon.h \
     SingleGame/SingleGameManager.h \
     SingleGame/MapGame.h \
-    SingleGame/GameMapObject.h \
-    SingleGame/GameMapObject.h \
-    SingleGame/MapGame.h \
-    SingleGame/SingleGameManager.h
+    SingleGame/GameMapObject.h
 
 
 FORMS += \
