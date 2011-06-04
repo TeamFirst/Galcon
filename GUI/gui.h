@@ -26,13 +26,12 @@ public:
    virtual ~CGUI();
 
    void ShowWindow();
-   void HideWindow();
+   void DestroyWindow();
 
 public slots:
    void TakeConfirmConnectToServer(const Message::CMessageConfirmationConnectToServerPtr mess);
    void TakeError(const Message::CMessageErrorPtr mess);
    void TakeFinishGame(const Message::CMessageFinishGamePtr mess);
-   void TakeStartGame(const Message::CMessageTimeToStartGamePtr mess);
    void TakeTimeStartToGame(const Message::CMessageTimeToStartGamePtr mess);
 
    void TakeFieldSize(const unsigned int X, const unsigned int Y);
@@ -45,9 +44,9 @@ signals:
    void SendStepPlayer(const Message::CMessageStepPlayerPtr mess);
 
 private:
-   CWaitWindow * m_waitWindow;
-   CEnterWindow * m_enterWindow;
-   CPlayWindow * m_playWindow;
+   CWaitWindow* m_waitWindow;
+   CEnterWindow* m_enterWindow;
+   CPlayWindow* m_playWindow;
 
    unsigned int m_playerId;
 

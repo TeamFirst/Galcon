@@ -21,7 +21,7 @@ void CWaitWindow::ShowWindow()
    show();
 }
 
-void CWaitWindow::HideWindow()
+void CWaitWindow::DestroyWindow()
 {
    m_timer.stop();
    ui->lcdNumber->hide();
