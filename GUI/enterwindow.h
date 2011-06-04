@@ -17,7 +17,7 @@ public:
     ~CEnterWindow();
 
    void ShowWindow();
-   void HideWindow();
+   void DestroyWindow();
 
 signals:
     void SendClientToServer(Message::CMessageConnectToServerPtr);

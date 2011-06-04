@@ -3,7 +3,7 @@
 #include <QDialog>
 
 #include "serverManager/ServerManager.h"
-
+#include "message/MessageInformation.h"
 
 namespace Ui {
     class CGalconClient;
@@ -24,7 +24,7 @@ private slots:
 
    void on_pBStepPlayer_clicked();
 
-   void showInfMessage(std::string sMes);
+   void showInfMessage(Message::CMessageInformationPtr sMes);
 
 private:
     Ui::CGalconClient *ui;

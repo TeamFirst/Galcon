@@ -21,7 +21,7 @@ void CEnterWindow::ShowWindow()
    show();
 }
 
-void CEnterWindow::HideWindow()
+void CEnterWindow::DestroyWindow()
 {
    hide();
 }

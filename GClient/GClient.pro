@@ -33,6 +33,7 @@ HEADERS  += galconclient.h \
     message/MessageFinishGame.h \
     message/MessageError.h \
     message/MessageConnectToServer.h \
-    message/MessageAddView.h
+    message/MessageAddView.h \
+    message/MessageInformation.h
 
 FORMS    += galconclient.ui

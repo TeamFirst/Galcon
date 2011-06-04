@@ -30,16 +30,16 @@ void CGUI::ShowWindow()
    m_enterWindow->ShowWindow();
 }
 
-void CGUI::HideWindow()
+void CGUI::DestroyWindow()
 {
-   m_enterWindow->HideWindow();
+   m_enterWindow->DestroyWindow();
 }
 
 void CGUI::TakeConfirmConnectToServer(const Message::CMessageConfirmationConnectToServerPtr mess)
 {
     m_playerId = mess->m_playerID;
 
-    m_enterWindow->HideWindow();
+    m_enterWindow->DestroyWindow();
     m_waitWindow->ShowWindow();
 }
 
@@ -55,22 +55,19 @@ void CGUI::TakeTimeStartToGame(const Message::CMessageTimeToStartGamePtr mess)
 
 void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
 {
+   m_playWindow->DestroyWindow();
+   m_enterWindow->ShowWindow();
 }
 
 void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
 {
-   CCriticalMessage::Show("Inside program error", mess->m_strInformation.c_str());
-}
-
-void CGUI::TakeStartGame(const Message::CMessageTimeToStartGamePtr ptr)
-{   
-
+   //CCriticalMessage::Show("Inside program error", mess->m_strInformation.c_str());
 }
 
 void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
 {
    m_playWindow->CreateWindow(X, Y);
-   m_waitWindow->HideWindow();
+   m_waitWindow->DestroyWindow();
    m_playWindow->ShowWindow();
 
    Message::CMessageAddViewPtr ptr(new Message::CMessageAddView);

@@ -17,7 +17,7 @@ public:
     ~CWaitWindow();
 
    void ShowWindow();
-   void HideWindow();
+   void DestroyWindow();
 
    void SetSecToStart(const unsigned int seconds);
 
