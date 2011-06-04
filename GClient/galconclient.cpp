@@ -11,8 +11,8 @@ CGalconClient::CGalconClient(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QObject::connect(&m_serverManager, SIGNAL(SendInError(std::string)),
-                     this, SLOT(showInfMessage(std::string)));
+    QObject::connect(&m_serverManager, SIGNAL(SendInInformation(Message::CMessageInformationPtr)),
+                     this, SLOT(showInfMessage(Message::CMessageInformationPtr)));
 }
 
 CGalconClient::~CGalconClient()
@@ -47,7 +47,7 @@ void CGalconClient::on_pBStepPlayer_clicked()
    m_serverManager.TakeStepPlayer(pMes);
 }
 
-void CGalconClient::showInfMessage(std::string sMes)
+void CGalconClient::showInfMessage(Message::CMessageInformationPtr sMes)
 {
-   ui->lEInfMes->setText(sMes.c_str());
+   ui->lEInfMes->setText(sMes->m_strInformation.c_str());
 }
