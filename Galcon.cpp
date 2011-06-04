@@ -14,7 +14,7 @@ void CGalcon::connectSendersToTakers()
 {
    bool typeGame; // true - network, false - local
 
-   typeGame = true;
+   typeGame = false;
 
    if(typeGame)
    {
