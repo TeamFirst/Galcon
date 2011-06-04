@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QTimer>
 #include <string>
 #include <vector>
 
@@ -40,8 +41,12 @@ namespace SingleGame
 
       void SendInInformation(const Message::CMessageInformationPtr pMessage);
 
+   private slots:
+      void slotWaitTime();
+      void slotRunTime();
+
    private:
-      /// run timers + logic + generation map
+      /// wait timer + generation map
       void startGame(
          const unsigned int timeToStart,
          const unsigned int widthMap,
@@ -50,10 +55,15 @@ namespace SingleGame
          const unsigned int growSpeed,
          const std::string& namePlayer
          );
+      /// run timer + logic
+      void runPlay();
 
 
       CMapGame m_mapGame;
       std::vector<CPlayer> m_vPlayer;
+      QTimer m_timerWaitStart;
+      QTimer m_timerRunTime;
+      unsigned int m_timeToStart;
 
    }; // class CSingleGameManager
 

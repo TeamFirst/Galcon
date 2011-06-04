@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "MapGame.h"
 
 namespace SingleGame
@@ -5,6 +7,7 @@ namespace SingleGame
 
    CMapGame::CMapGame()
    {
+      m_neutralPlayer.SetNeutral();
    }
 
    CMapGame::~CMapGame()
@@ -22,10 +25,70 @@ namespace SingleGame
       m_heigthMap = heigthMap;
       m_flySpeed = flySpeed;
       m_growSpeed = growSpeed;
+
+      createPlanet();
    }
 
-   void CMapGame::SetPlayers(const std::vector<CPlayer>& vPlayer)
+   void CMapGame::createPlanet()
    {
+      unsigned int countPlanetX = m_widthMap / (2 * m_cMaxPlanetRadius);
+      unsigned int countPlanetY = m_heigthMap / (2 * m_cMaxPlanetRadius);
+      unsigned int countPlanet = countPlanetX * countPlanetY;
+
+      CPlanet tempPlanet;
+
+      for(unsigned int i = 0; i < countPlanet; ++i)
+      {
+         tempPlanet.GenerationID();
+         tempPlanet.m_radius = m_cMaxPlanetRadius;
+         tempPlanet.m_coordinates.x = ( m_cMaxPlanetRadius * ( 1 + i * 2) ) % m_widthMap;
+         tempPlanet.m_coordinates.y = ( m_cMaxPlanetRadius * ( 1 + (i % countPlanetX) * 2) ) % m_heigthMap;
+         tempPlanet.m_countFleet = m_cMaxFleetCount;
+         tempPlanet.m_pPlayer = &m_neutralPlayer;
+
+         m_vPlanet.push_back(tempPlanet);
+      }
+   }
+
+   void CMapGame::SetPlayers(std::vector<CPlayer>& vPlayer)
+   {
+      std::vector<CPlayer>::iterator itB = vPlayer.begin();
+
+      for(; itB != vPlayer.end(); ++itB)
+      {
+         m_vPlanet[rand() % m_vPlanet.size()].m_pPlayer = &(*itB);
+      }
+   }
+
+/// get data
+   const std::vector<CPlanet>& CMapGame::GetPlanets() const
+   {
+      return m_vPlanet;
+   }
+
+   const std::list<CFleet>& CMapGame::GetFleets() const
+   {
+      return m_vFleet;
+   }
+
+   const unsigned int CMapGame::GetWidthMap() const
+   {
+      return m_widthMap;
+   }
+
+   const unsigned int CMapGame::GetHeigthMap() const
+   {
+      return m_heigthMap;
+   }
+
+   const unsigned int CMapGame::GetFlySpeed() const
+   {
+      return m_flySpeed;
+   }
+
+   const unsigned int CMapGame::GetGrowSpeed() const
+   {
+      return m_growSpeed;
    }
 
 } // namespace SingleGame

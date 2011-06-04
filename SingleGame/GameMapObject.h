@@ -11,19 +11,40 @@ namespace SingleGame
       unsigned int y;
    }; // struct Point
 
-   struct CPlayer
+   struct CGameObject
    {
-      static unsigned int GenerationID()
+      void GenerationID()
       {
-         static unsigned int id = 0;
-         return ++id;
+         m_ID = GenerationTypeObjectID();
       }
 
-      std::string m_name;
+      unsigned int GetID() const
+      {
+         return m_ID;
+      }
+
+   protected:
+      static unsigned int GenerationTypeObjectID()
+      {
+         static unsigned int sID = 0;
+         return ++sID;
+      }
+
       unsigned int m_ID;
+
+   }; // struct CGameObject
+
+   struct CPlayer : public CGameObject
+   {
+      void SetNeutral()
+      {
+         CGameObject::m_ID = 0;
+      }
+
+      std::string m_name;      
    }; // struct CPlayer
 
-   struct CPlanet
+   struct CPlanet : public CGameObject
    {
       CPlayer* m_pPlayer;
       Point m_coordinates;
@@ -33,7 +54,7 @@ namespace SingleGame
       QTime m_timeLastUpdate;
    }; // struct CPlanet
 
-   struct CFleet
+   struct CFleet : public CGameObject
    {
       CPlayer* m_pPlayer;
       CPlanet* m_fromPlanet;
