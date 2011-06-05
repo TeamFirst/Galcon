@@ -34,11 +34,18 @@ namespace GUI
    signals:
        void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
    private:
+       enum EMouseClick {
+          ESingle,
+          EDouble,
+          ENone
+       };
+
        CGUIView* m_view;
        unsigned int m_playerId;
 
-       bool m_mouseSelection;
-       bool m_mouseActive;
+       EMouseClick m_mouseClick;
+       bool m_mouseRelease;
+       bool m_mousePlanetState;
        int m_mousePressedX;
        int m_mousePressedY;
        int m_mouseCurrentX;

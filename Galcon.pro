@@ -74,7 +74,10 @@ FORMS += \
 
 RESOURCES += \
     resource.qrc \
-    space.qrc
+    space.qrc \
+    GUI/Spaceship.qrc
 
 OTHER_FILES += \
-    GUI/sky.png
+    GUI/sky.png \
+    GUI/Spaceship.png \
+    GUI/SpaceshipSmall.png

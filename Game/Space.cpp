@@ -74,7 +74,6 @@ namespace Game
          }
          if (iter != m_fleets.end())
          {
-            qDebug("Delete fleet");
             CFleet* toDelete = iter.operator *();
             m_fleets.erase(iter);
             delete toDelete;
@@ -141,7 +140,6 @@ namespace Game
                                     currMessFleet.m_playerID,
                                     currMessFleet.m_countFleet,
                                     currMessFleet.m_percentRoute);
-            qDebug("New fleet");
             m_fleets.push_front(newFleet);
          }
       }

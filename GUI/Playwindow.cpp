@@ -38,7 +38,7 @@ namespace GUI
 
       // Draw mouse selection rectangle
       painter.setPen(Qt::blue);
-      if (m_mouseSelection)
+      if (!m_mouseRelease && !m_mousePlanetState)
       {
          QLine l1(m_mousePressedX, m_mousePressedY, m_mousePressedX, m_mouseCurrentY);
          QLine l2(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mousePressedY);
@@ -64,39 +64,77 @@ namespace GUI
    }
 
    void CPlayWindow::mousePressEvent(QMouseEvent* event)
-   {
-      m_mouseSelection = true;
-      m_mousePressedX = event->pos().x();
-      m_mousePressedY = event->pos().y();
-      m_mouseCurrentX = event->pos().x();
-      m_mouseCurrentY = event->pos().y();
+      {
+         m_mouseClick = ESingle;
+         m_mouseRelease = false;
+         m_mousePressedX = event->pos().x();
+         m_mousePressedY = event->pos().y();
+      }
 
-      m_mouseActive = !m_mouseActive;
+   void CPlayWindow::mouseDoubleClickEvent(QMouseEvent* event)
+   {
+      m_mouseClick = EDouble;
+      m_mouseRelease = false;
    }
 
    void CPlayWindow::mouseReleaseEvent(QMouseEvent* event)
    {
-      m_mouseSelection = false;
-      //m_mouseActive = !m_mouseActive;
-      if ((m_mousePressedX == event->pos().x()) &&
-            (m_mousePressedY == event->pos().y()) && m_mouseActive)
+      m_mouseRelease = true;
+      m_mouseCurrentX = event->pos().x();
+      m_mouseCurrentY = event->pos().y();
+
+      if (m_mouseClick == ESingle)
       {
-         mouseClick();
+         if ((m_mousePressedX == event->pos().x()) &&
+               (m_mousePressedY == event->pos().y()))
+         {
+            if (m_mousePlanetState)
+            {
+               Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
+               if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())
+               {
+                  emit SendStepPlayer(mess);
+               }
+                m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
+               m_mousePlanetState = false;
+            }
+            else
+            {
+               m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
+               m_mousePlanetState = true;
+            }
+         }
+         else
+         {
+            m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
+            m_mousePlanetState = true;
+         }
       }
+      else if (m_mouseClick = EDouble)
+      {
+         m_view->CheckAll(event->pos().x(), event->pos().y());
+         m_mousePlanetState = true;
+      }
+      else
+      {
+         //Bug
+      }
+      m_mouseClick = ENone;
       update();
    }
 
    void CPlayWindow::mouseMoveEvent(QMouseEvent* event)
    {
-      if (m_mouseSelection)
+      if (m_mouseClick == ESingle && !m_mouseRelease)
       {
          m_mouseCurrentX = event->pos().x();
          m_mouseCurrentY = event->pos().y();
-         if (m_mouseActive)
-         {
-            m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
-         }
+         m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
          update();
+      }
+      else if (m_mouseClick = ENone)
+      {
+         //to do later
       }
    }
 
@@ -107,28 +145,5 @@ namespace GUI
       m_view->SetPercent(m_view->GetPercent() + numSteps);
       update();
    }
-
-   void CPlayWindow::mouseClick()
-   {
-      if (m_mouseActive)
-      {
-         // Send message to server
-         Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
-         if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())
-         {
-            emit SendStepPlayer(mess);
-         }
-      }
-
-      m_mouseActive = false;
-      m_mouseSelection = false;
-      m_view->Selection(m_mousePressedX, m_mousePressedY,m_mousePressedX, m_mousePressedY);
-   }
-
-   void CPlayWindow::mouseDoubleClickEvent(QMouseEvent* event)
-   {
-      m_view->CheckAll(event->pos().x(), event->pos().y());
-   }
-
 } //Namespace GUI
 

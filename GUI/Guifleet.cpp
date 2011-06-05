@@ -1,4 +1,5 @@
 #include <QVariant>
+#include <cmath>
 #include "Guifleet.h"
 #include "Guiplanet.h"
 
@@ -15,14 +16,18 @@ namespace GUI
       m_fleet->GetFixedPoint(fX,fY);
       int x(d_x), y(d_y);
       int fixX(fX), fixY(fY);
-      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
-      painter->setPen(Qt::white);
-      painter->drawEllipse(x - 5, y - 5, 10 ,10);
-      painter->drawLine(x,y, fixX, fixY);
-      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
-      painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
-      painter->drawText(x - 5, y - 10,
-               QVariant(quint32(m_fleet->GetShipCount())).toString());
+      //double angle = atan();
+//      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
+//      painter->setPen(Qt::white);
+//      painter->drawEllipse(x - 5, y - 5, 10 ,10);
+//      painter->drawLine(x,y, fixX, fixY);
+//      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
+//      painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
+//      painter->drawText(x - 5, y - 10,
+//               QVariant(quint32(m_fleet->GetShipCount())).toString());
+      QPixmap image (":/SpaceshipSmall.png");
+      painter->drawPixmap(x - 30, y - 30, image);
+
 
    }
 } //Namespace GUI
