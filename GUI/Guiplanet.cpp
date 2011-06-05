@@ -18,6 +18,7 @@ namespace GUI
       unsigned x(0), y(0);
       m_planet->GetPosition(x,y);
       /// If planet is selected - draw a bit larger circle first
+      painter->setPen(Qt::black);
       if(m_active)
       {
          painter->setBrush(Qt::blue);

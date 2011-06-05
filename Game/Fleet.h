@@ -17,6 +17,7 @@ namespace Game
       //Output into GUI
       void GetPosition (double& x, double& y) const;
       void GetFixedPoint (double& x, double& y) const;
+      double GetAngle() const;
 
       unsigned long GetShipCount() const;
       unsigned short GetPlayerId() const;

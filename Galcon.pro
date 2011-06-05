@@ -65,6 +65,7 @@ HEADERS += \
     GUI/Errorwindow.h \
     GUI/Waitwindow.h \
     GUI/SceneUpdates.h \
+    SingleGame/Bot.h \
     SingleGame/Bot.h
 
 

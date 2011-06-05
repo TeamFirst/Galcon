@@ -104,4 +104,32 @@ namespace Game
       x = (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualX;
       y = (length * ((double)m_toPl.y - m_actualY) * 100) / ((100 - (double)m_percentPassed) * m_distance) + m_actualY;
    }
+
+   double CFleet::GetAngle() const
+   {
+      const double pi = 3.141592653;
+      if (m_toPl.x < m_fromPl.x)
+      {
+         if (m_toPl.y < m_fromPl.y)
+         {
+            return -asin((m_fromPl.x - m_toPl.x)/m_distance);
+         }
+         else
+         {
+            return (-pi/2) - acos((m_fromPl.x - m_toPl.x)/m_distance);
+         }
+      }
+      else
+      {
+         if (m_toPl.y < m_fromPl.y)
+         {
+            return asin((m_toPl.x - m_fromPl.x)/m_distance);
+         }
+         else
+         {
+            return pi/2 + acos((m_toPl.x - m_fromPl.x)/m_distance);
+         }
+      }
+      return 0;
+   }
 } // Namepace Game
