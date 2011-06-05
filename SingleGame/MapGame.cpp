@@ -135,12 +135,15 @@ namespace SingleGame
 
       for(; itB != itE;)
       {
+         //CFleet tFleet = *itB;
          timeFinish = itB->GetTimeFinish(m_flySpeed);
-         CFleet tFleet = *itB;
 
          if(timeFinish < currentTime)
          {
-            itB->m_toPlanet->UpdatePlanet(timeFinish, m_growSpeed);
+            if(!itB->m_toPlanet->GetID())
+            {
+               itB->m_toPlanet->UpdatePlanet(timeFinish, m_growSpeed);
+            }
             if(itB->m_countFleet <= itB->m_toPlanet->m_countFleet)
             {
                itB->m_toPlanet->m_countFleet -= itB->m_countFleet;
@@ -150,9 +153,10 @@ namespace SingleGame
                itB->m_toPlanet->m_countFleet = itB->m_countFleet
                   - itB->m_toPlanet->m_countFleet;
                itB->m_toPlanet->m_pPlayer = itB->m_pPlayer;
+               itB->m_toPlanet->m_timeLastUpdate = timeFinish;
             }
 
-            m_vFleet.erase(itB);
+            itB = m_vFleet.erase(itB);
          }
          else
          {
@@ -192,7 +196,7 @@ namespace SingleGame
          tempFleet.m_countFleet = getPlanet(*itB)->m_countFleet * percent / 100;
          tempFleet.m_fromPlanet->m_countFleet -= tempFleet.m_countFleet;
          tempFleet.m_toPlanet = finishPlanet;
-         tempFleet.GetID();
+         tempFleet.GenerationID();
          tempFleet.m_timeStartMove = QDateTime::currentDateTime();
          tempFleet.m_pPlayer = getPlanet(*itB)->m_pPlayer;
 
