@@ -230,14 +230,10 @@ namespace SingleGame
       tempPlayer.m_name = "Bot1";
       tempPlayer.GenerationID();
       m_vPlayer.push_back(tempPlayer);
-      /*tempBot.CreateBot(
-               &(*m_vPlayer.insert(m_vPlayer.end(),tempPlayer)),
-               &m_mapGame);
-      m_vBot.push_back(tempBot);*/
 
-      tempPlayer.m_name = "Bot2";
+      /*tempPlayer.m_name = "Bot2";
       tempPlayer.GenerationID();
-      m_vPlayer.push_back(tempPlayer);
+      m_vPlayer.push_back(tempPlayer);*/
 
       std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
       std::vector<CPlayer>::iterator itE = m_vPlayer.end();
