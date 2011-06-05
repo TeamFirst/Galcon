@@ -114,6 +114,8 @@ namespace Game
    {
       // For every given fleet
       Message::CStateFleet currMessFleet;
+      if (message.empty()) qDebug("No fleets");
+      else qDebug("Are fleets");
       foreach (currMessFleet, message)
       {
          CFleet* currFleet;
@@ -124,6 +126,7 @@ namespace Game
          {
             if (currFleet->GetId() == currMessFleet.m_fleetID)
             {
+               qDebug("Existing fleet");
                currFleet->SetPercent(currMessFleet.m_percentRoute);
                flag = false;
                break;
@@ -133,6 +136,7 @@ namespace Game
          // If didn't found - add it to list
          if (flag)
          {
+            qDebug("New fleet");
             CPlanet* planetFr = GetPlanetById(currMessFleet.m_planetStartID);
             CPlanet* planetTo = GetPlanetById(currMessFleet.m_planetFinishID);
             CFleet* newFleet = new CFleet(currMessFleet.m_fleetID,

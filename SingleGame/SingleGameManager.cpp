@@ -31,7 +31,7 @@ namespace SingleGame
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
       QMessageBox mBox;
-      mBox.setText("take spep player");
+      mBox.setText("take step player");
       mBox.exec();
 
       m_mapGame.UpdateStateMap(

@@ -128,7 +128,7 @@ namespace GUI
       mess->m_finishPlanetID = destination;
       mess->m_startPlanetID = departure;
 
-      if ((!flagDest) || (departure.empty()))
+      if (!flagDest)
       {
          /// If no destination selected or no departure planets
          mess->m_percent = 0;

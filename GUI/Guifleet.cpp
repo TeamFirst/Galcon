@@ -13,8 +13,10 @@ namespace GUI
       m_fleet->GetFixedPoint(fX,fY);
       unsigned int x(d_x), y(d_y);
       unsigned int fixX(fX), fixY(fY);
+      painter->setBrush(Qt::yellow);
       painter->drawEllipse(x - 5, y - 5, 10 ,10);
       painter->drawLine(x,y, fixX, fixY);
       painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
+
    }
 } //Namespace GUI
