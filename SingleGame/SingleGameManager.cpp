@@ -1,4 +1,3 @@
-#include <QMessageBox>
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -30,10 +29,6 @@ namespace SingleGame
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
-      QMessageBox mBox;
-      mBox.setText("take step player");
-      mBox.exec();
-
       m_mapGame.UpdateStateMap(
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
