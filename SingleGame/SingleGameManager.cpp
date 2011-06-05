@@ -66,6 +66,15 @@ namespace SingleGame
          m_timerWaitStart.start();
       }
 
+      /// register bots
+      tempPlayer.m_name = "Bot1";
+      tempPlayer.GenerationID();
+      m_vPlayer.push_back(tempPlayer);
+
+      tempPlayer.m_name = "Bot2";
+      tempPlayer.GenerationID();
+      m_vPlayer.push_back(tempPlayer);
+
       /// generation play map
       m_mapGame.GenerationMap(widthMap, heigthMap, flySpeed, growSpeed);
       m_mapGame.SetPlayers(m_vPlayer);
