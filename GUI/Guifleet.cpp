@@ -14,8 +14,10 @@ namespace GUI
       unsigned int x(d_x), y(d_y);
       unsigned int fixX(fX), fixY(fY);
       painter->setBrush(Qt::yellow);
+      painter->setPen(Qt::white);
       painter->drawEllipse(x - 5, y - 5, 10 ,10);
       painter->drawLine(x,y, fixX, fixY);
+      painter->setBrush(Qt::red);
       painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
 
    }
