@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     SingleGame/MapGame.cpp \
     GUI/Enterwindow.cpp \
     GUI/Gui.cpp \
-    GUI/Errorwindow.cpp
+    GUI/Errorwindow.cpp \
+    SingleGame/Bot.cpp
 
 
 HEADERS += \
@@ -63,7 +64,8 @@ HEADERS += \
     GUI/Enterwindow.h \
     GUI/Errorwindow.h \
     GUI/Waitwindow.h \
-    GUI/SceneUpdates.h
+    GUI/SceneUpdates.h \
+    SingleGame/Bot.h
 
 
 FORMS += \

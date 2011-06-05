@@ -2,20 +2,22 @@
 
 namespace SingleGame
 {
-/// constructor
+/// ---------------- constructor
    CSingleGameManager::CSingleGameManager()
    {
       m_timerWaitStart.setInterval(1000);
       m_timerRunTime.setInterval(500);
+      m_timerBot.setInterval(1000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
+      connect(&m_timerBot, SIGNAL(timeout()), this, SLOT(slotStepBot()));
    }
 
    CSingleGameManager::~CSingleGameManager()
    {
    }
 
-/// publoc slots
+/// -------------------------- publoc slots
    void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage)
    {
       startGame(
@@ -24,7 +26,9 @@ namespace SingleGame
                500, //< heigth map
                20, //< fly speed
                1, //< grow spped
-               pMessage->m_namePlayer);
+               pMessage->m_namePlayer,
+               2 //< count bots
+               );
    }
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
@@ -35,14 +39,30 @@ namespace SingleGame
                pMessage->m_startPlanetID);
    }
 
-/// generation start data
+   void CSingleGameManager::slotStepBot()
+   {
+      std::vector<CBot>::iterator itB = m_vBot.begin();
+      std::vector<CBot>::iterator itE = m_vBot.end();
+
+      Message::CMessageStepPlayerPtr ptr(
+               new Message::CMessageStepPlayer);
+
+      for(; itB != itE; ++itB)
+      {
+         ptr = itB->StepBot();
+         TakeStepPlayer(ptr);
+      }
+   }
+
+/// ----------------- generation start data
    void CSingleGameManager::startGame(
       const unsigned int timeToStart,
       const unsigned int widthMap,
       const unsigned int heigthMap,
       const unsigned int flySpeed,
       const unsigned int growSpeed,
-      const std::string& namePlayer
+      const std::string& namePlayer,
+      const unsigned int countBot
       )
    {
       /// register player
@@ -66,14 +86,8 @@ namespace SingleGame
          m_timerWaitStart.start();
       }
 
-      /// register bots
-      tempPlayer.m_name = "Bot1";
-      tempPlayer.GenerationID();
-      m_vPlayer.push_back(tempPlayer);
-
-      tempPlayer.m_name = "Bot2";
-      tempPlayer.GenerationID();
-      m_vPlayer.push_back(tempPlayer);
+      /// bots
+      createBot(countBot);
 
       /// generation play map
       m_mapGame.GenerationMap(widthMap, heigthMap, flySpeed, growSpeed);
@@ -86,7 +100,7 @@ namespace SingleGame
       }
    }
 
-/// timers
+/// --------------------------- timers
    void CSingleGameManager::slotWaitTime()
    {
       //void SendTimeToStart(const Message::CMessageTimeToStartGamePtr pMessage);
@@ -162,7 +176,7 @@ namespace SingleGame
       SendStateMap(ptr);
    }
 
-/// run play
+/// ------------------------- run play
    void CSingleGameManager::runPlay()
    {
       Message::CMessageStartMapGamePtr ptr(
@@ -201,7 +215,38 @@ namespace SingleGame
 
       m_timerRunTime.start();
 
-      SendStartGame(ptr);      
+      SendStartGame(ptr);
+
+      m_timerBot.start();
+   }
+
+/// -------------------------------- bot
+   void CSingleGameManager::createBot(const unsigned int countBot)
+   {
+      CBot tempBot;
+      CPlayer tempPlayer;
+
+      /// register bots
+      tempPlayer.m_name = "Bot1";
+      tempPlayer.GenerationID();
+      m_vPlayer.push_back(tempPlayer);
+      /*tempBot.CreateBot(
+               &(*m_vPlayer.insert(m_vPlayer.end(),tempPlayer)),
+               &m_mapGame);
+      m_vBot.push_back(tempBot);*/
+
+      tempPlayer.m_name = "Bot2";
+      tempPlayer.GenerationID();
+      m_vPlayer.push_back(tempPlayer);
+
+      std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
+      std::vector<CPlayer>::iterator itE = m_vPlayer.end();
+
+      for(++itB; itB != itE; ++itB)
+      {
+         tempBot.CreateBot(&(*itB), &m_mapGame);
+         m_vBot.push_back(tempBot);
+      }
    }
 
 } // namespace SingleGame

@@ -78,6 +78,7 @@ namespace SingleGame
          if(!m_vPlanet[index].m_pPlayer->GetID())
          {
             m_vPlanet[index].m_pPlayer = &(*itB);
+            itB->AddPlanet(&m_vPlanet[index]);
             ++itB;
          }
       }
@@ -153,20 +154,29 @@ namespace SingleGame
             if(itB->m_toPlanet->m_pPlayer->GetID()
                   == itB->m_pPlayer->GetID())
             {
+               /// go to owner planet
                itB->m_toPlanet->m_countFleet += itB->m_countFleet;
             }
             else if(itB->m_countFleet <= itB->m_toPlanet->m_countFleet)
             {
+               /// no take planet
                itB->m_toPlanet->m_countFleet -= itB->m_countFleet;
             }
             else
             {
+               /// take planet
                itB->m_toPlanet->m_countFleet = itB->m_countFleet
                   - itB->m_toPlanet->m_countFleet;
+               if(itB->m_toPlanet->m_pPlayer->GetID() != 0)
+               {
+                  itB->m_toPlanet->m_pPlayer->DeletePlanet(itB->m_toPlanet->GetID());
+               }
                itB->m_toPlanet->m_pPlayer = itB->m_pPlayer;
                itB->m_toPlanet->m_timeLastUpdate = timeFinish;
+               itB->m_pPlayer->AddPlanet(&(*itB->m_toPlanet));
             }
 
+            itB->m_pPlayer->DeleteFleet(itB->GetID());
             itB = m_vFleet.erase(itB);
          }
          else
@@ -198,6 +208,7 @@ namespace SingleGame
 
       std::vector<unsigned int>::const_iterator itB = startPlanetID.begin();
       std::vector<unsigned int>::const_iterator itE = startPlanetID.end();
+      std::list<CFleet>::iterator itInsertFleet;
 
       CPlanet* finishPlanet = getPlanet(finishPlanetID);
 
@@ -211,7 +222,10 @@ namespace SingleGame
          tempFleet.m_timeStartMove = QDateTime::currentDateTime();
          tempFleet.m_pPlayer = getPlanet(*itB)->m_pPlayer;
 
-         m_vFleet.insert(findInsertFleetPosition(tempFleet), tempFleet);
+         itInsertFleet =
+               m_vFleet.insert(findInsertFleetPosition(tempFleet), tempFleet);
+
+         tempFleet.m_pPlayer->AddFleet(&(*itInsertFleet));
       }
    }
 

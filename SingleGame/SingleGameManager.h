@@ -15,6 +15,7 @@
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageInformation.h"
 #include "MapGame.h"
+#include "Bot.h"
 
 
 namespace SingleGame
@@ -44,6 +45,7 @@ namespace SingleGame
    private slots:
       void slotWaitTime();
       void slotRunTime();
+      void slotStepBot();
 
    private:
       /// wait timer + generation map
@@ -53,17 +55,22 @@ namespace SingleGame
          const unsigned int heigthMap,
          const unsigned int flySpeed,
          const unsigned int growSpeed,
-         const std::string& namePlayer
+         const std::string& namePlayer,
+         const unsigned int countBot
          );
       /// run timer + logic
       void runPlay();
 
+      void createBot(const unsigned int countBot);
 
       CMapGame m_mapGame;
       std::vector<CPlayer> m_vPlayer;
       QTimer m_timerWaitStart;
       QTimer m_timerRunTime;
+      QTimer m_timerBot;
       unsigned int m_timeToStart;
+
+      std::vector<CBot> m_vBot;
 
    }; // class CSingleGameManager
 

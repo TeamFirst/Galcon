@@ -6,6 +6,8 @@
 
 namespace SingleGame
 {
+   struct CPlayer;
+
    struct Point
    {
       unsigned int x;
@@ -33,17 +35,7 @@ namespace SingleGame
 
       unsigned int m_ID;
 
-   }; // struct CGameObject
-
-   struct CPlayer : public CGameObject
-   {
-      void SetNeutral()
-      {
-         CGameObject::m_ID = 0;
-      }
-
-      std::string m_name;      
-   }; // struct CPlayer
+   }; // struct CGameObject   
 
    struct CPlanet : public CGameObject
    {
@@ -85,5 +77,61 @@ namespace SingleGame
          return m_timeStartMove.addMSecs((distance / v) * 1000);
       }
    }; // struct CFleet
+
+   struct CPlayer : public CGameObject
+   {
+      void SetNeutral()
+      {
+         CGameObject::m_ID = 0;
+      }
+
+      std::string m_name;
+
+      void AddFleet(CFleet* pFleet)
+      {
+         m_vFleet.push_back(pFleet);
+      }
+
+      void DeleteFleet(const unsigned int ID)
+      {
+         std::list<CFleet*>::iterator itB = m_vFleet.begin();
+         std::list<CFleet*>::iterator itE = m_vFleet.end();
+         for(; itB != itE; ++itB)
+         {
+            if((*itB)->GetID() == ID)
+            {
+               m_vFleet.erase(itB);
+               break;
+            }
+         }
+      }
+
+      void AddPlanet(CPlanet* pPlanet)
+      {
+         m_vPlanet.push_back(pPlanet);
+      }
+
+      void DeletePlanet(const unsigned int ID)
+      {
+         std::list<CPlanet*>::iterator itB = m_vPlanet.begin();
+         std::list<CPlanet*>::iterator itE = m_vPlanet.end();
+         for(; itB != itE; ++itB)
+         {
+            if((*itB)->GetID() == ID)
+            {
+               m_vPlanet.erase(itB);
+               break;
+            }
+         }
+      }
+
+      bool Empty() const ///< return true if player no have fleets or planets
+      {
+         return m_vPlanet.empty() || m_vFleet.empty();
+      }
+
+      std::list<CPlanet*> m_vPlanet;
+      std::list<CFleet*> m_vFleet;
+   }; // struct CPlayer
 
 } // namespace SingleGame
