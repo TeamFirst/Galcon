@@ -42,7 +42,7 @@ namespace Game
    void CSpace::Update(const double i_time)
    {
       double plGrowth = i_time * m_growth;
-      double flMove = i_time * m_speed;
+      double flMove = i_time * (double)m_speed;
 
       // Make growth on planets
       for (unsigned int i = 0; i < m_planets.size(); ++i)
@@ -142,6 +142,7 @@ namespace Game
                                     currMessFleet.m_playerID,
                                     currMessFleet.m_countFleet,
                                     currMessFleet.m_percentRoute);
+            qDebug("New fleet");
             m_fleets.push_back(newFleet);
          }
       }

@@ -150,9 +150,20 @@ namespace GUI
       return m_playerId;
    }
 
-   void CGUIView::SetPercent(unsigned int percent)
+   void CGUIView::SetPercent(int percent)
    {
-      m_percent = percent;
+      if (percent <= 0)
+      {
+         m_percent = 0;
+      }
+      else if (percent >= 100)
+      {
+         m_percent = 100;
+      }
+      else
+      {
+         m_percent = percent;
+      }
    }
 
    void CGUIView::SetPlayerId(unsigned int id)

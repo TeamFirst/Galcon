@@ -82,7 +82,7 @@ namespace Game
 
    void CFleet::IncreaseWay(double onWay)
    {
-      double onPerc = 100.0 * onWay/m_distance;
+      double onPerc = 100 * onWay/m_distance;
       this->SetPercent(m_percentPassed + onPerc);
    }
 

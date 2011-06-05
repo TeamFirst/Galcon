@@ -32,7 +32,7 @@ namespace GUI
        unsigned int GetPercent() const;
 
        void SetPlayerId(unsigned int id);
-       void SetPercent(unsigned int percent);
+       void SetPercent(int percent);
 
    private:
       unsigned int m_width;
