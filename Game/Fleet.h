@@ -10,7 +10,7 @@ namespace Game
       CFleet(unsigned int id, CPlanet* from, CPlanet* to,
              unsigned int playerId, unsigned long number, double percent);
 
-      void SetPercent(unsigned short percent); //For synhronization with server
+      void SetPercent(const double percent); //For synhronization with server
 
       void IncreaseWay(double onWay); //For simulation
 

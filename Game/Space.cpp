@@ -127,7 +127,6 @@ namespace Game
             {
                currFleet->SetPercent(currMessFleet.m_percentRoute);
                flag = false;
-               break;
             }
          }
 
@@ -143,7 +142,7 @@ namespace Game
                                     currMessFleet.m_countFleet,
                                     currMessFleet.m_percentRoute);
             qDebug("New fleet");
-            m_fleets.push_back(newFleet);
+            m_fleets.push_front(newFleet);
          }
       }
    }

@@ -57,7 +57,7 @@ namespace Game
       return m_number;
    }
 
-   void CFleet::SetPercent(const unsigned short i_nPerc)
+   void CFleet::SetPercent(const double i_nPerc)
    {
       m_percentPassed = i_nPerc;
       if (m_percentPassed >= 100)

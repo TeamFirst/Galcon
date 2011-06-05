@@ -45,8 +45,9 @@ namespace Game
 
    void CGame::SlotStateMap(Message::CMessageStateMapPtr data)
    {
-      m_space->SetFleets(data->m_fleetState);
       m_space->SetPlanets(data->m_planetState);
+      m_space->SetFleets(data->m_fleetState);
+
 
       m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
    }
