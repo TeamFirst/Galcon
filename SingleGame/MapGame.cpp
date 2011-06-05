@@ -72,9 +72,14 @@ namespace SingleGame
    {
       std::vector<CPlayer>::iterator itB = vPlayer.begin();
 
-      for(; itB != vPlayer.end(); ++itB)
+      for(int index = 0; itB != vPlayer.end();)
       {
-         m_vPlanet[rand() % m_vPlanet.size()].m_pPlayer = &(*itB);
+         index = rand() % m_vPlanet.size();
+         if(!m_vPlanet[index].m_pPlayer->GetID())
+         {
+            m_vPlanet[index].m_pPlayer = &(*itB);
+            ++itB;
+         }
       }
    }
 
