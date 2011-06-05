@@ -1,3 +1,4 @@
+#include <QVariant>
 #include "Guifleet.h"
 
 namespace GUI
@@ -19,6 +20,8 @@ namespace GUI
       painter->drawLine(x,y, fixX, fixY);
       painter->setBrush(Qt::red);
       painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
+      painter->drawText(x - 5, y - 10,
+               QVariant(quint32(m_fleet->GetShipCount())).toString());
 
    }
 } //Namespace GUI
