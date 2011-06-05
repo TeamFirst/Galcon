@@ -127,7 +127,7 @@ namespace SingleGame
 
       bool Empty() const ///< return true if player no have fleets or planets
       {
-         return m_vPlanet.empty() || m_vFleet.empty();
+         return m_vPlanet.empty() && m_vFleet.empty();
       }
 
       std::list<CPlanet*> m_vPlanet;

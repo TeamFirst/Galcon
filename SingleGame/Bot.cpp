@@ -43,7 +43,7 @@ namespace SingleGame
             m_mapGame->GetPlanets()[rand() % countPlanet].GetID();
       }
 
-      ptr->m_percent = 50;
+      ptr->m_percent = 1;
 
       return ptr;
    }

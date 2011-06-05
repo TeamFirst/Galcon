@@ -7,7 +7,7 @@ namespace SingleGame
    {
       m_timerWaitStart.setInterval(1000);
       m_timerRunTime.setInterval(500);
-      m_timerBot.setInterval(1000);
+      m_timerBot.setInterval(100000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
       connect(&m_timerBot, SIGNAL(timeout()), this, SLOT(slotStepBot()));
@@ -174,6 +174,7 @@ namespace SingleGame
       }
 
       SendStateMap(ptr);
+      checkEndGame();
    }
 
 /// ------------------------- run play
@@ -218,6 +219,38 @@ namespace SingleGame
       SendStartGame(ptr);
 
       m_timerBot.start();
+   }
+
+   void CSingleGameManager::checkEndGame()
+   {
+      std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
+      std::vector<CPlayer>::iterator itE = m_vPlayer.end();
+
+      unsigned int countPlayers = 0;
+      unsigned int winnId = 0;
+
+      for(; itB != itE; ++itB)
+      {
+         if(!itB->Empty())
+         {
+            winnId = itB->GetID();
+            ++countPlayers;
+         }
+      }
+
+      if(countPlayers <= 1)
+      {
+         m_timerBot.stop();
+         m_timerRunTime.stop();
+
+         //void SendFinishGame(const Message::CMessageFinishGamePtr pMessage);
+         Message::CMessageFinishGamePtr ptr(
+                  new Message::CMessageFinishGame);
+         //unsigned int m_playerID;
+
+         ptr->m_playerID = winnId;
+         SendFinishGame(ptr);
+      }
    }
 
 /// -------------------------------- bot

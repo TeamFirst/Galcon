@@ -62,6 +62,7 @@ namespace SingleGame
       void runPlay();
 
       void createBot(const unsigned int countBot);
+      void checkEndGame();
 
       CMapGame m_mapGame;
       std::vector<CPlayer> m_vPlayer;
