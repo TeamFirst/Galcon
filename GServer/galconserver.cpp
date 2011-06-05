@@ -103,7 +103,7 @@ void CGalconServer::sendToConnectedClients( const QString& str )
 void CGalconServer::on_pBSC_CONNID_clicked()
 {
    m_mesStr.clear();
-   m_mesStr = "SC_CONNID#3##";
+   m_mesStr = "SC_CONNID#1##";
    ui->lESend->setText(m_mesStr);
 }
 
@@ -117,7 +117,7 @@ void CGalconServer::on_pBSC_TIMETOSTART_clicked()
 void CGalconServer::on_pBSC_START_clicked()
 {
    m_mesStr.clear();
-   m_mesStr.append("SC_START#500#400#2#25#(1,1,120,140,12,20)(2,0,40,200,10,15)(3,0,250,70,45,8)");
+   m_mesStr.append("SC_START#500#400#2#25#(1,1,120,140,12,20)(2,0,40,200,10,15)(3,1,250,70,45,8)");
    m_mesStr.append("(4,2,280,260,12,20)#(1,Red Fox)(2,Star_123456)##");
    ui->lESend->setText(m_mesStr);
 }

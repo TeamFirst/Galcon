@@ -1,4 +1,6 @@
 #include <QVariant>
+#include <QRadialGradient>
+
 #include "Guiplanet.h"
 
 namespace GUI
@@ -22,12 +24,16 @@ namespace GUI
          painter->drawEllipse(x - m_planet->GetRadius()/2 - 5, y - m_planet->GetRadius()/2 - 5,
                              m_planet->GetRadius() + 10, m_planet->GetRadius() + 10);
       }
-      painter->setBrush(GetColor(m_planet->GetPlayerId()));
-
-      painter->setBrush(br);
+      QRadialGradient gr(x, y, m_planet->GetRadius(), x, y);
+      gr.setColorAt(0.0, GetColor(m_planet->GetPlayerId()));
+      gr.setColorAt(0.8, Qt::darkGray);
+      gr.setColorAt(1.0, Qt::black);
+      painter->setPen(Qt::NoPen);
+      painter->setBrush(gr);
       painter->drawEllipse(x - m_planet->GetRadius()/2, y - m_planet->GetRadius()/2,
                           m_planet->GetRadius(), m_planet->GetRadius());
       /// Draw amount of army on planet
+      painter->setPen(Qt::white);
       painter->drawText(x - m_planet->GetRadius()/2, y - m_planet->GetRadius()/2,
                         QVariant(quint32(m_planet->GetArmy())).toString());
    }
