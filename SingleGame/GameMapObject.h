@@ -72,7 +72,7 @@ namespace SingleGame
       CPlanet* m_toPlanet;
       unsigned int m_countFleet;
 
-      QDateTime m_timeStartMove;
+      QDateTime m_timeStartMove;      
 
       QDateTime GetTimeFinish(const unsigned int v) const
       {
@@ -80,12 +80,9 @@ namespace SingleGame
             (m_fromPlanet->m_coordinates.x - m_toPlanet->m_coordinates.x)
             * (m_fromPlanet->m_coordinates.x - m_toPlanet->m_coordinates.x)
             + (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y)
-            * (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y));
+            * (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y));         
 
-         QDateTime tempTime = m_timeStartMove;
-         tempTime.addMSecs((distance / v) * 1000);
-
-         return tempTime;
+         return m_timeStartMove.addMSecs((distance / v) * 1000);;
       }
    }; // struct CFleet
 

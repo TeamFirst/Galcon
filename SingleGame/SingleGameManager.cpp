@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -6,7 +7,7 @@ namespace SingleGame
    CSingleGameManager::CSingleGameManager()
    {
       m_timerWaitStart.setInterval(1000);
-      m_timerRunTime.setInterval(2000);
+      m_timerRunTime.setInterval(1000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
    }
@@ -22,13 +23,17 @@ namespace SingleGame
                0, //< time to start
                1000, //< width map
                500, //< heigth map
-               1, //< fly speed
+               20, //< fly speed
                1, //< grow spped
                pMessage->m_namePlayer);
    }
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
+      QMessageBox mBox;
+      mBox.setText("take spep player");
+      mBox.exec();
+
       m_mapGame.UpdateStateMap(
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
@@ -111,6 +116,7 @@ namespace SingleGame
       Message::CStateFleet tempFleet;
       for(; itBFleet != itEFleet; ++itBFleet)
       {
+         CFleet tFleet = *itBFleet;
          //std::vector<CStateFleet> m_fleetState;
          //   unsigned int m_countFleet;
          tempFleet.m_countFleet = itBFleet->m_countFleet;
@@ -125,7 +131,7 @@ namespace SingleGame
          //   unsigned int m_planetFinishID;
          tempFleet.m_planetFinishID = itBFleet->m_toPlanet->GetID();
          //   unsigned int m_planetStartID;
-         tempFleet.m_planetFinishID = itBFleet->m_fromPlanet->GetID();
+         tempFleet.m_planetStartID = itBFleet->m_fromPlanet->GetID();
          //   unsigned int m_playerID;
          tempFleet.m_playerID = itBFleet->m_pPlayer->GetID();
 

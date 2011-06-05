@@ -136,6 +136,7 @@ namespace SingleGame
       for(; itB != itE;)
       {
          timeFinish = itB->GetTimeFinish(m_flySpeed);
+         CFleet tFleet = *itB;
 
          if(timeFinish < currentTime)
          {
@@ -193,6 +194,7 @@ namespace SingleGame
          tempFleet.m_toPlanet = finishPlanet;
          tempFleet.GetID();
          tempFleet.m_timeStartMove = QDateTime::currentDateTime();
+         tempFleet.m_pPlayer = getPlanet(*itB)->m_pPlayer;
 
          m_vFleet.insert(findInsertFleetPosition(tempFleet), tempFleet);
       }
