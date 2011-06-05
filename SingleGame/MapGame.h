@@ -36,6 +36,9 @@ namespace SingleGame
          const std::vector<unsigned int>& startPlanetID);
       void UpdateStateMap();
 
+      /// clear all data
+      void Clear();
+
    private:
       void createPlanet();
 
@@ -62,7 +65,7 @@ namespace SingleGame
       CPlayer m_neutralPlayer;
 
       static const unsigned int m_cMaxPlanetRadius = 20;
-      static const unsigned int m_cMinPlanetRadius = 1;
+      static const unsigned int m_cMinPlanetRadius = 10;
       static const unsigned int m_cCoefDispersionPlanets = 5;
       static const unsigned int m_cMinFleetCount = 10;
       static const unsigned int m_cMaxFleetCount = 100;

@@ -84,6 +84,17 @@ namespace SingleGame
       }
    }
 
+   void CMapGame::Clear()
+   {
+      m_widthMap = 0;
+      m_heigthMap = 0;
+      m_flySpeed = 0;
+      m_growSpeed = 0;
+
+      m_vPlanet.clear();
+      m_vFleet.clear();
+   }
+
 /// --------------------------- get data
    const std::vector<CPlanet>& CMapGame::GetPlanets() const
    {

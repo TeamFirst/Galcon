@@ -100,6 +100,16 @@ namespace SingleGame
       }
    }
 
+   void CSingleGameManager::clear()
+   {
+      m_vPlayer.clear();
+      m_timerWaitStart.stop();
+      m_timerRunTime.stop();
+      m_timerBot.stop();
+      m_timeToStart = 0;
+      m_vBot.clear();
+   }
+
 /// --------------------------- timers
    void CSingleGameManager::slotWaitTime()
    {
@@ -243,12 +253,14 @@ namespace SingleGame
          m_timerBot.stop();
          m_timerRunTime.stop();
 
-         //void SendFinishGame(const Message::CMessageFinishGamePtr pMessage);
          Message::CMessageFinishGamePtr ptr(
                   new Message::CMessageFinishGame);
-         //unsigned int m_playerID;
 
          ptr->m_playerID = winnId;
+
+         m_mapGame.Clear();
+         clear();
+
          SendFinishGame(ptr);
       }
    }

@@ -60,6 +60,7 @@ namespace SingleGame
          );
       /// run timer + logic
       void runPlay();
+      void clear();
 
       void createBot(const unsigned int countBot);
       void checkEndGame();
