@@ -116,7 +116,7 @@ namespace Game
       }
       else
       {
-         y = m_actualX - (length * (m_toPl.y - m_actualY) * 100) / ((100 - m_percentPassed) * m_distance);
+         y = m_actualY - (length * (m_toPl.y - m_actualY) * 100) / ((100 - m_percentPassed) * m_distance);
       }
 
    }

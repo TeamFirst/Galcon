@@ -114,9 +114,8 @@ namespace GUI
       {
          // Send message to server
          Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
-         if (mess->m_percent != 0) // If clicked in right way,
-         {                         //planets were selected and percent not null
-
+         if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())
+         {
             emit SendStepPlayer(mess);
          }
       }
