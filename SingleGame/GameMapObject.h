@@ -58,7 +58,7 @@ namespace SingleGame
       {
          if(m_timeLastUpdate < time)
          {
-            m_countFleet += ( (time.toMSecsSinceEpoch() - m_timeLastUpdate.toMSecsSinceEpoch()) / 1000)
+            m_countFleet += ( double(time.toMSecsSinceEpoch() - m_timeLastUpdate.toMSecsSinceEpoch()) / 1000)
                   * v * m_radius;
             m_timeLastUpdate = time;
          }
@@ -72,7 +72,8 @@ namespace SingleGame
       CPlanet* m_toPlanet;
       unsigned int m_countFleet;
 
-      QDateTime m_timeStartMove;      
+      QDateTime m_timeStartMove;
+      mutable QDateTime timeFinish;
 
       QDateTime GetTimeFinish(const unsigned int v) const
       {
@@ -82,7 +83,8 @@ namespace SingleGame
             + (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y)
             * (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y));         
 
-         return m_timeStartMove.addMSecs((distance / v) * 1000);;
+         timeFinish = m_timeStartMove.addMSecs((distance / v) * 1000);
+         return m_timeStartMove.addMSecs((distance / v) * 1000);
       }
    }; // struct CFleet
 

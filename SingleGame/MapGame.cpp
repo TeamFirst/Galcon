@@ -233,7 +233,7 @@ namespace SingleGame
 
       for(; itB != itE; ++itB)
       {
-         if(itB->GetTimeFinish(m_flySpeed) < fleet.GetTimeFinish(m_flySpeed))
+         if(itB->GetTimeFinish(m_flySpeed) > fleet.GetTimeFinish(m_flySpeed))
          {
             return itB;
          }
