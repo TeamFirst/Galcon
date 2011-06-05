@@ -24,14 +24,14 @@ namespace GUI
 //      painter->drawLine(x,y, fixX, fixY);
 //      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
 //      painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
-      painter->drawText(x - 15, y - 30,
+      painter->drawText(x - 15, y - 20,
                QVariant(quint32(m_fleet->GetShipCount())).toString());
       QPixmap image (":/SpaceshipSmall.png");
       QTransform tr;
       tr.rotateRadians(m_fleet->GetAngle());
 
       //painter->rotate(0.1);
-      painter->drawPixmap(x - 30, y - 37, image.transformed(tr));
+      painter->drawPixmap(x - 22, y - 22, image.transformed(tr));
 
 
    }

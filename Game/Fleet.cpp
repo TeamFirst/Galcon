@@ -3,6 +3,7 @@
 
 namespace Game
 {
+   const double PI = 3.141592653;
    CFleet::CFleet(unsigned int id, CPlanet* from, CPlanet* to, unsigned int playerId, unsigned long number, double percent):
       m_id(id),
       m_from(from),
@@ -107,7 +108,6 @@ namespace Game
 
    double CFleet::GetAngle() const
    {
-      const double pi = 3.141592653;
       if (m_toPl.x < m_fromPl.x)
       {
          if (m_toPl.y < m_fromPl.y)
@@ -116,7 +116,7 @@ namespace Game
          }
          else
          {
-            return (-pi/2) - acos((m_fromPl.x - m_toPl.x)/m_distance);
+            return (-PI/2) - acos((m_fromPl.x - m_toPl.x)/m_distance);
          }
       }
       else
@@ -127,7 +127,7 @@ namespace Game
          }
          else
          {
-            return pi/2 + acos((m_toPl.x - m_fromPl.x)/m_distance);
+            return PI/2 + acos((m_toPl.x - m_fromPl.x)/m_distance);
          }
       }
       return 0;
