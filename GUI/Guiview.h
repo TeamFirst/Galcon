@@ -27,6 +27,7 @@ namespace GUI
                       unsigned int endX, unsigned int endY);
 
        Message::CMessageStepPlayerPtr Target(unsigned int clickX, unsigned int clickY);
+       void CheckAll(unsigned int clickX, unsigned int clickY);
 
        unsigned int GetPlayerId() const;
        unsigned int GetPercent() const;

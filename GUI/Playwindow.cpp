@@ -124,5 +124,11 @@ namespace GUI
       m_mouseSelection = false;
       m_view->Selection(m_mousePressedX, m_mousePressedY,m_mousePressedX, m_mousePressedY);
    }
+
+   void CPlayWindow::mouseDoubleClickEvent(QMouseEvent* event)
+   {
+      m_view->CheckAll(event->pos().x(), event->pos().y());
+   }
+
 } //Namespace GUI
 

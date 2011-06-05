@@ -12,8 +12,8 @@ namespace GUI
    CGUIView::CGUIView(unsigned int x, unsigned int y, QWidget* parent) :
       m_width(x),
       m_height(y),
-      m_parent(parent),
-      m_percent(50)
+      m_percent(50),
+      m_parent(parent)
    {
       m_space = new CGUISpace(m_width,m_height);
    }
@@ -138,6 +138,36 @@ namespace GUI
          mess->m_percent = m_percent;
       }
       return mess;
+   }
+
+   void CGUIView::CheckAll(unsigned int clickX, unsigned int clickY)
+   {
+      bool flagChecked = false;
+      CGUIPlanet* currPl;
+      foreach (currPl, m_planets)
+      {
+         unsigned int x(0), y(0);
+         currPl->GetPlanet()->GetPosition(x,y);
+
+         if ((abs(clickX - x) < currPl->GetPlanet()->GetRadius()) &&
+               (abs(clickY - y) < currPl->GetPlanet()->GetRadius())
+               && (currPl->GetPlanet()->GetPlayerId() == m_playerId))
+         {
+               flagChecked = true;
+         }
+      }
+
+      if (flagChecked)
+      {
+         CGUIPlanet* currPl;
+         foreach (currPl, m_planets)
+         {
+            if (currPl->GetPlanet()->GetPlayerId() == m_playerId)
+            {
+               currPl->MakeActive();
+            }
+         }
+      }
    }
 
    unsigned int CGUIView::GetPercent() const

@@ -22,6 +22,7 @@ namespace GUI
        void mousePressEvent(QMouseEvent *);
        void mouseMoveEvent(QMouseEvent *);
        void mouseReleaseEvent(QMouseEvent *);
+       void mouseDoubleClickEvent(QMouseEvent *);
        void wheelEvent(QWheelEvent *);
 
        void mouseClick();

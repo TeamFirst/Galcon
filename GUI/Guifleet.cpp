@@ -1,5 +1,6 @@
 #include <QVariant>
 #include "Guifleet.h"
+#include "Guiplanet.h"
 
 namespace GUI
 {
@@ -14,11 +15,11 @@ namespace GUI
       m_fleet->GetFixedPoint(fX,fY);
       int x(d_x), y(d_y);
       int fixX(fX), fixY(fY);
-      painter->setBrush(Qt::yellow);
+      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
       painter->setPen(Qt::white);
       painter->drawEllipse(x - 5, y - 5, 10 ,10);
       painter->drawLine(x,y, fixX, fixY);
-      painter->setBrush(Qt::red);
+      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
       painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
       painter->drawText(x - 5, y - 10,
                QVariant(quint32(m_fleet->GetShipCount())).toString());
