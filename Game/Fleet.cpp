@@ -31,7 +31,7 @@ namespace Game
       m_toPl.x = x;
       m_toPl.y = y;
 
-      m_distance = sqrt((double)(m_toPl.x - m_fromPl.x) * (m_toPl.x - m_fromPl.x) +
+      m_distance = sqrt((m_toPl.x - m_fromPl.x) * (m_toPl.x - m_fromPl.x) +
                       (m_toPl.y - m_fromPl.y) * (m_toPl.y - m_fromPl.y));
       updatePosition();
    }
@@ -100,24 +100,8 @@ namespace Game
    }
    void CFleet::GetFixedPoint(double &x, double &y) const
    {
-      const int length = 30;
-      if (m_toPl.x > m_fromPl.x)
-      {
-         x = (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualX;
-      }
-      else
-      {
-         x = m_actualX - (length * (m_actualX - m_toPl.x) * 100) / ((100 - m_percentPassed) * m_distance);
-      }
-
-      if (m_toPl.y > m_fromPl.y)
-      {
-         y = (length * (m_toPl.y - m_actualY) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualY;
-      }
-      else
-      {
-         y = m_actualY - (length * (m_actualY - m_toPl.y) * 100) / ((100 - m_percentPassed) * m_distance);
-      }
-
+      const double length = 30;
+      x = (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualX;
+      y = (length * ((double)m_toPl.y - m_actualY) * 100) / ((100 - (double)m_percentPassed) * m_distance) + m_actualY;
    }
 } // Namepace Game

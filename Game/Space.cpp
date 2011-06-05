@@ -74,6 +74,7 @@ namespace Game
          }
          if (iter != m_fleets.end())
          {
+            qDebug("Delete fleet");
             CFleet* toDelete = iter.operator *();
             m_fleets.erase(iter);
             delete toDelete;

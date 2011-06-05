@@ -12,8 +12,8 @@ namespace GUI
       double d_x(0), d_y(0), fX(0), fY(0);
       m_fleet->GetPosition(d_x,d_y);
       m_fleet->GetFixedPoint(fX,fY);
-      unsigned int x(d_x), y(d_y);
-      unsigned int fixX(fX), fixY(fY);
+      int x(d_x), y(d_y);
+      int fixX(fX), fixY(fY);
       painter->setBrush(Qt::yellow);
       painter->setPen(Qt::white);
       painter->drawEllipse(x - 5, y - 5, 10 ,10);
