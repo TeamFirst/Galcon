@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -6,7 +7,7 @@ namespace SingleGame
    CSingleGameManager::CSingleGameManager()
    {
       m_timerWaitStart.setInterval(1000);
-      m_timerRunTime.setInterval(2000);
+      m_timerRunTime.setInterval(1000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
    }
@@ -22,13 +23,21 @@ namespace SingleGame
                0, //< time to start
                1000, //< width map
                500, //< heigth map
-               1, //< fly speed
+               20, //< fly speed
                1, //< grow spped
                pMessage->m_namePlayer);
    }
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
+      QMessageBox mBox;
+      mBox.setText("take spep player");
+      mBox.exec();
+
+      m_mapGame.UpdateStateMap(
+               pMessage->m_finishPlanetID,
+               pMessage->m_percent,
+               pMessage->m_startPlanetID);
    }
 
 /// generation start data
@@ -68,6 +77,7 @@ namespace SingleGame
 
       if(!m_timeToStart)
       {
+         m_timerWaitStart.stop();
          runPlay();
       }
    }
@@ -92,7 +102,60 @@ namespace SingleGame
    }
 
    void CSingleGameManager::slotRunTime()
-   {
+   {      
+      //void SendStateMap(const Message::CMessageStateMapPtr pMessage);
+      m_mapGame.UpdateStateMap();
+      QDateTime nowTime = QDateTime::currentDateTime();
+
+      Message::CMessageStateMapPtr ptr(
+               new Message::CMessageStateMap);
+
+      std::list<CFleet>::const_iterator itBFleet = m_mapGame.GetFleets().begin();
+      std::list<CFleet>::const_iterator itEFleet = m_mapGame.GetFleets().end();
+
+      Message::CStateFleet tempFleet;
+      for(; itBFleet != itEFleet; ++itBFleet)
+      {
+         CFleet tFleet = *itBFleet;
+         //std::vector<CStateFleet> m_fleetState;
+         //   unsigned int m_countFleet;
+         tempFleet.m_countFleet = itBFleet->m_countFleet;
+         //   unsigned int m_fleetID;
+         tempFleet.m_fleetID = itBFleet->GetID();
+         //   unsigned int m_percentRoute;
+         tempFleet.m_percentRoute = 100 *
+               (nowTime.toMSecsSinceEpoch()
+               - itBFleet->m_timeStartMove.toMSecsSinceEpoch())
+               / (itBFleet->GetTimeFinish(m_mapGame.GetFlySpeed()).toMSecsSinceEpoch()
+               - itBFleet->m_timeStartMove.toMSecsSinceEpoch());
+         //   unsigned int m_planetFinishID;
+         tempFleet.m_planetFinishID = itBFleet->m_toPlanet->GetID();
+         //   unsigned int m_planetStartID;
+         tempFleet.m_planetStartID = itBFleet->m_fromPlanet->GetID();
+         //   unsigned int m_playerID;
+         tempFleet.m_playerID = itBFleet->m_pPlayer->GetID();
+
+         ptr->m_fleetState.push_back(tempFleet);
+      }
+
+      std::vector<CPlanet>::const_iterator itBPlanet = m_mapGame.GetPlanets().begin();
+      std::vector<CPlanet>::const_iterator itEPlanet = m_mapGame.GetPlanets().end();
+
+      Message::CStatePlanet tempPlanet;
+      for(; itBPlanet != itEPlanet; ++itBPlanet)
+      {
+         //std::vector<CStatePlanet> m_planetState;
+         //   unsigned int m_countFleet;
+         tempPlanet.m_countFleet = itBPlanet->m_countFleet;
+         //   unsigned int m_planetID;
+         tempPlanet.m_planetID = itBPlanet->GetID();
+         //   unsigned int m_playerID;
+         tempPlanet.m_playerID = itBPlanet->m_pPlayer->GetID();
+
+         ptr->m_planetState.push_back(tempPlanet);
+      }
+
+      SendStateMap(ptr);
    }
 
 /// run play
@@ -132,7 +195,9 @@ namespace SingleGame
          ptr->m_playerData.push_back(tempPlayer);
       }
 
-      SendStartGame(ptr);
+      m_timerRunTime.start();
+
+      SendStartGame(ptr);      
    }
 
 } // namespace SingleGame

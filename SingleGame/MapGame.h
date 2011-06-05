@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <list>
+#include <QTime>
 
 #include "GameMapObject.h"
 
@@ -29,8 +30,27 @@ namespace SingleGame
       const unsigned int GetFlySpeed() const;
       const unsigned int GetGrowSpeed() const;
 
+      void UpdateStateMap(
+         const unsigned int finishPlanetID,
+         const unsigned int percent,
+         const std::vector<unsigned int>& startPlanetID);
+      void UpdateStateMap();
+
    private:
       void createPlanet();
+
+      void updateFleet();
+      void updatePlanet(QDateTime time);
+
+      void addFleet(
+         const unsigned int finishPlanetID,
+         const unsigned int percent,
+         const std::vector<unsigned int>& startPlanetID);
+
+      CPlanet* getPlanet(const unsigned int ID);
+
+      /// find position fleet with time finish more than parametres fleet
+      std::list<CFleet>::iterator findInsertFleetPosition(const CFleet& fleet);
 
       unsigned int m_widthMap;
       unsigned int m_heigthMap;
@@ -38,13 +58,13 @@ namespace SingleGame
       unsigned int m_growSpeed;
 
       std::vector<CPlanet> m_vPlanet;
-      std::list<CFleet> m_vFleet;
+      std::list<CFleet> m_vFleet; ///< sorted for time finish
       CPlayer m_neutralPlayer;
 
-      static const unsigned int m_cMaxPlanetRadius = 20;
+      static const unsigned int m_cMaxPlanetRadius = 50;
       static const unsigned int m_cMinPlanetRadius = 10;
-      static const unsigned int m_cCoefDispersionPlanets = 3;
-      static const unsigned int m_cMinFleetCount = 50;
+      static const unsigned int m_cCoefDispersionPlanets = 2;
+      static const unsigned int m_cMinFleetCount = 10;
       static const unsigned int m_cMaxFleetCount = 100;
 
    }; // class CMapGame
