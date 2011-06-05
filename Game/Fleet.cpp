@@ -107,7 +107,7 @@ namespace Game
       }
       else
       {
-         x = m_actualX - (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance);
+         x = m_actualX - (length * (m_actualX - m_toPl.x) * 100) / ((100 - m_percentPassed) * m_distance);
       }
 
       if (m_toPl.y > m_fromPl.y)
@@ -116,7 +116,7 @@ namespace Game
       }
       else
       {
-         y = m_actualY - (length * (m_toPl.y - m_actualY) * 100) / ((100 - m_percentPassed) * m_distance);
+         y = m_actualY - (length * (m_actualY - m_toPl.y) * 100) / ((100 - m_percentPassed) * m_distance);
       }
 
    }
