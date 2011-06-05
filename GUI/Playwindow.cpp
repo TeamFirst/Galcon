@@ -79,7 +79,7 @@ namespace GUI
       m_mouseSelection = false;
       //m_mouseActive = !m_mouseActive;
       if ((m_mousePressedX == event->pos().x()) &&
-            (m_mousePressedY == event->pos().y()))
+            (m_mousePressedY == event->pos().y()) && m_mouseActive)
       {
          mouseClick();
       }
