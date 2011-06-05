@@ -1,4 +1,5 @@
 #include <QVariant>
+#include <QTransform>
 #include <cmath>
 #include "Guifleet.h"
 #include "Guiplanet.h"
@@ -18,15 +19,19 @@ namespace GUI
       int fixX(fX), fixY(fY);
       //double angle = atan();
 //      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
-//      painter->setPen(Qt::white);
+      painter->setPen(Qt::white);
 //      painter->drawEllipse(x - 5, y - 5, 10 ,10);
 //      painter->drawLine(x,y, fixX, fixY);
 //      painter->setBrush(CGUIPlanet::GetColor(m_fleet->GetPlayerId()));
 //      painter->drawEllipse(fixX - 5, fixY - 5, 10 ,10);
-//      painter->drawText(x - 5, y - 10,
-//               QVariant(quint32(m_fleet->GetShipCount())).toString());
+      painter->drawText(x - 15, y - 30,
+               QVariant(quint32(m_fleet->GetShipCount())).toString());
       QPixmap image (":/SpaceshipSmall.png");
-      painter->drawPixmap(x - 30, y - 30, image);
+      QTransform tr;
+      tr.rotateRadians(m_fleet->GetAngle());
+
+      //painter->rotate(0.1);
+      painter->drawPixmap(x - 30, y - 37, image.transformed(tr));
 
 
    }
