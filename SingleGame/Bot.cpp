@@ -6,7 +6,6 @@ namespace SingleGame
 {
    CBot::CBot()
    {
-      //connect(&m_timer, SIGNAL(timeout()), this, SLOT(slotStepPlayer()));
    }
 
    CBot::~CBot()
@@ -21,12 +20,6 @@ namespace SingleGame
 
    const Message::CMessageStepPlayerPtr CBot::StepBot()
    {
-      //void SendStepPlayer(const Message::CMessageStepPlayerPtr pMessage);
-      /*
-      unsigned int m_finishPlanetID;
-      unsigned int m_percent;
-      std::vector<unsigned int> m_startPlanetID;
-      */
       Message::CMessageStepPlayerPtr ptr(
                new Message::CMessageStepPlayer);
 
@@ -35,7 +28,6 @@ namespace SingleGame
          ptr->m_startPlanetID.push_back((*m_player->m_vPlanet.begin())->GetID());
       }
 
-      //std::vector<CPlanet>
       size_t countPlanet = m_mapGame->GetPlanets().size();
       if(countPlanet)
       {

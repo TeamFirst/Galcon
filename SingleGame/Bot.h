@@ -1,10 +1,5 @@
 #pragma once
 
-#include <QObject>
-#include <string>
-#include <vector>
-
-#include "QTimer"
 #include "SingleGame/GameMapObject.h"
 #include "message/MessageStepPlayer.h"
 #include "MapGame.h"

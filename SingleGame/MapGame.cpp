@@ -16,7 +16,7 @@ namespace SingleGame
    {
    }
 
-/// generation start data
+/// --------------------- generation start data
    void CMapGame::GenerationMap(
       const unsigned int widthMap,
       const unsigned int heigthMap,
@@ -84,7 +84,7 @@ namespace SingleGame
       }
    }
 
-/// get data
+/// --------------------------- get data
    const std::vector<CPlanet>& CMapGame::GetPlanets() const
    {
       return m_vPlanet;
@@ -115,7 +115,7 @@ namespace SingleGame
       return m_growSpeed;
    }
 
-/// update data
+/// --------------------------- update data
    void CMapGame::UpdateStateMap()
    {
       updateFleet();

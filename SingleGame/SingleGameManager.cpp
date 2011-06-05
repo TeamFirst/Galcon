@@ -22,8 +22,8 @@ namespace SingleGame
    {
       startGame(
                0, //< time to start
-               1000, //< width map
-               500, //< heigth map
+               500, //< width map
+               400, //< heigth map
                20, //< fly speed
                1, //< grow spped
                pMessage->m_namePlayer,
