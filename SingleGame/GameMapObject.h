@@ -58,7 +58,8 @@ namespace SingleGame
       {
          if(m_timeLastUpdate < time)
          {
-            m_countFleet += ( (time.toMSecsSinceEpoch() - m_timeLastUpdate.toMSecsSinceEpoch()) / 1000) * v;
+            m_countFleet += ( (time.toMSecsSinceEpoch() - m_timeLastUpdate.toMSecsSinceEpoch()) / 1000)
+                  * v * m_radius;
             m_timeLastUpdate = time;
          }
       }

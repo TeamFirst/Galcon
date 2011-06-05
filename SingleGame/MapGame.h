@@ -61,10 +61,10 @@ namespace SingleGame
       std::list<CFleet> m_vFleet; ///< sorted for time finish
       CPlayer m_neutralPlayer;
 
-      static const unsigned int m_cMaxPlanetRadius = 20;
+      static const unsigned int m_cMaxPlanetRadius = 50;
       static const unsigned int m_cMinPlanetRadius = 10;
-      static const unsigned int m_cCoefDispersionPlanets = 3;
-      static const unsigned int m_cMinFleetCount = 50;
+      static const unsigned int m_cCoefDispersionPlanets = 2;
+      static const unsigned int m_cMinFleetCount = 10;
       static const unsigned int m_cMaxFleetCount = 100;
 
    }; // class CMapGame

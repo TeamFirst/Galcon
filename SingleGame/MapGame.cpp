@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <algorithm>
+#include <time.h>
 
 #include "MapGame.h"
 
@@ -39,20 +40,29 @@ namespace SingleGame
       unsigned int countPlanet = countPlanetX * countPlanetY;
 
       CPlanet tempPlanet;
+      QDateTime nowTime = QDateTime::currentDateTime();
+
+      srand(time(NULL));
 
       for(unsigned int i = 0; i < countPlanet; ++i)
       {
          tempPlanet.GenerationID();
-         tempPlanet.m_radius = m_cMaxPlanetRadius;
+         tempPlanet.m_radius = m_cMinPlanetRadius
+               + rand() % (m_cMaxPlanetRadius - m_cMinPlanetRadius);
          tempPlanet.m_coordinates.x = m_cMaxPlanetRadius
                * m_cCoefDispersionPlanets
-               * (1 + (i % countPlanetX));
+               * (1 + (i % countPlanetX))
+               + (rand() % 2 ? -1 : 1)
+               * (rand() % (m_cMaxPlanetRadius * (m_cCoefDispersionPlanets -1) / 2));
          tempPlanet.m_coordinates.y = m_cMaxPlanetRadius
                *  m_cCoefDispersionPlanets
-               * (1 + (i / countPlanetX));
-         tempPlanet.m_countFleet = m_cMaxFleetCount;
+               * (1 + (i / countPlanetX))
+               + (rand() % 2 ? -1 : 1)
+               * (rand() % (m_cMaxPlanetRadius * (m_cCoefDispersionPlanets -1) / 2));
+         tempPlanet.m_countFleet = m_cMinFleetCount
+               + rand() % (m_cMaxFleetCount - m_cMinFleetCount);
          tempPlanet.m_pPlayer = &m_neutralPlayer;
-         tempPlanet.m_timeLastUpdate = QDateTime::currentDateTime();
+         tempPlanet.m_timeLastUpdate = nowTime;
 
          m_vPlanet.push_back(tempPlanet);
       }
