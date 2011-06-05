@@ -8,7 +8,7 @@ namespace GUI
 
    void CGUISpace::Draw(QPainter* painter)
    {
-      painter->setBrush(Qt::white);
+      painter->setBrush(Qt::black);
       painter->drawRect(0, 0, m_width, m_height);
 
       //QPixmap pm(":/space.jpg");

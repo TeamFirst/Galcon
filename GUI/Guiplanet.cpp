@@ -25,8 +25,8 @@ namespace GUI
                              m_planet->GetRadius() + 10, m_planet->GetRadius() + 10);
       }
       QRadialGradient gr(x, y, m_planet->GetRadius(), x, y);
-      gr.setColorAt(0.0, GetColor(m_planet->GetPlayerId()));
-      gr.setColorAt(0.8, Qt::darkGray);
+      gr.setColorAt(0.0, Qt::white);
+      gr.setColorAt(0.5, GetColor(m_planet->GetPlayerId()));
       gr.setColorAt(1.0, Qt::black);
       painter->setPen(Qt::NoPen);
       painter->setBrush(gr);
