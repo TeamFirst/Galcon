@@ -98,4 +98,26 @@ namespace Game
       m_actualY = ((double)m_percentPassed/100) * m_toPl.y +
                (1 - (double)m_percentPassed/100) * m_fromPl.y;
    }
+   void CFleet::GetFixedPoint(double &x, double &y) const
+   {
+      const int length = 30;
+      if (m_toPl.x > m_fromPl.x)
+      {
+         x = (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualX;
+      }
+      else
+      {
+         x = m_actualX - (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance);
+      }
+
+      if (m_toPl.y > m_fromPl.y)
+      {
+         y = (length * (m_toPl.y - m_actualY) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualY;
+      }
+      else
+      {
+         y = m_actualX - (length * (m_toPl.y - m_actualY) * 100) / ((100 - m_percentPassed) * m_distance);
+      }
+
+   }
 } // Namepace Game
