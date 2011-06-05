@@ -7,7 +7,7 @@ namespace SingleGame
    CSingleGameManager::CSingleGameManager()
    {
       m_timerWaitStart.setInterval(1000);
-      m_timerRunTime.setInterval(1000);
+      m_timerRunTime.setInterval(5000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
    }
@@ -23,7 +23,7 @@ namespace SingleGame
                0, //< time to start
                1000, //< width map
                500, //< heigth map
-               20, //< fly speed
+               1, //< fly speed
                1, //< grow spped
                pMessage->m_namePlayer);
    }

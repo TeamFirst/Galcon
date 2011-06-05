@@ -144,7 +144,13 @@ namespace SingleGame
             {
                itB->m_toPlanet->UpdatePlanet(timeFinish, m_growSpeed);
             }
-            if(itB->m_countFleet <= itB->m_toPlanet->m_countFleet)
+
+            if(itB->m_toPlanet->m_pPlayer->GetID()
+                  == itB->m_pPlayer->GetID())
+            {
+               itB->m_toPlanet->m_countFleet += itB->m_countFleet;
+            }
+            else if(itB->m_countFleet <= itB->m_toPlanet->m_countFleet)
             {
                itB->m_toPlanet->m_countFleet -= itB->m_countFleet;
             }
