@@ -73,7 +73,6 @@ namespace SingleGame
       unsigned int m_countFleet;
 
       QDateTime m_timeStartMove;
-      mutable QDateTime timeFinish;
 
       QDateTime GetTimeFinish(const unsigned int v) const
       {
@@ -83,7 +82,6 @@ namespace SingleGame
             + (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y)
             * (m_fromPlanet->m_coordinates.y - m_toPlanet->m_coordinates.y));         
 
-         timeFinish = m_timeStartMove.addMSecs((distance / v) * 1000);
          return m_timeStartMove.addMSecs((distance / v) * 1000);
       }
    }; // struct CFleet

@@ -1,4 +1,3 @@
-#include <QMessageBox>
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -30,10 +29,6 @@ namespace SingleGame
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
    {
-      QMessageBox mBox;
-      mBox.setText("take step player");
-      mBox.exec();
-
       m_mapGame.UpdateStateMap(
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
@@ -70,6 +65,15 @@ namespace SingleGame
          slotWaitTime();
          m_timerWaitStart.start();
       }
+
+      /// register bots
+      tempPlayer.m_name = "Bot1";
+      tempPlayer.GenerationID();
+      m_vPlayer.push_back(tempPlayer);
+
+      tempPlayer.m_name = "Bot2";
+      tempPlayer.GenerationID();
+      m_vPlayer.push_back(tempPlayer);
 
       /// generation play map
       m_mapGame.GenerationMap(widthMap, heigthMap, flySpeed, growSpeed);
