@@ -225,6 +225,11 @@ namespace SingleGame
 
       for(; itB != itE; ++itB)
       {
+         if(finishPlanetID == *itB)
+         {
+            continue;
+         }
+
          tempFleet.m_fromPlanet = getPlanet(*itB);
          tempFleet.m_countFleet = getPlanet(*itB)->m_countFleet * percent / 100;
          tempFleet.m_fromPlanet->m_countFleet -= tempFleet.m_countFleet;

@@ -37,6 +37,8 @@ namespace SingleGame
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
                pMessage->m_startPlanetID);
+
+      slotRunTime();
    }
 
    void CSingleGameManager::slotStepBot()
@@ -146,23 +148,15 @@ namespace SingleGame
       Message::CStateFleet tempFleet;
       for(; itBFleet != itEFleet; ++itBFleet)
       {
-         CFleet tFleet = *itBFleet;
-         //std::vector<CStateFleet> m_fleetState;
-         //   unsigned int m_countFleet;
          tempFleet.m_countFleet = itBFleet->m_countFleet;
-         //   unsigned int m_fleetID;
          tempFleet.m_fleetID = itBFleet->GetID();
-         //   unsigned int m_percentRoute;
          tempFleet.m_percentRoute = 100 *
                (nowTime.toMSecsSinceEpoch()
                - itBFleet->m_timeStartMove.toMSecsSinceEpoch())
                / (itBFleet->GetTimeFinish(m_mapGame.GetFlySpeed()).toMSecsSinceEpoch()
                - itBFleet->m_timeStartMove.toMSecsSinceEpoch());
-         //   unsigned int m_planetFinishID;
          tempFleet.m_planetFinishID = itBFleet->m_toPlanet->GetID();
-         //   unsigned int m_planetStartID;
          tempFleet.m_planetStartID = itBFleet->m_fromPlanet->GetID();
-         //   unsigned int m_playerID;
          tempFleet.m_playerID = itBFleet->m_pPlayer->GetID();
 
          ptr->m_fleetState.push_back(tempFleet);
@@ -174,12 +168,8 @@ namespace SingleGame
       Message::CStatePlanet tempPlanet;
       for(; itBPlanet != itEPlanet; ++itBPlanet)
       {
-         //std::vector<CStatePlanet> m_planetState;
-         //   unsigned int m_countFleet;
-         tempPlanet.m_countFleet = itBPlanet->m_countFleet;
-         //   unsigned int m_planetID;
-         tempPlanet.m_planetID = itBPlanet->GetID();
-         //   unsigned int m_playerID;
+         tempPlanet.m_countFleet = itBPlanet->m_countFleet;         
+         tempPlanet.m_planetID = itBPlanet->GetID();         
          tempPlanet.m_playerID = itBPlanet->m_pPlayer->GetID();
 
          ptr->m_planetState.push_back(tempPlanet);
