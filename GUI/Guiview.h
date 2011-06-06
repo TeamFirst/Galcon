@@ -23,7 +23,7 @@ namespace GUI
 
        void Draw(QPainter* painter);
 
-       void Selection(unsigned int beginX, unsigned int beginY,
+       bool Selection(unsigned int beginX, unsigned int beginY,
                       unsigned int endX, unsigned int endY);
 
        Message::CMessageStepPlayerPtr Target(unsigned int clickX, unsigned int clickY);

@@ -77,9 +77,10 @@ namespace GUI
       painter->drawText(m_width - 80, 30, percentStr);
    }
 
-   void CGUIView::Selection(unsigned int beginX, unsigned int beginY,
+   bool CGUIView::Selection(unsigned int beginX, unsigned int beginY,
                             unsigned int endX, unsigned int endY)
    {
+      bool returnValue = false;
       CGUIPlanet* currPl;
       unsigned int x(0), y(0);
       foreach (currPl, m_planets)
@@ -92,12 +93,14 @@ namespace GUI
                && (pl->GetPlayerId() == m_playerId))
          {
             currPl->MakeActive();
+            returnValue = true;
          }
          else
          {
             currPl->ReleaseActive();
          }
       }
+      return returnValue;
    }
 
    Message::CMessageStepPlayerPtr CGUIView::Target(unsigned int clickX, unsigned int clickY)

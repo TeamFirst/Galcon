@@ -57,13 +57,13 @@ namespace GUI
       m_waitWindow->SetSecToStart(mess->m_second);
    }
 
-   void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
+   void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr)
    {
       m_playWindow->DestroyWindow();
       m_enterWindow->ShowWindow();
    }
 
-   void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
+   void CGUI::TakeInInformation(const Message::CMessageInformationPtr)
    {
       //CCriticalMessage::Show("Inside program error", mess->m_strInformation.c_str());
    }

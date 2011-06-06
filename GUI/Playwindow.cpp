@@ -75,6 +75,8 @@ namespace GUI
    {
       m_mouseClick = EDouble;
       m_mouseRelease = false;
+      m_mousePressedX = event->pos().x();
+      m_mousePressedY = event->pos().y();
    }
 
    void CPlayWindow::mouseReleaseEvent(QMouseEvent* event)
@@ -95,25 +97,50 @@ namespace GUI
                {
                   emit SendStepPlayer(mess);
                }
-                m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
+               m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
                m_mousePlanetState = false;
             }
             else
             {
-               m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
-               m_mousePlanetState = true;
+               if (m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY))
+               {
+                  m_mousePlanetState = true;
+               }
+               else
+               {
+                  m_mousePlanetState = false;
+               }
             }
          }
          else
          {
-            m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
-            m_mousePlanetState = true;
+            if (m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY))
+            {
+               m_mousePlanetState = true;
+            }
+            else
+            {
+               m_mousePlanetState = false;
+            }
          }
       }
-      else if (m_mouseClick = EDouble)
+      else if (m_mouseClick == EDouble)
       {
-         m_view->CheckAll(event->pos().x(), event->pos().y());
-         m_mousePlanetState = true;
+         if (m_mousePlanetState)
+         {
+            Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
+            if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())
+            {
+               emit SendStepPlayer(mess);
+            }
+            m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
+            m_mousePlanetState = false;
+         }
+         else
+         {
+            m_view->CheckAll(event->pos().x(), event->pos().y());
+            m_mousePlanetState = true;
+         }
       }
       else
       {
@@ -132,7 +159,7 @@ namespace GUI
          m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
          update();
       }
-      else if (m_mouseClick = ENone)
+      else if (m_mouseClick == ENone)
       {
          //to do later
       }
