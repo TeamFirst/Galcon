@@ -2,7 +2,10 @@
 
 #include <QSharedPointer>
 
-class ISceneUpdates;
+namespace GUI
+{
+   class ISceneUpdates;
+} // Namespace GUI
 
 namespace Message
 {   
@@ -12,7 +15,7 @@ namespace Message
 
    struct CMessageAddView
    {
-      ISceneUpdates* m_view;
+      GUI::ISceneUpdates* m_view;
 
    }; // struct CMessageAddView   
 
