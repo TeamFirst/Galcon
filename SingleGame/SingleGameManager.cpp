@@ -107,7 +107,9 @@ namespace SingleGame
       m_timerRunTime.stop();
       m_timerBot.stop();
       m_timeToStart = 0;
-      m_vBot.clear();
+      m_vBot.clear();      
+
+      CGameObject::ClearID();
    }
 
 /// --------------------------- timers
