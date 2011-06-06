@@ -31,7 +31,7 @@ SOURCES += main.cpp \
     SingleGame/Bot.cpp \
     Player.cpp \
     SingleGame/GameMapObject.cpp \
-    GUI/Mainwindow.cpp
+#    GUI/Mainwindow.cpp
 
 
 HEADERS += \
@@ -69,7 +69,7 @@ HEADERS += \
     SingleGame/Bot.h \
     SingleGame/Bot.h \
     Player.h \
-    GUI/Mainwindow.h
+#    GUI/Mainwindow.h
 
 
 FORMS += \

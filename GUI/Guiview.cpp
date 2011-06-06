@@ -76,7 +76,7 @@ namespace GUI
 
       if (!activePlanets.empty())
       {
-         QPen linesPen(Qt::blue, 2);
+         QPen linesPen(CGUIPlanet::GetColor(m_playerId), 2);
          painter->setPen(linesPen);
          unsigned int min_x(0), min_y(0);
          unsigned int max_x(0), max_y(0);
@@ -111,7 +111,7 @@ namespace GUI
 
          unsigned int middle_x ((max_x + min_x)/2);
          unsigned int middle_y ((max_y + min_y)/2);
-         unsigned int diff(middle_x + middle_y);
+         int diff(middle_x + middle_y);
          CGUIPlanet* centralPl;
          foreach (currPl, activePlanets)
          {

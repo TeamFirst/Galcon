@@ -7,15 +7,16 @@
 
 namespace GUI
 {
-   CPlayWindow::CPlayWindow(QWidget *parent) : QWidget(parent)
+   CPlayWindow::CPlayWindow(QWidget *parent) :
+      QWidget(parent),
+      m_mouseClick(ENone),
+      m_mouseState(ENotSelected),
+      m_mouseRelease(true),
+      m_mouseCurrentX(0),
+      m_mouseCurrentY(0),
+      m_mousePressedX(0),
+      m_mousePressedY(0)
    {
-      m_mouseRelease = false;
-      m_mousePlanetState = false;
-      m_mouseClick = ENone;
-      m_mouseCurrentX = 0;
-      m_mouseCurrentY = 0;
-      m_mousePressedX = 0;
-      m_mousePressedY = 0;
    }
 
    void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
@@ -42,9 +43,10 @@ namespace GUI
 
       m_view->Draw(&painter);
 
-      // Draw mouse selection rectangle
+      /// Draw mouse selection rectangle
+
       painter.setPen(Qt::blue);
-      if (!m_mouseRelease && !m_mousePlanetState)
+      if (!m_mouseRelease)
       {
          QLine l1(m_mousePressedX, m_mousePressedY, m_mousePressedX, m_mouseCurrentY);
          QLine l2(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mousePressedY);
@@ -96,43 +98,37 @@ namespace GUI
          if ((m_mousePressedX == event->pos().x()) &&
                (m_mousePressedY == event->pos().y()))
          {
-            if (m_mousePlanetState)
+            if (m_mouseState == EPlanetsSelected)
             {
                Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
                if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())
                {
                   emit SendStepPlayer(mess);
                }
+
                m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
-               m_mousePlanetState = false;
+               m_mouseState = ENotSelected;
             }
             else
             {
-               if (m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY))
-               {
-                  m_mousePlanetState = true;
-               }
-               else
-               {
-                  m_mousePlanetState = false;
-               }
+               m_mouseState = ENotSelected;
             }
          }
          else
          {
             if (m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY))
             {
-               m_mousePlanetState = true;
+               m_mouseState = EPlanetsSelected;
             }
             else
             {
-               m_mousePlanetState = false;
+               m_mouseState = ENotSelected;
             }
          }
       }
       else if (m_mouseClick == EDouble)
       {
-         if (m_mousePlanetState)
+         if (m_mouseState == EPlanetsSelected)
          {
             Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
             if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())
@@ -140,12 +136,12 @@ namespace GUI
                emit SendStepPlayer(mess);
             }
             m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
-            m_mousePlanetState = false;
+            m_mouseState = ENotSelected;
          }
          else
          {
             m_view->CheckAll(event->pos().x(), event->pos().y());
-            m_mousePlanetState = true;
+            m_mouseState = EPlanetsSelected;
          }
       }
       else

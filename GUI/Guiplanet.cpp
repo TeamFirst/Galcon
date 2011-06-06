@@ -18,10 +18,11 @@ namespace GUI
       unsigned x(0), y(0);
       m_planet->GetPosition(x,y);
       /// If planet is selected - draw a bit larger circle first
-      painter->setPen(Qt::black);
+      painter->setBrush(Qt::NoBrush);
       if(m_active)
       {
-         painter->setBrush(Qt::blue);
+         painter->setPen(QPen(GetColor(m_planet->GetPlayerId()), 2));
+         //painter->setBrush(Qt::blue);
          painter->drawEllipse(x - m_planet->GetRadius()/2 - 5, y - m_planet->GetRadius()/2 - 5,
                              m_planet->GetRadius() + 10, m_planet->GetRadius() + 10);
       }
@@ -57,42 +58,5 @@ namespace GUI
    Game::CPlanet* CGUIPlanet::GetPlanet() const
    {
       return m_planet;
-   }
-
-   QColor CGUIPlanet::GetColor(unsigned int id)
-   {
-      switch (id)
-      {
-         case 0:
-            return Qt::gray;
-            break;
-         case 1:
-            return Qt::red;
-            break;
-         case 2:
-            return Qt::green;
-            break;
-         case 3:
-            return Qt::blue;
-            break;
-         case 4:
-            return QColor::fromRgb(0, 255,255);
-            break;
-         case 5:
-            return QColor::fromRgb(255,0,255);
-            break;
-         case 6:
-            return Qt::yellow;
-            break;
-         case 7:
-            return QColor::fromRgb(96,0,0);
-            break;
-         case 8:
-            return QColor::fromRgb(0, 96, 0);
-            break;
-         default:
-            return Qt::lightGray;
-            break;
-      }
    }
 } // Namespace GUI

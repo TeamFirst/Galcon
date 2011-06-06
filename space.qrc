@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>GUI/space.jpg</file>
+        <file>GUI/space.png</file>
     </qresource>
 </RCC>
