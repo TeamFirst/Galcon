@@ -6,7 +6,7 @@ namespace SingleGame
    CSingleGameManager::CSingleGameManager()
    {
       m_timerWaitStart.setInterval(1000);
-      m_timerRunTime.setInterval(500);
+      m_timerRunTime.setInterval(2000);
       m_timerBot.setInterval(100000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
