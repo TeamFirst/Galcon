@@ -1,5 +1,6 @@
 #include <QVariant>
 #include <QPainter>
+#include <QPen>
 #include <QWidget>
 
 #include "Guiview.h"
@@ -57,12 +58,14 @@ namespace GUI
    {
       painter->setBrush(Qt::green);
       m_space->Draw(painter);
-      /// Draw planets
+
+      /// Finding active planets
+
       CGUIPlanet* currPl;
       std::vector<CGUIPlanet* > activePlanets;
+
       foreach (currPl, m_planets)
       {
-         currPl->Draw(painter);
          if (currPl->IsActive())
          {
             activePlanets.push_back(currPl);
@@ -73,7 +76,8 @@ namespace GUI
 
       if (!activePlanets.empty())
       {
-         painter->setPen(Qt::blue);
+         QPen linesPen(Qt::blue, 2);
+         painter->setPen(linesPen);
          unsigned int min_x(0), min_y(0);
          unsigned int max_x(0), max_y(0);
          unsigned int curr_x(0), curr_y(0);
@@ -124,10 +128,20 @@ namespace GUI
          centralPl->GetPlanet()->GetPosition(central_x, central_y);
          foreach (currPl, activePlanets)
          {
-            currPl->GetPlanet()->GetPosition(curr_x, curr_y);
-            painter->drawLine(central_x, central_y, curr_x, curr_y);
+            if (currPl != centralPl)
+            {
+               currPl->GetPlanet()->GetPosition(curr_x, curr_y);
+               painter->drawLine(central_x, central_y, curr_x, curr_y);
+            }
          }
 
+      }
+
+      /// Draw planets
+
+      foreach (currPl, m_planets)
+      {
+         currPl->Draw(painter);
       }
 
       /// Draw fleets
