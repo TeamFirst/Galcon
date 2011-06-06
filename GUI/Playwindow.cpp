@@ -18,7 +18,6 @@ namespace GUI
       resize(x,y);
    }
 
-
    void CPlayWindow::ShowWindow()
    {
       show();

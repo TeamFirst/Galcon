@@ -5,12 +5,13 @@
 
 #include "message/MessageTimeToStartGame.h"
 
-namespace Ui {
+namespace Ui
+{
     class CWaitWindow;
 }
+
 namespace GUI
 {
-
 
    class CWaitWindow : public QDialog
    {

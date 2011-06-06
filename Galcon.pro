@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     GUI/Errorwindow.cpp \
     SingleGame/Bot.cpp \
     Player.cpp \
-    SingleGame/GameMapObject.cpp
+    SingleGame/GameMapObject.cpp \
+    GUI/Mainwindow.cpp
 
 
 HEADERS += \
@@ -67,13 +68,15 @@ HEADERS += \
     GUI/SceneUpdates.h \
     SingleGame/Bot.h \
     SingleGame/Bot.h \
-    Player.h
+    Player.h \
+    GUI/Mainwindow.h
 
 
 FORMS += \
     GUI/waitwindow.ui \
-    GUI/playwindow.ui \
-    GUI/enterwindow.ui
+    GUI/enterwindow.ui \
+    GUI/mainwindow.ui \
+    GUI/playwindow.ui
 
 
 RESOURCES += \
