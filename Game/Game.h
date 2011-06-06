@@ -5,6 +5,7 @@
 
 #include "GUI/SceneUpdates.h"
 #include "Space.h"
+#include "../Player.h"
 #include "message/MessageAddView.h"
 #include "message/MessageFinishGame.h"
 
@@ -15,7 +16,7 @@ namespace Game
       Q_OBJECT
 
    public:
-      CGame();
+      CGame(std::vector<CPlayer* >* players);
       static const unsigned long m_timeTick = 100;
 
    signals:
@@ -32,7 +33,7 @@ namespace Game
       void slotTimer();
 
    private:
-
+      std::vector<CPlayer* >* m_players;
       GUI::ISceneUpdates* m_view;
       CSpace* m_space;
       QTimer* m_timer;

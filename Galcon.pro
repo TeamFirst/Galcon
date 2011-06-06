@@ -11,7 +11,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     Game/Space.cpp \
-    Game/Player.cpp \
     Game/Planet.cpp \
     Game/Game.cpp \
     Game/Fleet.cpp \
@@ -29,12 +28,12 @@ SOURCES += main.cpp \
     GUI/Enterwindow.cpp \
     GUI/Gui.cpp \
     GUI/Errorwindow.cpp \
-    SingleGame/Bot.cpp
+    SingleGame/Bot.cpp \
+    Player.cpp
 
 
 HEADERS += \
     Game/Space.h \
-    Game/Player.h \
     Game/Planet.h \
     Game/Game.h \
     Game/Fleet.h \
@@ -66,7 +65,8 @@ HEADERS += \
     GUI/Waitwindow.h \
     GUI/SceneUpdates.h \
     SingleGame/Bot.h \
-    SingleGame/Bot.h
+    SingleGame/Bot.h \
+    Player.h
 
 
 FORMS += \

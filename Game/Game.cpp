@@ -2,7 +2,8 @@
 
 namespace Game
 {
-   CGame::CGame()
+   CGame::CGame(std::vector<CPlayer *> *players) :
+      m_players(players)
    {
       m_timer = new QTimer(this);
       connect(m_timer, SIGNAL(timeout()), this, SIGNAL(signalTimer()));
@@ -35,6 +36,14 @@ namespace Game
 
    void CGame::SlotStartData(Message::CMessageStartMapGamePtr data)
    {
+      Message::CPlayerStartData currPlayer;
+      foreach (currPlayer, data->m_playerData)
+      {
+         CPlayer* player = new CPlayer(currPlayer.m_playerID,
+                                       currPlayer.m_playerName);
+         m_players->push_back(player);
+      }
+
       m_space = new CSpace(data->m_flyV,
                            data->m_growV,
                            data->m_mapX,

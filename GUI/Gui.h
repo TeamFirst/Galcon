@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QObject>
-
+#include "../Player.h"
 #include "message/MessageConnectToServer.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
@@ -23,7 +23,7 @@ namespace GUI
       Q_OBJECT
    public:
 
-      explicit CGUI(QObject *parent = 0);
+      explicit CGUI(std::vector<CPlayer* >* players, QObject *parent = 0);
       virtual ~CGUI();
 
       void ShowWindow();
@@ -53,6 +53,7 @@ namespace GUI
       CPlayWindow* m_playWindow;
 
       unsigned int m_playerId;
+      std::vector<CPlayer* >* m_players;
 
    }; // class CGUI
 } // Namespace GUI

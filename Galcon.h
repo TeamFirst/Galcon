@@ -7,6 +7,7 @@
 #include "GUI/Gui.h"
 #include "serverManager/ServerManager.h"
 #include "Game/Game.h"
+#include "Player.h"
 #include "SingleGame/SingleGameManager.h"
 
 class CGalcon : public QObject
@@ -24,6 +25,7 @@ private:
    Game::CGame* m_game;
    ServerManagerDecl::CServerManager* m_manager;
    SingleGame::CSingleGameManager* m_singleGame;
+   std::vector<CPlayer*> m_players;
 };
 
 #endif // GALCON_H

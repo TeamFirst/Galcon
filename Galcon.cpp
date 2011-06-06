@@ -2,9 +2,9 @@
 
 CGalcon::CGalcon()
 {
-   m_gui = new GUI::CGUI();
+   m_gui = new GUI::CGUI(&m_players);
    m_manager = new ServerManagerDecl::CServerManager();
-   m_game = new Game::CGame();
+   m_game = new Game::CGame(&m_players);
    m_singleGame = new SingleGame::CSingleGameManager();
    connectSendersToTakers();
    m_gui->ShowWindow();

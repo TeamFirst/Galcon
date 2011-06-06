@@ -1,5 +1,6 @@
 #include <QDialog>
-//#include <QDebug>
+#include <QVariant>
+
 #include "Gui.h"
 #include "Playwindow.h"
 #include "Waitwindow.h"
@@ -8,9 +9,10 @@
 
 namespace GUI
 {
-   CGUI::CGUI(QObject *parent) :
+   CGUI::CGUI(std::vector<CPlayer *> *players, QObject *parent) :
       QObject(parent),
-      m_playerId(0)
+      m_playerId(0),
+      m_players(players)
    {
        m_enterWindow = new CEnterWindow();
        m_waitWindow = new CWaitWindow();
@@ -50,6 +52,9 @@ namespace GUI
    void CGUI::TakeError(const Message::CMessageErrorPtr mess)
    {
       CErrorWindow::Show("Server error", mess->m_strError.c_str());
+      m_playWindow->DestroyWindow();
+      m_waitWindow->DestroyWindow();
+      m_enterWindow->ShowWindow();
    }
 
    void CGUI::TakeTimeStartToGame(const Message::CMessageTimeToStartGamePtr mess)
@@ -57,9 +62,19 @@ namespace GUI
       m_waitWindow->SetSecToStart(mess->m_second);
    }
 
-   void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr)
+   void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
    {
       m_playWindow->DestroyWindow();
+      CPlayer* currPlayer;
+      foreach (currPlayer, *m_players)
+      {
+         if (mess->m_playerID == currPlayer->GetId())
+         {
+            break;
+         }
+      }
+
+      CErrorWindow::Show("Winner!", "Wins "+ currPlayer->GetName());
       m_enterWindow->ShowWindow();
    }
 
