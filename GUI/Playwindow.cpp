@@ -9,6 +9,13 @@ namespace GUI
 {
    CPlayWindow::CPlayWindow(QWidget *parent) : QWidget(parent)
    {
+      m_mouseRelease = false;
+      m_mousePlanetState = false;
+      m_mouseClick = ENone;
+      m_mouseCurrentX = 0;
+      m_mouseCurrentY = 0;
+      m_mousePressedX = 0;
+      m_mousePressedY = 0;
    }
 
    void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)

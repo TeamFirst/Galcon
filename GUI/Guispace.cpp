@@ -11,7 +11,7 @@ namespace GUI
       painter->setBrush(Qt::black);
       painter->drawRect(0, 0, m_width, m_height);
 
-      //QPixmap pm(":/space.jpg");
+      //QPixmap pm(":/sky.png");
       //painter->drawPixmap(0,0, m_width, m_height, pm);
    }
 } // Namespace GUI
