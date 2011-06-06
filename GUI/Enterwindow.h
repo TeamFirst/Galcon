@@ -4,7 +4,8 @@
 
 #include "message/MessageConnectToServer.h"
 
-namespace Ui {
+namespace Ui
+{
     class CEnterWindow;
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QObject>
-#include "../Player.h"
+#include "Player.h"
 #include "message/MessageConnectToServer.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
