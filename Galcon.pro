@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     GUI/Gui.cpp \
     GUI/Errorwindow.cpp \
     SingleGame/Bot.cpp \
-    Player.cpp
+    Player.cpp \
+    SingleGame/GameMapObject.cpp
 
 
 HEADERS += \

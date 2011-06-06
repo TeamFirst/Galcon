@@ -59,10 +59,77 @@ namespace GUI
       m_space->Draw(painter);
       /// Draw planets
       CGUIPlanet* currPl;
+      std::vector<CGUIPlanet* > activePlanets;
       foreach (currPl, m_planets)
       {
          currPl->Draw(painter);
+         if (currPl->IsActive())
+         {
+            activePlanets.push_back(currPl);
+         }
       }
+
+      /// Connecting active planets with lines
+
+      if (!activePlanets.empty())
+      {
+         painter->setPen(Qt::blue);
+         unsigned int min_x(0), min_y(0);
+         unsigned int max_x(0), max_y(0);
+         unsigned int curr_x(0), curr_y(0);
+         activePlanets.front()->GetPlanet()->GetPosition(min_x, min_y);
+         activePlanets.front()->GetPlanet()->GetPosition(max_x, max_y);
+
+         /// Find min and max koords of active planets to determine middle planet
+
+         foreach (currPl, activePlanets)
+         {
+            currPl->GetPlanet()->GetPosition(curr_x, curr_y);
+            if (curr_x < min_x)
+            {
+               min_x = curr_x;
+            }
+            else if (curr_x > max_x)
+            {
+               max_x = curr_x;
+            }
+            if (curr_y < min_y)
+            {
+               min_y = curr_y;
+            }
+            else if (curr_y > max_y)
+            {
+               max_y = curr_y;
+            }
+         }
+
+         /// Determine central planet
+
+         unsigned int middle_x ((max_x + min_x)/2);
+         unsigned int middle_y ((max_y + min_y)/2);
+         unsigned int diff(middle_x + middle_y);
+         CGUIPlanet* centralPl;
+         foreach (currPl, activePlanets)
+         {
+            currPl->GetPlanet()->GetPosition(curr_x, curr_y);
+            if (diff > abs(curr_x - middle_x) + abs(curr_y - middle_y))
+            {
+               centralPl = currPl;
+               diff = abs(curr_x - middle_x) + abs(curr_y - middle_y);
+            }
+         }
+
+         /// Draw lines to central planet
+         unsigned int central_x(0), central_y(0);
+         centralPl->GetPlanet()->GetPosition(central_x, central_y);
+         foreach (currPl, activePlanets)
+         {
+            currPl->GetPlanet()->GetPosition(curr_x, curr_y);
+            painter->drawLine(central_x, central_y, curr_x, curr_y);
+         }
+
+      }
+
       /// Draw fleets
       CGUIFleet* currFl;
       foreach (currFl, m_fleets)
