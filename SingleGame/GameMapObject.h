@@ -18,7 +18,7 @@ namespace SingleGame
    {
       void GenerationID()
       {
-         m_ID = GenerationTypeObjectID();
+         m_ID = ++sID;
       }
 
       unsigned int GetID() const
@@ -26,12 +26,15 @@ namespace SingleGame
          return m_ID;
       }
 
-   protected:
-      static unsigned int GenerationTypeObjectID()
+
+      static void ClearID()
       {
-         static unsigned int sID = 0;
-         return ++sID;
+         sID = 0;
       }
+
+   protected:
+
+      static unsigned int sID;
 
       unsigned int m_ID;
 
