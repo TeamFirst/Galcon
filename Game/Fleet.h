@@ -1,27 +1,39 @@
 #pragma once
 
-#include "Planet.h"
+/// @file Fleet.h
+/// @brief CFleet declaration header
+/// @author Dmitriy Kozhevnikov
+/// @date 06-June-2011
 
 namespace Game
 {
+   class CPlanet;
+
+   /// @class CFleet
+   /// @brief Fleet management class
+
    class CFleet
    {
    public:
-      CFleet(unsigned int id, CPlanet* from, CPlanet* to,
-             unsigned int playerId, unsigned long number, double percent);
 
-      void SetPercent(const double percent); //For synhronization with server
+      CFleet(const unsigned int id, CPlanet* from, CPlanet* to,
+             const unsigned int playerId, const unsigned long number, const double percent);
 
-      void IncreaseWay(double onWay); //For simulation
+      /// Sets percent recieved from server to make position up-to-date
+      void SetPercent(const double percent);
 
-      //Output into GUI
+      /// Increase percent when timer clicks
+      void IncreaseWay(const double onWay);
+
+      /// Output for GUI
       void GetPosition (double& x, double& y) const;
-      void GetFixedPoint (double& x, double& y) const;
       double GetAngle() const;
 
+      /// Get functions
       unsigned long GetShipCount() const;
       unsigned short GetPlayerId() const;
       unsigned int GetId() const;
+
       bool ReachedDestination() const;
 
    private:
@@ -31,6 +43,7 @@ namespace Game
          unsigned int y;
       };
 
+      /// Recount real coords according to percent change
       void updatePosition();
 
       unsigned int m_id;
@@ -46,7 +59,7 @@ namespace Game
       double m_actualX;
       double m_actualY;
 
-      double m_distance;
+      double m_distance; ///< Distance between planets
       bool m_reached;
    };
 } // Namespace Game

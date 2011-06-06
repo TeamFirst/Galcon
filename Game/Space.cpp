@@ -1,5 +1,11 @@
+/// @file Space.cpp
+/// @author Dmitriy Kozhevnikov
+/// @date 06-06-2011
+
+#include "Planet.h"
+#include "Fleet.h"
 #include "Space.h"
-//#include "Player.h"
+
 
 namespace Game
 {
@@ -44,16 +50,16 @@ namespace Game
       double plGrowth = i_time * m_growth;
       double flMove = i_time * (double)m_speed;
 
-      // Make growth on planets
+      ///  Make growth on planets
       for (unsigned int i = 0; i < m_planets.size(); ++i)
       {
-         if (m_planets[i]->GetPlayerId() != 0) //Exclude growth on neutral planets
+         if (m_planets[i]->GetPlayerId() != 0) ///< Exclude growth on neutral planets
          {
             m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth * m_planets[i]->GetRadius());
          }
       }
 
-      // Move fleets
+      /// Move fleets
       CFleet* currFleet;
       bool ReachedFleetsPresent(true);
       foreach (currFleet, m_fleets)
@@ -61,7 +67,7 @@ namespace Game
          currFleet->IncreaseWay(flMove);
       }
 
-      //Delete reached fleets
+      /// Delete reached fleets
       while (ReachedFleetsPresent)
       {
          std::list<CFleet*>::iterator iter;
@@ -88,7 +94,7 @@ namespace Game
 
    void CSpace::SetPlanets(const std::vector<Message::CStatePlanet>& i_planets)
    {
-      // For every existing planet update its army & owner from given data
+      /// For every existing planet update its army & owner from given data
       Message::CStatePlanet inPl;
       CPlanet* currPl;
       bool NewFlag = false;
@@ -112,14 +118,14 @@ namespace Game
 
    void CSpace::SetFleets(const std::vector<Message::CStateFleet>& message)
    {
-      // For every given fleet
+      /// For every given fleet
       Message::CStateFleet currMessFleet;
       foreach (currMessFleet, message)
       {
          CFleet* currFleet;
          bool flag = true;
 
-         // Search for it in existing list
+         /// Search for it in existing list
          foreach (currFleet, m_fleets)
          {
             if (currFleet->GetId() == currMessFleet.m_fleetID)
@@ -129,7 +135,7 @@ namespace Game
             }
          }
 
-         // If didn't found - add it to list
+         /// If didn't found - add it to list
          if (flag)
          {
             CPlanet* planetFr = GetPlanetById(currMessFleet.m_planetStartID);

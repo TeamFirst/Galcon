@@ -1,14 +1,17 @@
-#include <cmath>
+/// @file Fleet.cpp
+/// @author Dmitriy Kozhevnikov
+/// @date 06-06-2011
 
+#include <cmath>
 #include "Planet.h"
 
-const double EPS = 0.5;
+//const double EPS = 0.5;
 
 namespace Game
 {
-   CPlanet::CPlanet(unsigned short id, unsigned short x, unsigned short y,
-                    unsigned short radius, unsigned long army,
-                    unsigned short playerId):
+   CPlanet::CPlanet(const unsigned short id, const unsigned short x, const unsigned short y,
+                    const unsigned short radius, const unsigned long army,
+                    const unsigned short playerId):
       m_id(id),
       m_x(x),
       m_y(y),

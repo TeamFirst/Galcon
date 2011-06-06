@@ -1,10 +1,17 @@
-#include <cmath>
+/// @file Fleet.cpp
+/// @author Dmitriy Kozhevnikov
+/// @date 06-06-2011
+
 #include "Fleet.h"
+#include "Planet.h"
+
+#include <cmath>
 
 namespace Game
 {
    const double PI = 3.141592653;
-   CFleet::CFleet(unsigned int id, CPlanet* from, CPlanet* to, unsigned int playerId, unsigned long number, double percent):
+   CFleet::CFleet(const unsigned int id, CPlanet* from, CPlanet* to,
+                  const unsigned int playerId, const unsigned long number, const double percent):
       m_id(id),
       m_from(from),
       m_to(to),
@@ -98,12 +105,6 @@ namespace Game
                (1 - (double)m_percentPassed/100) * m_fromPl.x;
       m_actualY = ((double)m_percentPassed/100) * m_toPl.y +
                (1 - (double)m_percentPassed/100) * m_fromPl.y;
-   }
-   void CFleet::GetFixedPoint(double &x, double &y) const
-   {
-      const double length = 30;
-      x = (length * (m_toPl.x - m_actualX) * 100) / ((100 - m_percentPassed) * m_distance) + m_actualX;
-      y = (length * ((double)m_toPl.y - m_actualY) * 100) / ((100 - (double)m_percentPassed) * m_distance) + m_actualY;
    }
 
    double CFleet::GetAngle() const

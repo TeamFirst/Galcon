@@ -1,12 +1,21 @@
 #pragma once
 
+/// @file Planet.h
+/// @brief CPlanet declaration header
+/// @author Dmitriy Kozhevnikov
+/// @date 06-June-2011
+
 namespace Game
 {
+   /// @class CPlanet
+   /// @brief Planet management class
+
    class CPlanet
    {
    public:
-      CPlanet(unsigned short id, unsigned short x, unsigned short y,
-              unsigned short radius, unsigned long army, unsigned short playerId);
+      CPlanet(const unsigned short id, const unsigned short x, const unsigned short y,
+              const unsigned short radius, const unsigned long army,
+              const unsigned short playerId);
 
       unsigned long GetArmy() const;
       unsigned short GetPlayerId() const;

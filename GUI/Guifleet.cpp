@@ -12,49 +12,31 @@ namespace GUI
 
    void CGUIFleet::Draw(QPainter* painter)
    {
+
+      /// Determine fleets position
+
       double d_x(0), d_y(0);
-      double PI = 3.141592653;
       m_fleet->GetPosition(d_x,d_y);
       int x(d_x), y(d_y);
+
+      /// Draw text upon the fleet
+
       painter->setPen(Qt::white);
       painter->drawText(x - 15, y - 20,
                QVariant(quint32(m_fleet->GetShipCount())).toString());
 
-      /// Drawing image
+      /// Determine right image file, depends on fleet's owner
 
-      QPixmap image (":/SpaceshipSmall.png");
-      QTransform tr;
+      QString imageSource;
+      imageSource.setNum(m_fleet->GetPlayerId());
+      imageSource = ":/SpaceshipSmall" + imageSource + ".png";
+      QPixmap image (imageSource);
 
       /// Rotate on right angle
 
+      QTransform tr;
       double angle = m_fleet->GetAngle();
       tr.rotateRadians(angle);
-
-      /// Shift image to center it
-
-//      unsigned int image_w = 55;
-//      unsigned int image_h = 55;
-//      int offset_x(0), offset_y(0);
-//      if ((angle < PI/4) && (angle > -PI/4))
-//      {
-//         offset_x = -image_w/2;
-//         offset_y = -image_h/2;
-//      }
-//      else if ((angle >= PI/4) && (angle < 3*PI/4))
-//      {
-//         offset_x = image_w/2;
-//         offset_y = -image_h/2;
-//      }
-//      else if ((angle >= 3*PI/4 ) || (angle < -3*PI/4))
-//      {
-//         offset_x = image_w/2;
-//         offset_y = image_h/2;
-//      }
-//      else
-//      {
-//         offset_x = -image_w/2;
-//         offset_y = image_h/2;
-//      }
 
       painter->drawPixmap(x - 27, y - 27, image.transformed(tr));
    }

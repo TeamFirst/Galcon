@@ -1,13 +1,19 @@
 #pragma once
 
+/// @file Game.h
+/// @brief CGame declaration header
+/// @author Dmitriy Kozhevnikov
+/// @date 06-June-2011
+
 #include <QObject>
 #include <QTimer>
 
-#include "GUI/SceneUpdates.h"
-#include "Space.h"
-#include "../Player.h"
 #include "message/MessageAddView.h"
 #include "message/MessageFinishGame.h"
+
+#include "GUI/SceneUpdates.h"
+#include "Space.h"
+#include "Player.h"
 
 namespace Game
 {

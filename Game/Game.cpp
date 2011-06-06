@@ -1,3 +1,7 @@
+/// @file Game.cpp
+/// @author Dmitriy Kozhevnikov
+/// @date 06-06-2011
+
 #include "Game.h"
 
 namespace Game
@@ -56,7 +60,6 @@ namespace Game
    {
       m_space->SetPlanets(data->m_planetState);
       m_space->SetFleets(data->m_fleetState);
-
 
       m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
    }

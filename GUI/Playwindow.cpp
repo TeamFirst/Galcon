@@ -9,13 +9,13 @@ namespace GUI
 {
    CPlayWindow::CPlayWindow(QWidget *parent) :
       QWidget(parent),
-      m_mouseClick(ENone),
       m_mouseState(ENotSelected),
+      m_mouseClick(ENone),
       m_mouseRelease(true),
-      m_mouseCurrentX(0),
-      m_mouseCurrentY(0),
       m_mousePressedX(0),
-      m_mousePressedY(0)
+      m_mousePressedY(0),
+      m_mouseCurrentX(0),
+      m_mouseCurrentY(0)
    {
    }
 
@@ -77,6 +77,8 @@ namespace GUI
          m_mouseRelease = false;
          m_mousePressedX = event->pos().x();
          m_mousePressedY = event->pos().y();
+         m_mouseCurrentX = event->pos().x();
+         m_mouseCurrentY = event->pos().y();
       }
 
    void CPlayWindow::mouseDoubleClickEvent(QMouseEvent* event)
