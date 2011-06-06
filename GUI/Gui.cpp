@@ -74,7 +74,8 @@ namespace GUI
          }
       }
 
-      CErrorWindow::Show("Winner!", "Wins "+ currPlayer->GetName());
+      CErrorWindow::Show("Winner!", "Wins "+
+                         QString::fromStdString(currPlayer->GetName()));
       m_enterWindow->ShowWindow();
    }
 
