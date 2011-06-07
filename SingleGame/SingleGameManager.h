@@ -70,7 +70,10 @@ namespace SingleGame
       void runPlay();
       void clear();
 
-      void createBot(const unsigned int countBot);
+      void createBot(
+         const unsigned int botNumber,
+         const unsigned int botLevel);
+
       void checkEndGame();
 
       CMapGame m_mapGame;

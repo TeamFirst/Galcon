@@ -1,3 +1,5 @@
+#include <QVariant>
+
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -101,9 +103,9 @@ namespace SingleGame
       }
 
       /// bots
-      //const unsigned int m_botNumber,
-      //const unsigned int m_botLevel
-      createBot(botNumber);
+      //const unsigned int botNumber,
+      //const unsigned int botLevel
+      createBot(botNumber, botLevel);
 
       /// generation play map      
       m_mapGame.GenerationMap(
@@ -281,19 +283,20 @@ namespace SingleGame
    }
 
 /// -------------------------------- bot
-   void CSingleGameManager::createBot(const unsigned int countBot)
+   void CSingleGameManager::createBot(
+         const unsigned int botNumber,
+         const unsigned int botLevel)
    {
       CBot tempBot;
       CPlayer tempPlayer;
 
       /// register bots
-      tempPlayer.m_name = "Bot1";
-      tempPlayer.GenerationID();
-      m_vPlayer.push_back(tempPlayer);
-
-      /*tempPlayer.m_name = "Bot2";
-      tempPlayer.GenerationID();
-      m_vPlayer.push_back(tempPlayer);*/
+      for(unsigned int i = 0; i < botNumber; ++i)
+      {
+         tempPlayer.m_name = "Bot" + QVariant(i + 1).toString().toStdString();
+         tempPlayer.GenerationID();
+         m_vPlayer.push_back(tempPlayer);
+      }
 
       std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
       std::vector<CPlayer>::iterator itE = m_vPlayer.end();
