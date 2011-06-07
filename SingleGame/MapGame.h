@@ -19,7 +19,12 @@ namespace SingleGame
          const unsigned int widthMap,
          const unsigned int heigthMap,
          const unsigned int flySpeed,
-         const unsigned int growSpeed);
+         const unsigned int growSpeed,
+         const unsigned int planetMinSize,
+         const unsigned int planetMaxSize,
+         const unsigned int dispersionPlanets,
+         const unsigned int fleetMinCount,
+         const unsigned int fleetMaxCount);
 
       void SetPlayers(std::vector<CPlayer>& vPlayer);
 
@@ -60,15 +65,15 @@ namespace SingleGame
       unsigned int m_flySpeed;
       unsigned int m_growSpeed;
 
+      unsigned int m_cMaxPlanetRadius;
+      unsigned int m_cMinPlanetRadius;
+      unsigned int m_cCoefDispersionPlanets;
+      unsigned int m_cMinFleetCount;
+      unsigned int m_cMaxFleetCount;
+
       std::vector<CPlanet> m_vPlanet;
       std::list<CFleet> m_vFleet; ///< sorted for time finish
       CPlayer m_neutralPlayer;
-
-      static const unsigned int m_cMaxPlanetRadius = 20;
-      static const unsigned int m_cMinPlanetRadius = 10;
-      static const unsigned int m_cCoefDispersionPlanets = 5;
-      static const unsigned int m_cMinFleetCount = 10;
-      static const unsigned int m_cMaxFleetCount = 100;
 
    }; // class CMapGame
 

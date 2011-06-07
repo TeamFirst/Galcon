@@ -22,6 +22,8 @@ namespace Message
       unsigned int m_planetMinSize;
       unsigned int m_planetMaxSize;
 
+      unsigned int m_dispersionPlanets;
+
       unsigned int m_fleetMinCount;
       unsigned int m_fleetMaxCount;
 
