@@ -2,9 +2,11 @@
 #include <QVariant>
 
 #include "Gui.h"
+#include "Mainwindow.h"
 #include "Playwindow.h"
 #include "Waitwindow.h"
 #include "Enterwindow.h"
+#include "Singlewindow.h"
 #include "Errorwindow.h"
 
 namespace GUI
@@ -14,38 +16,59 @@ namespace GUI
       m_playerId(0),
       m_players(players)
    {
-       m_enterWindow = new CEnterWindow();
-       m_waitWindow = new CWaitWindow();
-       m_playWindow = new CPlayWindow();
+      m_mainWindow = new CMainWindow();
+      m_enterWindow = new CEnterWindow();
+      m_waitWindow = new CWaitWindow();
+      m_playWindow = new CPlayWindow();
+      m_singleWindow = new CSingleWindow();
 
-       connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
-               this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
-       connect(m_playWindow, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
-               this, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)));
+      connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
+              this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
+      connect(m_singleWindow, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)),
+              this, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)));
+
+      connect(m_playWindow, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
+              this, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)));
+
+      connect(m_mainWindow, SIGNAL(signalChoiceSingleGame()),
+              this, SLOT(slotChoiceSingleGame()));
+      connect(m_mainWindow, SIGNAL(signalChoiceNetworkGame()),
+              this, SLOT(slotChoiceNetworkGame()));
    }
 
    CGUI::~CGUI()
    {
+      delete m_mainWindow;
       delete m_enterWindow;
       delete m_waitWindow;
       delete m_playWindow;
+      delete m_singleWindow;
    }
 
    void CGUI::ShowWindow()
    {
-      m_enterWindow->ShowWindow();
+      m_mainWindow->ShowWindow();
    }
 
    void CGUI::DestroyWindow()
    {
-      m_enterWindow->DestroyWindow();
+      m_mainWindow->DestroyWindow();
    }
 
    void CGUI::TakeConfirmConnectToServer(const Message::CMessageConfirmationConnectToServerPtr mess)
    {
        m_playerId = mess->m_playerID;
        m_playWindow->SetPlayerId(m_playerId);
-       m_enterWindow->DestroyWindow();
+       switch(m_typeGame)
+       {
+       case eSingleGame:
+          m_singleWindow->DestroyWindow();
+          break;
+       case eNetworkGame:
+          m_enterWindow->DestroyWindow();
+          break;
+       }
+
        m_waitWindow->ShowWindow();
    }
 
@@ -65,7 +88,7 @@ namespace GUI
    void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
    {
       m_playWindow->DestroyWindow();
-      CPlayer* currPlayer;
+      CPlayer* currPlayer = NULL;
       foreach (currPlayer, *m_players)
       {
          if (mess->m_playerID == currPlayer->GetId())
@@ -75,8 +98,17 @@ namespace GUI
       }
 
       CErrorWindow::Show("Winner!", "Wins "+
-                         QString::fromStdString(currPlayer->GetName()));
-      m_enterWindow->ShowWindow();
+         QString::fromStdString(currPlayer->GetName()));
+
+      switch(m_typeGame)
+      {
+      case eSingleGame:
+         m_singleWindow->ShowWindow();
+         break;
+      case eNetworkGame:
+         m_enterWindow->ShowWindow();
+         break;
+      }
    }
 
    void CGUI::TakeInInformation(const Message::CMessageInformationPtr)
@@ -94,4 +126,25 @@ namespace GUI
       ptr->m_view = (GUI::ISceneUpdates*)m_playWindow->GetView();
       SendView(ptr);
    }
+
+   void CGUI::slotChoiceSingleGame()
+   {
+      m_typeGame = eSingleGame;
+
+      emit signalChoiceSingleGame();
+
+      m_mainWindow->DestroyWindow();
+      m_singleWindow->ShowWindow();
+   }
+
+   void CGUI::slotChoiceNetworkGame()
+   {
+      m_typeGame = eNetworkGame;
+
+      emit signalChoiceNetworkGame();
+
+      m_mainWindow->DestroyWindow();
+      m_enterWindow->ShowWindow();
+   }
+
 } // Namespace GUI

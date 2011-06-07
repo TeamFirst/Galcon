@@ -3,6 +3,6 @@
 namespace SingleGame
 {
 
-   unsigned int CGameObject::sID = 2;
+   unsigned int CGameObject::sID = 0;
 
 } // namespace SingleGame

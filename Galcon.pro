@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     SingleGame/Bot.cpp \
     Player.cpp \
     SingleGame/GameMapObject.cpp \
-#    GUI/Mainwindow.cpp
+    GUI/Singlewindow.cpp \
+    GUI/Mainwindow.cpp
 
 
 HEADERS += \
@@ -69,14 +70,16 @@ HEADERS += \
     SingleGame/Bot.h \
     SingleGame/Bot.h \
     Player.h \
-#    GUI/Mainwindow.h
+    GUI/Mainwindow.h \
+    GUI/Singlewindow.h \
+    message/MessageConnectToSingleGame.h
 
 
 FORMS += \
     GUI/waitwindow.ui \
     GUI/enterwindow.ui \
     GUI/mainwindow.ui \
-    GUI/playwindow.ui
+    GUI/singlewindow.ui
 
 
 RESOURCES += \
@@ -87,4 +90,13 @@ RESOURCES += \
 OTHER_FILES += \
     GUI/sky.png \
     GUI/Spaceship.png \
-    GUI/SpaceshipSmall.png
+    GUI/SpaceshipSmall8.png \
+    GUI/SpaceshipSmall7.png \
+    GUI/SpaceshipSmall6.png \
+    GUI/SpaceshipSmall5.png \
+    GUI/SpaceshipSmall4.png \
+    GUI/SpaceshipSmall3.png \
+    GUI/SpaceshipSmall2.png \
+    GUI/SpaceshipSmall1.png \
+    GUI/space.png \
+    GUI/space.jpg

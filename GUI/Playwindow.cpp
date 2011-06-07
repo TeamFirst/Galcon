@@ -15,7 +15,9 @@ namespace GUI
       m_mousePressedX(0),
       m_mousePressedY(0),
       m_mouseCurrentX(0),
-      m_mouseCurrentY(0)
+      m_mouseCurrentY(0),
+      m_width(1000),
+      m_height(800)
    {
    }
 
@@ -23,7 +25,7 @@ namespace GUI
    {
       m_view = new CGUIView(x, y, this);
       m_view->SetPlayerId(m_playerId);
-      resize(x,y);
+      resize(m_width, m_height);
    }
 
    void CPlayWindow::ShowWindow()
@@ -40,7 +42,7 @@ namespace GUI
    void CPlayWindow::paintEvent(QPaintEvent *)
    {
       QPainter painter(this);
-
+      //painter.setViewport(0, 0, m_width, m_height);
       m_view->Draw(&painter);
 
       /// Draw mouse selection rectangle
@@ -69,6 +71,12 @@ namespace GUI
    CGUIView* CPlayWindow::GetView()
    {
       return m_view;
+   }
+
+   void CPlayWindow::GetSize(unsigned int &width, unsigned int &height)
+   {
+      width = m_width;
+      height = m_height;
    }
 
    void CPlayWindow::mousePressEvent(QMouseEvent* event)
@@ -113,7 +121,14 @@ namespace GUI
             }
             else
             {
-               m_mouseState = ENotSelected;
+               if (m_view->SelectOne(m_mousePressedX, m_mousePressedY))
+               {
+                  m_mouseState = EPlanetsSelected;
+               }
+               else
+               {
+                  m_mouseState = ENotSelected;
+               }
             }
          }
          else
@@ -130,7 +145,8 @@ namespace GUI
       }
       else if (m_mouseClick == EDouble)
       {
-         if (m_mouseState == EPlanetsSelected)
+         if (m_mouseState == EPlanetsSelected &&
+               ((m_mousePressedX != m_mouseCurrentX) || (m_mousePressedY != m_mouseCurrentY)))
          {
             Message::CMessageStepPlayerPtr mess = m_view->Target(m_mousePressedX, m_mousePressedY);
             if (mess->m_percent != 0 && !mess->m_startPlanetID.empty())

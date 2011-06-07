@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -18,13 +20,14 @@ namespace SingleGame
    }
 
 /// -------------------------- publoc slots
-   void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage)
+   void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToSingleGamePtr pMessage)
    {
+      qDebug("connect to single game");
       startGame(
                0, //< time to start
                500, //< width map
                400, //< heigth map
-               50, //< fly speed
+               80, //< fly speed
                1, //< grow spped
                pMessage->m_namePlayer,
                2 //< count bots

@@ -30,6 +30,7 @@ namespace GUI
        CGUIView* GetView();
 
        void SetPlayerId(unsigned int id);
+       void GetSize (unsigned int& width, unsigned int& height);
 
    signals:
        void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
@@ -54,6 +55,8 @@ namespace GUI
        int m_mouseCurrentY;
 
        CGUIView* m_view;
+       unsigned int m_width;
+       unsigned int m_height;
        unsigned int m_playerId;
    };
 } // Namespace GUI
