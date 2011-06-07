@@ -16,11 +16,20 @@ namespace GUI
    class CPlayWindow;
    class CWaitWindow;
    class CEnterWindow;
+   class CSingleWindow;
    class ISceneUpdates;
+   class CMainWindow;
 
    class CGUI : public QObject
    {
       Q_OBJECT
+   private:
+      enum ETypeGame
+      {
+         eSingleGame,
+         eNetworkGame
+      };
+
    public:
 
       explicit CGUI(std::vector<CPlayer* >* players, QObject *parent = 0);
@@ -47,13 +56,24 @@ namespace GUI
       void SendView(Message::CMessageAddViewPtr mess);
       void SendStepPlayer(const Message::CMessageStepPlayerPtr mess);
 
+      void signalChoiceSingleGame();
+      void signalChoiceNetworkGame();
+
+   private slots:
+      void slotChoiceSingleGame();
+      void slotChoiceNetworkGame();
+
    private:
       CWaitWindow* m_waitWindow;
       CEnterWindow* m_enterWindow;
+      CSingleWindow* m_singleWindow;
       CPlayWindow* m_playWindow;
+      CMainWindow* m_mainWindow;
 
       unsigned int m_playerId;
       std::vector<CPlayer* >* m_players;
+
+      ETypeGame m_typeGame;
 
    }; // class CGUI
 } // Namespace GUI

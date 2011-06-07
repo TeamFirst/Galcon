@@ -24,4 +24,18 @@ namespace GUI
    {
       hide();
    }
+
+   void CMainWindow::on_pushButtonSingle_clicked()
+   {
+      emit signalChoiceSingleGame();
+   }
+
+   void CMainWindow::on_pushButtonNetwork_clicked()
+   {
+      emit signalChoiceNetworkGame();
+   }
 }
+
+
+
+

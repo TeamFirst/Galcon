@@ -20,6 +20,15 @@ namespace GUI
       void ShowWindow();
       void DestroyWindow();
 
+   signals:
+      void signalChoiceSingleGame();
+      void signalChoiceNetworkGame();
+
+   private slots:
+      void on_pushButtonSingle_clicked();
+
+      void on_pushButtonNetwork_clicked();
+
    private:
        Ui::CMainWindow *ui;
 

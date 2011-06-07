@@ -18,8 +18,14 @@ class CGalcon : public QObject
 public:
    CGalcon();
 
+private slots:
+   void slotChoiceNetworkGame();
+   void slotChoiceSingleGame();
+
 private:
    void connectSendersToTakers();
+   void connectNetworkSendersToTakers();
+   void connectSingleSendersToTakers();
 
    GUI::CGUI* m_gui;
    Game::CGame* m_game;
