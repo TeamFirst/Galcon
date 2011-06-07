@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "SingleGameManager.h"
 
 namespace SingleGame
@@ -22,15 +20,20 @@ namespace SingleGame
 /// -------------------------- publoc slots
    void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToSingleGamePtr pMessage)
    {
-      qDebug("connect to single game");
       startGame(
                0, //< time to start
-               500, //< width map
-               400, //< heigth map
-               80, //< fly speed
-               1, //< grow spped
+               pMessage->m_mapWidth,
+               pMessage->m_mapHeigth,
+               pMessage->m_flySpeed,
+               pMessage->m_growSpeed,
                pMessage->m_namePlayer,
-               2 //< count bots
+               pMessage->m_planetMinSize,
+               pMessage->m_planetMaxSize,
+               pMessage->m_dispersionPlanets,
+               pMessage->m_fleetMinCount,
+               pMessage->m_fleetMaxCount,
+               pMessage->m_botNumber,
+               pMessage->m_botLevel
                );
    }
 
@@ -67,7 +70,13 @@ namespace SingleGame
       const unsigned int flySpeed,
       const unsigned int growSpeed,
       const std::string& namePlayer,
-      const unsigned int countBot
+      const unsigned int planetMinSize,
+      const unsigned int planetMaxSize,
+      const unsigned int dispersionPlanets,
+      const unsigned int fleetMinCount,
+      const unsigned int fleetMaxCount,
+      const unsigned int botNumber,
+      const unsigned int botLevel
       )
    {
       /// register player
@@ -92,10 +101,21 @@ namespace SingleGame
       }
 
       /// bots
-      createBot(countBot);
+      //const unsigned int m_botNumber,
+      //const unsigned int m_botLevel
+      createBot(botNumber);
 
-      /// generation play map
-      m_mapGame.GenerationMap(widthMap, heigthMap, flySpeed, growSpeed);
+      /// generation play map      
+      m_mapGame.GenerationMap(
+         widthMap,
+         heigthMap,
+         flySpeed,
+         growSpeed,
+         planetMinSize,
+         planetMaxSize,
+         dispersionPlanets,
+         fleetMinCount,
+         fleetMaxCount);
       m_mapGame.SetPlayers(m_vPlayer);
 
       if(!m_timeToStart)

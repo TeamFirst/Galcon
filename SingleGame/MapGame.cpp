@@ -21,12 +21,23 @@ namespace SingleGame
       const unsigned int widthMap,
       const unsigned int heigthMap,
       const unsigned int flySpeed,
-      const unsigned int growSpeed)
+      const unsigned int growSpeed,
+      const unsigned int planetMinSize,
+      const unsigned int planetMaxSize,
+      const unsigned int dispersionPlanets,
+      const unsigned int fleetMinCount,
+      const unsigned int fleetMaxCount)
    {
       m_widthMap = widthMap;
       m_heigthMap = heigthMap;
       m_flySpeed = flySpeed;
       m_growSpeed = growSpeed;
+
+      m_cMaxPlanetRadius = planetMaxSize;
+      m_cMinPlanetRadius = planetMinSize;
+      m_cCoefDispersionPlanets = dispersionPlanets;
+      m_cMinFleetCount = fleetMinCount;
+      m_cMaxFleetCount = fleetMaxCount;
 
       createPlanet();
    }
@@ -90,6 +101,12 @@ namespace SingleGame
       m_heigthMap = 0;
       m_flySpeed = 0;
       m_growSpeed = 0;
+
+      m_cMaxPlanetRadius = 0;
+      m_cMinPlanetRadius = 0;
+      m_cCoefDispersionPlanets = 0;
+      m_cMinFleetCount = 0;
+      m_cMaxFleetCount = 0;
 
       m_vPlanet.clear();
       m_vFleet.clear();

@@ -57,8 +57,15 @@ namespace SingleGame
          const unsigned int flySpeed,
          const unsigned int growSpeed,
          const std::string& namePlayer,
-         const unsigned int countBot
-         );
+         const unsigned int planetMinSize,
+         const unsigned int planetMaxSize,
+         const unsigned int dispersionPlanets,
+         const unsigned int fleetMinCount,
+         const unsigned int fleetMaxCount,
+         const unsigned int botNumber,
+         const unsigned int botLevel
+         );      
+
       /// run timer + logic
       void runPlay();
       void clear();
