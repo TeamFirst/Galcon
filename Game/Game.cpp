@@ -141,8 +141,13 @@ namespace Game
       Message::CStateFleet currFleet;
       foreach (currFleet, mess->m_fleetState)
       {
-         if (!m_space->CheckPlanetId(currFleet.m_planetStartID) ||
-               !m_space->CheckPlanetId(currFleet.m_planetFinishID))
+         /// Check existence of Start planet, End planet
+         /// and for equivalence of ids of fleet owner and start planet owner
+
+         if (!m_space->CheckPlanetId(currFleet.m_planetStartID)
+               || !m_space->CheckPlanetId(currFleet.m_planetFinishID)
+               || (m_space->GetPlanetById(currFleet.m_planetStartID)->GetPlayerId()
+                   != currFleet.m_playerID))
          {
             return false;
          }
