@@ -171,4 +171,17 @@ namespace Game
       }
       return 0;
    }
+
+   bool CSpace::CheckPlanetId(unsigned int id) const
+   {
+      CPlanet* currPl;
+      foreach (currPl, m_planets)
+      {
+         if (currPl->GetId() == id)
+         {
+            return true;
+         }
+      }
+      return false;
+   }
 } //Namespace Game

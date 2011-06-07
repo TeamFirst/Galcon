@@ -24,7 +24,7 @@ namespace SingleGame
                0, //< time to start
                500, //< width map
                400, //< heigth map
-               20, //< fly speed
+               50, //< fly speed
                1, //< grow spped
                pMessage->m_namePlayer,
                2 //< count bots

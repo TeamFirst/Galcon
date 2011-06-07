@@ -32,6 +32,7 @@ namespace Game
       std::list<CFleet*> GetFleets() const;
 
       CPlanet* GetPlanetById(unsigned short id) const;
+      bool CheckPlanetId (unsigned int id) const;
 
    private:
 
