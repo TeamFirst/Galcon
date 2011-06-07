@@ -23,6 +23,8 @@ namespace GUI
 
    void CPlayWindow::CreateWindow(const unsigned int x, const unsigned int y)
    {
+      m_logicalWidth = x;
+      m_logicalHeight = y;
       m_view = new CGUIView(x, y, this);
       m_view->SetPlayerId(m_playerId);
       resize(m_width, m_height);
@@ -42,7 +44,8 @@ namespace GUI
    void CPlayWindow::paintEvent(QPaintEvent *)
    {
       QPainter painter(this);
-      //painter.setViewport(0, 0, m_width, m_height);
+      painter.setWindow(0, 0, m_logicalWidth, m_logicalHeight);
+      painter.setViewport(0, 0, m_width, m_height);
       m_view->Draw(&painter);
 
       /// Draw mouse selection rectangle
@@ -79,6 +82,12 @@ namespace GUI
       height = m_height;
    }
 
+   void CPlayWindow::GetLogicalFromActual(int &x, int &y) const
+   {
+      x *= (double)m_logicalWidth/m_width;
+      y *= (double)m_logicalHeight/m_height;
+   }
+
    void CPlayWindow::mousePressEvent(QMouseEvent* event)
       {
          m_mouseClick = ESingle;
@@ -87,6 +96,8 @@ namespace GUI
          m_mousePressedY = event->pos().y();
          m_mouseCurrentX = event->pos().x();
          m_mouseCurrentY = event->pos().y();
+         GetLogicalFromActual(m_mousePressedX, m_mousePressedY);
+         GetLogicalFromActual(m_mouseCurrentX, m_mouseCurrentY);
       }
 
    void CPlayWindow::mouseDoubleClickEvent(QMouseEvent* event)
@@ -95,6 +106,7 @@ namespace GUI
       m_mouseRelease = false;
       m_mousePressedX = event->pos().x();
       m_mousePressedY = event->pos().y();
+      GetLogicalFromActual(m_mousePressedX, m_mousePressedY);
    }
 
    void CPlayWindow::mouseReleaseEvent(QMouseEvent* event)
@@ -102,11 +114,11 @@ namespace GUI
       m_mouseRelease = true;
       m_mouseCurrentX = event->pos().x();
       m_mouseCurrentY = event->pos().y();
-
+      GetLogicalFromActual(m_mouseCurrentX, m_mouseCurrentY);
       if (m_mouseClick == ESingle)
       {
-         if ((m_mousePressedX == event->pos().x()) &&
-               (m_mousePressedY == event->pos().y()))
+         if ((m_mousePressedX == m_mouseCurrentX) &&
+               (m_mousePressedY == m_mouseCurrentY))
          {
             if (m_mouseState == EPlanetsSelected)
             {
@@ -158,7 +170,7 @@ namespace GUI
          }
          else
          {
-            m_view->CheckAll(event->pos().x(), event->pos().y());
+            m_view->CheckAll(m_mouseCurrentX, m_mouseCurrentY);
             m_mouseState = EPlanetsSelected;
          }
       }
@@ -176,6 +188,7 @@ namespace GUI
       {
          m_mouseCurrentX = event->pos().x();
          m_mouseCurrentY = event->pos().y();
+         GetLogicalFromActual(m_mouseCurrentX, m_mouseCurrentY);
          m_view->Selection(m_mousePressedX, m_mousePressedY, m_mouseCurrentX, m_mouseCurrentY);
          update();
       }

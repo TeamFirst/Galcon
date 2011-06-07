@@ -56,7 +56,6 @@ namespace GUI
 
    void CGUIView::Draw(QPainter* painter)
    {
-      //painter->setWindow(0, 0, m_width, m_height);
       painter->setBrush(Qt::green);
       m_space->Draw(painter);
 
@@ -282,6 +281,8 @@ namespace GUI
    {
       return m_playerId;
    }
+
+
 
    void CGUIView::SetPercent(int percent)
    {
