@@ -3,6 +3,7 @@
 #include <QObject>
 #include "Player.h"
 #include "message/MessageConnectToServer.h"
+#include "message/MessageConnectToSingleGame.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageStartMapGame.h"
 #include "message/MessageError.h"
@@ -53,6 +54,7 @@ namespace GUI
 
    signals:
       void SendClientToServer(const Message::CMessageConnectToServerPtr mess);
+      void SendClientToSingleGame(const Message::CMessageConnectToSingleGamePtr mess);
       void SendView(Message::CMessageAddViewPtr mess);
       void SendStepPlayer(const Message::CMessageStepPlayerPtr mess);
 

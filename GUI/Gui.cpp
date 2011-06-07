@@ -24,8 +24,8 @@ namespace GUI
 
       connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
               this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
-      connect(m_singleWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
-              this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
+      connect(m_singleWindow, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)),
+              this, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)));
 
       connect(m_playWindow, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
               this, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)));
@@ -88,7 +88,7 @@ namespace GUI
    void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
    {
       m_playWindow->DestroyWindow();
-      CPlayer* currPlayer;
+      CPlayer* currPlayer = NULL;
       foreach (currPlayer, *m_players)
       {
          if (mess->m_playerID == currPlayer->GetId())
@@ -98,7 +98,8 @@ namespace GUI
       }
 
       CErrorWindow::Show("Winner!", "Wins "+
-                         QString::fromStdString(currPlayer->GetName()));
+         QString::fromStdString(currPlayer->GetName()));
+
       switch(m_typeGame)
       {
       case eSingleGame:

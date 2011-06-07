@@ -2,7 +2,7 @@
 
 #include <QDialog>
 
-#include "message/MessageConnectToServer.h"
+#include "message/MessageConnectToSingleGame.h"
 
 namespace Ui
 {
@@ -23,7 +23,7 @@ namespace GUI
       void DestroyWindow();
 
    signals:
-      void SendClientToServer(Message::CMessageConnectToServerPtr);
+      void SendClientToSingleGame(const Message::CMessageConnectToSingleGamePtr mess);
 
    private slots:
       void on_pushButtonStartPlay_clicked();

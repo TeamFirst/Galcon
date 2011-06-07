@@ -20,8 +20,14 @@ void CGalcon::connectSendersToTakers()
    connect(m_game, SIGNAL(signalTimer()),
            m_game, SLOT(slotTimer()));
 
+   connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
+           m_manager, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
+   connect(m_gui, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)),
+           m_singleGame, SLOT(TakeServerConnect(Message::CMessageConnectToSingleGamePtr)));
+
    connect(m_gui, SIGNAL(signalChoiceNetworkGame()), this, SLOT(slotChoiceNetworkGame()));
    connect(m_gui, SIGNAL(signalChoiceSingleGame()), this, SLOT(slotChoiceSingleGame()));
+
 }
 
 void CGalcon::connectNetworkSendersToTakers()
@@ -41,8 +47,6 @@ void CGalcon::connectNetworkSendersToTakers()
    connect(m_manager, SIGNAL(SendInInformation(Message::CMessageInformationPtr)),
            m_gui, SLOT(TakeInInformation(Message::CMessageInformationPtr)));
 
-   connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
-           m_manager, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
    connect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
            m_manager, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
 }
@@ -66,8 +70,6 @@ void CGalcon::connectSingleSendersToTakers()
    connect(m_singleGame, SIGNAL(SendInInformation(Message::CMessageInformationPtr)),
            m_gui, SLOT(TakeInInformation(Message::CMessageInformationPtr)));
 
-   connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
-           m_singleGame, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
    connect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
            m_singleGame, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
 }

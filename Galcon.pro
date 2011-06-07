@@ -71,7 +71,8 @@ HEADERS += \
     SingleGame/Bot.h \
     Player.h \
     GUI/Mainwindow.h \
-    GUI/Singlewindow.h
+    GUI/Singlewindow.h \
+    message/MessageConnectToSingleGame.h
 
 
 FORMS += \
@@ -89,7 +90,6 @@ RESOURCES += \
 OTHER_FILES += \
     GUI/sky.png \
     GUI/Spaceship.png \
-    GUI/SpaceshipSmall.png \
     GUI/SpaceshipSmall8.png \
     GUI/SpaceshipSmall7.png \
     GUI/SpaceshipSmall6.png \

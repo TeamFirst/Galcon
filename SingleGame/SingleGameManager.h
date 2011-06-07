@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "message/MessageItf.h"
+#include "message/MessageConnectToSingleGame.h"
 #include "message/MessageConnectToServer.h"
 #include "message/MessageStepPlayer.h"
 #include "message/MessageError.h"
@@ -29,7 +30,7 @@ namespace SingleGame
        ~CSingleGameManager();
 
    public slots:
-      void TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage);
+      void TakeServerConnect(const Message::CMessageConnectToSingleGamePtr pMessage);
       void TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage);
 
    signals:

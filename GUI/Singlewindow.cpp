@@ -26,13 +26,10 @@ namespace GUI
       hide();
    }
 
-   void GUI::CSingleWindow::on_pushButtonStartPlay_clicked()
+   void CSingleWindow::on_pushButtonStartPlay_clicked()
    {
-      Message::CMessageConnectToServerPtr mess(new Message::CMessageConnectToServer());
-      mess->m_namePlayer = "user";
-      mess->m_serverIP = "";
-      mess->m_serverPort = 0;
-      emit SendClientToServer(mess);
+      Message::CMessageConnectToSingleGamePtr mess(new Message::CMessageConnectToSingleGame);
+      emit SendClientToSingleGame(mess);
    }
 
 } // namespace GUI
