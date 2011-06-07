@@ -25,6 +25,7 @@ namespace GUI
 
        bool Selection(unsigned int beginX, unsigned int beginY,
                       unsigned int endX, unsigned int endY);
+       bool SelectOne(unsigned int clickX, unsigned int clickY);
 
        Message::CMessageStepPlayerPtr Target(unsigned int clickX, unsigned int clickY);
        void CheckAll(unsigned int clickX, unsigned int clickY);

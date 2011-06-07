@@ -38,6 +38,6 @@ namespace GUI
       double angle = m_fleet->GetAngle();
       tr.rotateRadians(angle);
 
-      painter->drawPixmap(x - 27, y - 27, image.transformed(tr));
+      painter->drawPixmap(x - 27 - 27*abs(cos(angle)), y - 27 - 27*abs(sin(angle)), image.transformed(tr));
    }
 } //Namespace GUI

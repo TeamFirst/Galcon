@@ -10,6 +10,7 @@
 
 #include "message/MessageAddView.h"
 #include "message/MessageFinishGame.h"
+#include "message/MessageInformation.h"
 
 #include "GUI/SceneUpdates.h"
 #include "Space.h"
@@ -27,6 +28,7 @@ namespace Game
 
    signals:
       void SendStartGame(unsigned int mapX, unsigned int mapY);
+      void SendError(Message::CMessageInformationPtr);
       void signalTimer();
 
    public slots:
@@ -39,6 +41,9 @@ namespace Game
       void slotTimer();
 
    private:
+      inline bool AvailiblePlayer(unsigned int id) const;
+      bool CheckStateData(Message::CMessageStateMapPtr mess) const;
+
       std::vector<CPlayer* >* m_players;
       GUI::ISceneUpdates* m_view;
       CSpace* m_space;

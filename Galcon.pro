@@ -31,8 +31,8 @@ SOURCES += main.cpp \
     SingleGame/Bot.cpp \
     Player.cpp \
     SingleGame/GameMapObject.cpp \
-    GUI/Mainwindow.cpp \
-    GUI/Singlewindow.cpp
+    GUI/Singlewindow.cpp \
+    GUI/Mainwindow.cpp
 
 
 HEADERS += \

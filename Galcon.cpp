@@ -17,6 +17,8 @@ void CGalcon::connectSendersToTakers()
 
    connect(m_game, SIGNAL(SendStartGame(uint,uint)),
            m_gui, SLOT(TakeFieldSize(uint,uint)));
+   connect(m_game, SIGNAL(SendError(Message::CMessageInformationPtr)),
+           m_gui, SLOT(TakeInInformation(Message::CMessageInformationPtr)));
    connect(m_game, SIGNAL(signalTimer()),
            m_game, SLOT(slotTimer()));
 

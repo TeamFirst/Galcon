@@ -184,6 +184,24 @@ namespace GUI
       return returnValue;
    }
 
+   bool CGUIView::SelectOne(unsigned int clickX, unsigned int clickY)
+   {
+      CGUIPlanet* currPl;
+      unsigned int x(0), y(0), radius(0);
+      foreach (currPl, m_planets)
+      {
+         currPl->GetPlanet()->GetPosition(x,y);
+         radius = currPl->GetPlanet()->GetRadius();
+         if ((clickX >= x - radius) && (clickX <= x + radius)
+               && (clickY >= y - radius) && (clickY <= y + radius))
+         {
+            currPl->MakeActive();
+            return true;
+         }
+      }
+      return false;
+   }
+
    Message::CMessageStepPlayerPtr CGUIView::Target(unsigned int clickX, unsigned int clickY)
    {
       std::vector<unsigned int> departure;
@@ -263,6 +281,8 @@ namespace GUI
    {
       return m_playerId;
    }
+
+
 
    void CGUIView::SetPercent(int percent)
    {
