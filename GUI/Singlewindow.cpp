@@ -82,7 +82,7 @@ namespace GUI
    /// ----------------------- check input data
    bool CSingleWindow::checkInputData()
    {
-      if(ui->lineEditPlanetMinSize->text().toUInt() > ui->lineEditPlanetMaxSize->text().toUInt())
+      if(ui->lineEditPlanetMinSize->text().toUInt() >= ui->lineEditPlanetMaxSize->text().toUInt())
       {
          ui->pushButtonStartPlay->setEnabled(false);
 
@@ -99,7 +99,7 @@ namespace GUI
          ui->lineEditPlanetMinSize->setPalette(palette);
       }
 
-      if(ui->lineEditFleetMinCount->text().toUInt() > ui->lineEditFleetMaxCount->text().toUInt())
+      if(ui->lineEditFleetMinCount->text().toUInt() >= ui->lineEditFleetMaxCount->text().toUInt())
       {
          ui->pushButtonStartPlay->setEnabled(false);
 
