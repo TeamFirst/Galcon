@@ -12,6 +12,7 @@
 #include "message/MessageStartMapGame.h"
 #include "message/MessageTimeToStartGame.h"
 #include "message/MessageInformation.h"
+#include "message/MessageInformation.h"
 
 namespace ServerManagerDecl
 {
@@ -53,6 +54,10 @@ namespace ServerManagerDecl
       const Message::CMessageTimeToStartGamePtr
          ParseMTimeToStartGame(const std::string& sMes);
 
+      const Message::CMessageInformationPtr GetParserMessage() const;
+
+      bool ValidMessage() const;
+
    private:
       unsigned int convertStdStrToUInt(const std::string& sMes);
 
@@ -64,10 +69,13 @@ namespace ServerManagerDecl
 
       unsigned int parseMesToUInt(const std::string& sMes);
 
-      void SendParseMessage(const std::string& str);
+      void setParseMessage(const std::string& str);
 
       std::vector< std::pair<std::string, ETypeMessage> > m_vMsgStrEnumType;
       std::vector<unsigned int> m_vParseSubMesUInt;
+
+      std::string m_parseMessage;
+      bool m_validMessage;
 
    }; // class CParser
 

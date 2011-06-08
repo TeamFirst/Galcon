@@ -6,8 +6,8 @@ namespace ServerManagerDecl
 {
 /// constructor
    CServerManager::CServerManager():
-      m_connectToServer(false),
-      m_parser()
+      m_connectToServer(false)//,
+      //m_parser()
    {
    }
 
@@ -43,85 +43,39 @@ namespace ServerManagerDecl
 
    void CServerManager::parseStrFromServer(const std::string& sMes)
    {
-      switch(m_parser.CheckTypeMessage(sMes))
+      try
       {
-      case CParser::eConfirmConnect :
-      {
-         Message::CMessageConfirmationConnectToServerPtr ptr(
-                  new Message::CMessageConfirmationConnectToServer);
-         ptr = m_parser.ParseMConfirmConnect(sMes);
-         if(m_parser.ValidMessage())
+         switch(m_parser.CheckTypeMessage(sMes))
          {
-            emit SendConfirmConnect(ptr);
+         case CParser::eConfirmConnect :
+            emit SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
+            break;
+         case CParser::eError :
+            emit SendError(m_parser.ParseMError(sMes));
+            break;
+         case CParser::eFinishGame :
+            emit SendFinishGame(m_parser.ParseMFinishGame(sMes));
+            break;
+         case CParser::eStartGame :
+            emit SendStartGame(m_parser.ParseMStartMapGame(sMes));
+            break;
+         case CParser::eStateMap :
+            emit SendStateMap(m_parser.ParseMStateMap(sMes));
+            break;
+         case CParser::eTimeToStart :
+            emit SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
+            break;
+         case CParser::eUnknown :
+            throw std::string("Error, Server send unknown message");
+            break;
          }
-         break;
       }
-      case CParser::eError :
+      catch(std::string str)
       {
-         Message::CMessageErrorPtr ptr(
-                  new Message::CMessageError);
-         ptr = m_parser.ParseMError(sMes);
-         if(m_parser.ValidMessage())
-         {
-            emit SendError(ptr);
-         }
-         break;
-      }
-      case CParser::eFinishGame :
-      {
-         Message::CMessageFinishGamePtr ptr(
-                  new Message::CMessageFinishGame);
-         ptr = m_parser.ParseMFinishGame(sMes);
-         if(m_parser.ValidMessage())
-         {
-            emit SendFinishGame(ptr);
-         }
-         break;
-      }
-      case CParser::eStartGame :
-      {
-         Message::CMessageStartMapGamePtr ptr(
-                  new Message::CMessageStartMapGame);
-         ptr = m_parser.ParseMStartMapGame(sMes);
-         if(m_parser.ValidMessage())
-         {
-            emit SendStartGame(ptr);
-         }
-         break;
-      }
-      case CParser::eStateMap :
-      {
-         Message::CMessageStateMapPtr ptr(
-                  new Message::CMessageStateMap);
-         ptr = m_parser.ParseMStateMap(sMes);
-         if(m_parser.ValidMessage())
-         {
-            emit SendStateMap(ptr);
-         }
-         break;
-      }
-      case CParser::eTimeToStart :
-      {
-         Message::CMessageTimeToStartGamePtr ptr(
-                  new Message::CMessageTimeToStartGame);
-         ptr = m_parser.ParseMTimeToStartGame(sMes);
-         if(m_parser.ValidMessage())
-         {
-            emit SendTimeToStart(ptr);
-         }
-         break;
-      }
-      case CParser::eUnknown :
          Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
          ptr->m_typeInformation = Message::CMessageInformation::eMessageFromServer;
-         ptr->m_strInformation = "Error, Server send unknown message";
+         ptr->m_strInformation = str;
          emit SendInInformation(ptr);
-         break;
-      }
-
-      if(!m_parser.ValidMessage())
-      {
-         emit SendInInformation(m_parser.GetParserMessage());
       }
    }
 

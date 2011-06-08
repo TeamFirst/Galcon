@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QDebug>
+
 #include <vector>
 #include <string>
 #include <QSharedPointer>
@@ -22,6 +24,8 @@ namespace Message
 
       virtual std::string toString() const
       {
+         qDebug("enter");
+
          std::string sMes("CS_STEP#");
          QString temp;
          std::vector<unsigned int>::const_iterator it = m_startPlanetID.begin();

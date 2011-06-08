@@ -45,6 +45,8 @@ namespace ServerManagerDecl
 
       ptr->m_playerID = parseMesToUInt(sMes);
 
+      m_validMessage = true;
+
       return ptr;
    }
 
@@ -59,6 +61,8 @@ namespace ServerManagerDecl
 
       ptr->m_strError = sMes.substr(posBegPart + 1, posEndPart - posBegPart - 1);
 
+      m_validMessage = true;
+
       return ptr;
    }
 
@@ -70,6 +74,8 @@ namespace ServerManagerDecl
          new Message::CMessageFinishGame);
 
       ptr->m_playerID = parseMesToUInt(sMes);
+
+      m_validMessage = true;
 
       return ptr;
    }
@@ -102,7 +108,8 @@ namespace ServerManagerDecl
 
          if(m_vParseSubMesUInt.size() < 3)
          {
-            SendParseMessage("Error, bad message");
+            setParseMessage("Error, bad message");
+            m_validMessage = false;
             return ptr;
          }
 
@@ -112,7 +119,7 @@ namespace ServerManagerDecl
 
          ptr->m_planetState.push_back(tempPlanet);
       }
-      while(posFrstBkt < posEndPart);
+      while(posScndBkt != (posEndPart - 1));
 
       /// parse fleet state
       Message::CStateFleet tempFleet;
@@ -130,7 +137,8 @@ namespace ServerManagerDecl
 
          if(m_vParseSubMesUInt.size() < 6)
          {
-            SendParseMessage("Error, bad message");
+            setParseMessage("Error, bad message");
+            m_validMessage = false;
             return ptr;
          }
 
@@ -143,7 +151,9 @@ namespace ServerManagerDecl
 
          ptr->m_fleetState.push_back(tempFleet);
       }
-      while(posFrstBkt < posEndPart);
+      while(posScndBkt != (posEndPart - 1));
+
+      m_validMessage = true;
 
       return ptr;
    }
@@ -168,7 +178,8 @@ namespace ServerManagerDecl
 
       if(m_vParseSubMesUInt.size() < 4)
       {
-         SendParseMessage("Error, bad message");
+         setParseMessage("Error, bad message");
+         m_validMessage = false;
          return ptr;
       }
 
@@ -193,7 +204,8 @@ namespace ServerManagerDecl
 
          if(m_vParseSubMesUInt.size() < 6)
          {
-            SendParseMessage("Error, bad message");
+            setParseMessage("Error, bad message");
+            m_validMessage = false;
             return ptr;
          }
 
@@ -206,7 +218,7 @@ namespace ServerManagerDecl
 
          ptr->m_planetData.push_back(tempPlanet);
       }
-      while(posFrstBkt < posEndPart);
+      while(posScndBkt != (posEndPart - 1));
 
       /// parse player start data
       Message::CPlayerStartData tempPlayer;
@@ -228,7 +240,9 @@ namespace ServerManagerDecl
 
          ptr->m_playerData.push_back(tempPlayer);
       }
-      while(posFrstBkt < posEndPart);
+      while(posScndBkt != (posEndPart - 1));
+
+      m_validMessage = true;
 
       return ptr;
    }
@@ -241,6 +255,8 @@ namespace ServerManagerDecl
          new Message::CMessageTimeToStartGame);
 
       ptr->m_second = parseMesToUInt(sMes);
+
+      m_validMessage = true;
 
       return ptr;
    }
@@ -278,8 +294,25 @@ namespace ServerManagerDecl
       return convertStdStrToUInt(sMes.substr(posBegPart + 1, posEndPart - posBegPart - 1));
    }
 
-   void CParser::SendParseMessage(const std::string& str)
+   void CParser::setParseMessage(const std::string& str)
    {
+      m_parseMessage = str;
+   }
+
+   const Message::CMessageInformationPtr CParser::GetParserMessage() const
+   {
+      Message::CMessageInformationPtr ptr(
+               new Message::CMessageInformation);
+
+      ptr->m_typeInformation = Message::CMessageInformation::eMessageFromServer;
+      ptr->m_strInformation = m_parseMessage;
+
+      return ptr;
+   }
+
+   bool CParser::ValidMessage() const
+   {
+      return m_validMessage;
    }
 
 } //namespace ServerManagerDecl
