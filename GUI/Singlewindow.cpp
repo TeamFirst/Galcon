@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include <QVariant>
 
 #include "Singlewindow.h"
@@ -7,20 +9,37 @@ namespace GUI
 {
 
    CSingleWindow::CSingleWindow(QWidget *parent) :
-       QDialog(parent),
-       ui(new Ui::CSingleWindow)
+      QDialog(parent),
+      ui(new Ui::CSingleWindow),
+      m_validator(new QIntValidator)
    {
        ui->setupUi(this);
        for(int i = 0; i < 10; ++i)
        {
-          ui->comboBoxNumberBots->addItem(QVariant(i + 1).toString());
+          if(i < 7)
+          {
+            ui->comboBoxNumberBots->addItem(QVariant(i + 1).toString());
+          }
           ui->comboBoxLevelBots->addItem(QVariant(i + 1).toString());
        }
+
+      m_validator->setBottom(1);
+
+      ui->lineEditDispersion->setValidator(m_validator);
+      ui->lineEditFleetMaxCount->setValidator(m_validator);
+      ui->lineEditFleetMinCount->setValidator(m_validator);
+      ui->lineEditFlySpeed->setValidator(m_validator);
+      ui->lineEditGrowSpeed->setValidator(m_validator);
+      ui->lineEditMapHeigt->setValidator(m_validator);
+      ui->lineEditMapWidth->setValidator(m_validator);
+      ui->lineEditPlanetMaxSize->setValidator(m_validator);
+      ui->lineEditPlanetMinSize->setValidator(m_validator);
    }
 
    CSingleWindow::~CSingleWindow()
    {
-       delete ui;
+      delete ui;
+      delete m_validator;
    }
 
    void CSingleWindow::ShowWindow()
@@ -60,6 +79,20 @@ namespace GUI
       emit SendClientToSingleGame(mess);
    }
 
+   /// ----------------------- check input data
+
+
+
 } // namespace GUI
+
+
+
+
+
+
+
+
+
+
 
 

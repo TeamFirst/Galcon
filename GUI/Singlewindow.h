@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QDialog>
+#include <QValidator>
 
 #include "message/MessageConnectToSingleGame.h"
 
@@ -11,6 +12,7 @@ namespace Ui
 
 namespace GUI
 {
+
    class CSingleWindow : public QDialog
    {
        Q_OBJECT
@@ -30,7 +32,9 @@ namespace GUI
 
    private:
 
-       Ui::CSingleWindow *ui;
+      Ui::CSingleWindow *ui;
+
+      QIntValidator* m_validator;
 
    }; // class CSingleWindow
 

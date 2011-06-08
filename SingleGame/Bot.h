@@ -14,14 +14,20 @@ namespace SingleGame
       CBot();
       ~CBot();
 
-      void CreateBot(CPlayer* botPlayer, CMapGame* mapGame);      
+      void CreateBot(
+         CPlayer* botPlayer,
+         CMapGame* mapGame,
+         const unsigned int level);
 
       const Message::CMessageStepPlayerPtr StepBot();
+      bool HasPlanets();
 
-   private:
+   private:      
 
       CPlayer* m_player;
       CMapGame* m_mapGame;
+
+      unsigned int m_level;
 
    }; // class CBot
 

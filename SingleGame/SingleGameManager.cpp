@@ -8,8 +8,7 @@ namespace SingleGame
    CSingleGameManager::CSingleGameManager()
    {
       m_timerWaitStart.setInterval(1000);
-      m_timerRunTime.setInterval(2000);
-      m_timerBot.setInterval(100000);
+      m_timerRunTime.setInterval(2000);      
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
       connect(&m_timerBot, SIGNAL(timeout()), this, SLOT(slotStepBot()));
@@ -51,7 +50,7 @@ namespace SingleGame
 
    void CSingleGameManager::slotStepBot()
    {
-      std::vector<CBot>::iterator itB = m_vBot.begin();
+      /*std::vector<CBot>::iterator itB = m_vBot.begin();
       std::vector<CBot>::iterator itE = m_vBot.end();
 
       Message::CMessageStepPlayerPtr ptr(
@@ -61,6 +60,13 @@ namespace SingleGame
       {
          ptr = itB->StepBot();
          TakeStepPlayer(ptr);
+      }*/
+      foreach(CBot bot, m_vBot)
+      {
+         if(bot.HasPlanets())
+         {
+            TakeStepPlayer(bot.StepBot());
+         }
       }
    }
 
@@ -102,9 +108,7 @@ namespace SingleGame
          m_timerWaitStart.start();
       }
 
-      /// bots
-      //const unsigned int botNumber,
-      //const unsigned int botLevel
+      /// bots      
       createBot(botNumber, botLevel);
 
       /// generation play map      
@@ -299,13 +303,15 @@ namespace SingleGame
       }
 
       std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
-      std::vector<CPlayer>::iterator itE = m_vPlayer.end();
+      std::vector<CPlayer>::iterator itE = m_vPlayer.end();      
 
       for(++itB; itB != itE; ++itB)
       {
-         tempBot.CreateBot(&(*itB), &m_mapGame);
+         tempBot.CreateBot(&(*itB), &m_mapGame, botLevel);
          m_vBot.push_back(tempBot);
       }
+
+      m_timerBot.setInterval((10 - botLevel + 1) * 1000);
    }
 
 } // namespace SingleGame
