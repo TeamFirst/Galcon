@@ -21,7 +21,7 @@ namespace GUI
       painter->setBrush(Qt::NoBrush);
       if(m_active)
       {
-         painter->setPen(QPen(GetColor(m_planet->GetPlayerId()), 2));
+         painter->setPen(QPen(GetColor(m_planet->GetPlayerId()), 1));
          //painter->setBrush(Qt::blue);
          painter->drawEllipse(x - m_planet->GetRadius()/2 - 5, y - m_planet->GetRadius()/2 - 5,
                              m_planet->GetRadius() + 10, m_planet->GetRadius() + 10);

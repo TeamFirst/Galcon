@@ -30,6 +30,7 @@ namespace Game
       void SendStartGame(unsigned int mapX, unsigned int mapY);
       void SendError(Message::CMessageInformationPtr);
       void signalTimer();
+      void SendFinishGame(Message::CMessageFinishGamePtr mes);
 
    public slots:
       void SlotStartData(Message::CMessageStartMapGamePtr data);

@@ -76,12 +76,12 @@ namespace Game
             m_reached = true;
             if (m_to->GetArmy() < m_number)
             {
-               m_to->SetPlayer(m_playerId);
-               m_to->SetArmy(m_number - m_to->GetArmy());
+//               m_to->SetPlayer(m_playerId);
+//               m_to->SetArmy(m_number - m_to->GetArmy());
             }
             else
             {
-               m_to->SetArmy(m_to->GetArmy() - m_number);
+//               m_to->SetArmy(m_to->GetArmy() - m_number);
             }
          }
       }

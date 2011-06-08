@@ -16,8 +16,8 @@ namespace GUI
       m_mousePressedY(0),
       m_mouseCurrentX(0),
       m_mouseCurrentY(0),
-      m_width(1000),
-      m_height(800)
+      m_width(500),
+      m_height(400)
    {
    }
 
