@@ -11,7 +11,7 @@ namespace GUI
        CGUIFleet(){};
        CGUIFleet(Game::CFleet*);
 
-       void Draw(QPainter*);
+       void Draw(QPainter*, double scale);
 
    private:
        Game::CFleet* m_fleet;

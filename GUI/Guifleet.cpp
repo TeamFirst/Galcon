@@ -10,9 +10,9 @@ namespace GUI
    {
    }
 
-   void CGUIFleet::Draw(QPainter* painter)
+   void CGUIFleet::Draw(QPainter* painter, double scale)
    {
-
+      const double PI = 3.141592653;
       /// Determine fleets position
 
       double d_x(0), d_y(0);
@@ -35,9 +35,23 @@ namespace GUI
       /// Rotate on right angle
 
       QTransform tr;
+      //tr.scale(scale, scale);
       double angle = m_fleet->GetAngle();
+      double diag = 27*sqrt(2);
       tr.rotateRadians(angle);
+      if (abs(angle) > PI/2)
+      {
+         angle = angle > 0 ? angle - PI/2 : angle + PI/2;
+      }
 
-      painter->drawPixmap(x - 27 - 27*abs(cos(angle)), y - 27 - 27*abs(sin(angle)), image.transformed(tr));
+
+      if (angle > 0)
+      {
+         painter->drawPixmap(x - diag*sin(PI/4 + angle), y - diag*(cos(PI/4 - angle)), image.transformed(tr));
+      }
+      else
+      {
+         painter->drawPixmap(x - diag*sin(PI/4 - angle), y - diag*(cos(PI/4 + angle)), image.transformed(tr));
+      }
    }
 } //Namespace GUI

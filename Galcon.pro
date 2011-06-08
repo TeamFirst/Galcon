@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     Player.cpp \
     SingleGame/GameMapObject.cpp \
     GUI/Mainwindow.cpp \
-    GUI/Singlewindow.cpp
+    GUI/Singlewindow.cpp \
+    GalconThread.cpp
 
 
 HEADERS += \
@@ -72,7 +73,8 @@ HEADERS += \
     Player.h \
     GUI/Mainwindow.h \
     GUI/Singlewindow.h \
-    message/MessageConnectToSingleGame.h
+    message/MessageConnectToSingleGame.h \
+    GalconThread.h
 
 
 FORMS += \

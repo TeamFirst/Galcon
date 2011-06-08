@@ -46,7 +46,7 @@ namespace GUI
       QPainter painter(this);
       painter.setWindow(0, 0, m_logicalWidth, m_logicalHeight);
       painter.setViewport(0, 0, m_width, m_height);
-      m_view->Draw(&painter);
+      m_view->Draw(&painter, m_logicalWidth/m_width);
 
       /// Draw mouse selection rectangle
 
@@ -209,17 +209,18 @@ namespace GUI
    void CPlayWindow::resizeEvent(QResizeEvent* event)
    {
       QSize newsize = event->size();
-      if ((newsize.width() != m_width) || (newsize.height() != m_height))
+      if ((double)newsize.width()/newsize.height() > (double)m_logicalWidth/m_logicalHeight)
       {
+         m_width = newsize.width();
+         m_height = (m_width * m_logicalHeight/m_logicalWidth);
          resize(m_width, m_height);
       }
-//      if ((double)newsize.width()/newsize.height() > (double)m_logicalWidth/m_logicalHeight)
-//      {
-//         resize(newsize.width(), (double)(newsize.width()/m_logicalWidth) * m_logicalHeight);
-//      }
-//      {
-//         resize(((double)(newsize.height()/m_logicalHeight) * m_logicalWidth), newsize.height());
-//      }
+      else
+      {
+         m_height = newsize.height();
+         m_width = (m_height * m_logicalWidth/m_logicalHeight);
+         resize(m_width, m_height);
+      }
    }
 } //Namespace GUI
 

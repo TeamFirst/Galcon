@@ -21,7 +21,7 @@ namespace GUI
        void OnHideView();
        void OnUpdate(const std::vector<Game::CPlanet *> &, const std::list<Game::CFleet *> &);
 
-       void Draw(QPainter* painter);
+       void Draw(QPainter* painter, double scale);
 
        bool Selection(unsigned int beginX, unsigned int beginY,
                       unsigned int endX, unsigned int endY);

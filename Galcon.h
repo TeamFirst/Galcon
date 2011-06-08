@@ -9,6 +9,7 @@
 #include "Game/Game.h"
 #include "Player.h"
 #include "SingleGame/SingleGameManager.h"
+#include "GalconThread.h"
 
 class CGalcon : public QObject
 {
@@ -32,6 +33,7 @@ private:
 
    GUI::CGUI* m_gui;
    Game::CGame* m_game;
+   CGalconThread m_thread;
    ServerManagerDecl::CServerManager* m_manager;
    SingleGame::CSingleGameManager* m_singleGame;
    std::vector<CPlayer*> m_players;

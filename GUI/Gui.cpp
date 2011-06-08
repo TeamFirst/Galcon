@@ -99,7 +99,7 @@ namespace GUI
 
       CErrorWindow::Show("Winner!", "Wins "+
          QString::fromStdString(currPlayer->GetName()));
-
+      m_players->clear();
       m_mainWindow->ShowWindow();
       emit signalDisconnect();
    }

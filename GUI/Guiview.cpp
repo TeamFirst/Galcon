@@ -54,7 +54,7 @@ namespace GUI
       m_parent->update();
    }
 
-   void CGUIView::Draw(QPainter* painter)
+   void CGUIView::Draw(QPainter* painter, double scale)
    {
       painter->setBrush(Qt::green);
       m_space->Draw(painter);
@@ -148,7 +148,7 @@ namespace GUI
       CGUIFleet* currFl;
       foreach (currFl, m_fleets)
       {
-         currFl->Draw(painter);
+         currFl->Draw(painter, scale);
       }
       /// Draw percents
       painter->setPen(Qt::white);

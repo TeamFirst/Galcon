@@ -153,7 +153,8 @@ namespace Game
          if (!m_space->CheckPlanetId(currFleet.m_planetStartID)
                || !m_space->CheckPlanetId(currFleet.m_planetFinishID)
                || (m_space->GetPlanetById(currFleet.m_planetStartID)->GetPlayerId()
-                   != currFleet.m_playerID))
+                   != currFleet.m_playerID)
+               || (currFleet.m_playerID == 0))
          {
             return false;
          }
