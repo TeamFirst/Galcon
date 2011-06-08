@@ -101,7 +101,7 @@ namespace GUI
          QString::fromStdString(currPlayer->GetName()));
 
       m_mainWindow->ShowWindow();
-      signalDisconnect();
+      emit signalDisconnect();
    }
 
    void CGUI::TakeInInformation(const Message::CMessageInformationPtr)

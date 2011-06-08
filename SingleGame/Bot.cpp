@@ -34,16 +34,14 @@ namespace SingleGame
       Message::CMessageStepPlayerPtr ptr(
                new Message::CMessageStepPlayer);      
 
+      /// start planets id
       size_t countStartPlanet = m_player->m_vPlanet.size();
       countStartPlanet = (countStartPlanet * (rand() % (m_level * 10))) / 100;
+
       if(!countStartPlanet)
       {
          countStartPlanet = 1;
       }
-      /*if(!m_player->m_vPlanet.empty())
-      {
-         ptr->m_startPlanetID.push_back((*m_player->m_vPlanet.begin())->GetID());
-      }*/
 
       foreach(CPlanet* planet, m_player->m_vPlanet)
       {
@@ -54,11 +52,13 @@ namespace SingleGame
          }
       }
 
+      /// finish planet id
       if(ptr->m_startPlanetID.empty())
       {
          ptr->m_startPlanetID.push_back((*m_player->m_vPlanet.begin())->GetID());
       }
 
+      /// percent
       ptr->m_finishPlanetID =
          m_mapGame->GetPlanets()[rand() % m_mapGame->GetPlanets().size()].GetID();
 

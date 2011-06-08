@@ -21,7 +21,7 @@ namespace SingleGame
 /// -------------------------- publoc slots
    void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToSingleGamePtr pMessage)
    {
-      startGame(
+      bool start = startGame(
                0, //< time to start
                pMessage->m_mapWidth,
                pMessage->m_mapHeigth,
@@ -36,6 +36,10 @@ namespace SingleGame
                pMessage->m_botNumber,
                pMessage->m_botLevel
                );
+      if(!start)
+      {
+         clear();
+      }
    }
 
    void CSingleGameManager::TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage)
@@ -49,18 +53,7 @@ namespace SingleGame
    }
 
    void CSingleGameManager::slotStepBot()
-   {
-      /*std::vector<CBot>::iterator itB = m_vBot.begin();
-      std::vector<CBot>::iterator itE = m_vBot.end();
-
-      Message::CMessageStepPlayerPtr ptr(
-               new Message::CMessageStepPlayer);
-
-      for(; itB != itE; ++itB)
-      {
-         ptr = itB->StepBot();
-         TakeStepPlayer(ptr);
-      }*/
+   {      
       foreach(CBot bot, m_vBot)
       {
          if(bot.HasPlanets())
@@ -71,7 +64,7 @@ namespace SingleGame
    }
 
 /// ----------------- generation start data
-   void CSingleGameManager::startGame(
+   bool CSingleGameManager::startGame(
       const unsigned int timeToStart,
       const unsigned int widthMap,
       const unsigned int heigthMap,
@@ -91,27 +84,12 @@ namespace SingleGame
       CPlayer tempPlayer;
       tempPlayer.m_name = namePlayer;
       tempPlayer.GenerationID();
-      m_vPlayer.push_back(tempPlayer);
-
-      /// send message with register player
-      Message::CMessageConfirmationConnectToServerPtr ptr(
-               new Message::CMessageConfirmationConnectToServer);
-
-      ptr->m_playerID = tempPlayer.GetID();
-      SendConfirmConnect(ptr);
-
-      /// start timer Wait
-      m_timeToStart = timeToStart;
-      if(m_timeToStart)
-      {
-         slotWaitTime();
-         m_timerWaitStart.start();
-      }
+      m_vPlayer.push_back(tempPlayer);      
 
       /// bots      
       createBot(botNumber, botLevel);
 
-      /// generation play map      
+      /// generation play map
       m_mapGame.GenerationMap(
          widthMap,
          heigthMap,
@@ -122,13 +100,37 @@ namespace SingleGame
          dispersionPlanets,
          fleetMinCount,
          fleetMaxCount);
+
+      if(m_mapGame.CountPlanets() < m_vPlayer.size())
+      {
+         return false;
+      }
+
+      /// send message with register player
+      Message::CMessageConfirmationConnectToServerPtr ptr(
+               new Message::CMessageConfirmationConnectToServer);
+
+      ptr->m_playerID = tempPlayer.GetID();
+      SendConfirmConnect(ptr);
+
+      /// set planet's owner
       m_mapGame.SetPlayers(m_vPlayer);
+
+      /// start timer Wait
+      m_timeToStart = timeToStart;
+      if(m_timeToStart)
+      {
+         slotWaitTime();
+         m_timerWaitStart.start();
+      }
 
       if(!m_timeToStart)
       {
          m_timerWaitStart.stop();
          runPlay();
       }
+
+      return true;
    }
 
    void CSingleGameManager::clear()

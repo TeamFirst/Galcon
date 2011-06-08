@@ -23,7 +23,7 @@ namespace GUI
           ui->comboBoxLevelBots->addItem(QVariant(i + 1).toString());
        }
 
-      m_validator->setBottom(1);
+      m_validator->setBottom(0);
 
       ui->lineEditDispersion->setValidator(m_validator);
       ui->lineEditFleetMaxCount->setValidator(m_validator);
@@ -80,19 +80,104 @@ namespace GUI
    }
 
    /// ----------------------- check input data
+   bool CSingleWindow::checkInputData()
+   {
+      if(ui->lineEditPlanetMinSize->text().toUInt() > ui->lineEditPlanetMaxSize->text().toUInt())
+      {
+         ui->pushButtonStartPlay->setEnabled(false);
 
+         QPalette palette = ui->lineEditPlanetMinSize->palette();
+         palette.setColor( QPalette::Normal, QPalette::Base, QColor(255, 0, 0) );
+         ui->lineEditPlanetMinSize->setPalette(palette);
 
+         return false;
+      }
+      else
+      {
+         QPalette palette = ui->lineEditPlanetMinSize->palette();
+         palette.setColor( QPalette::Normal, QPalette::Base, QColor(255, 255, 255) );
+         ui->lineEditPlanetMinSize->setPalette(palette);
+      }
+
+      if(ui->lineEditFleetMinCount->text().toUInt() > ui->lineEditFleetMaxCount->text().toUInt())
+      {
+         ui->pushButtonStartPlay->setEnabled(false);
+
+         QPalette palette = ui->lineEditFleetMinCount->palette();
+         palette.setColor( QPalette::Normal, QPalette::Base, QColor(255, 0, 0) );
+         ui->lineEditFleetMinCount->setPalette(palette);
+
+         return false;
+      }
+      else
+      {
+         QPalette palette = ui->lineEditPlanetMinSize->palette();
+         palette.setColor( QPalette::Normal, QPalette::Base, QColor(255, 255, 255) );
+         ui->lineEditPlanetMinSize->setPalette(palette);
+      }
+
+      ui->pushButtonStartPlay->setEnabled(true);
+      return true;
+   }
+
+   void CSingleWindow::checkInputDataToEdit(QLineEdit* edit)
+   {
+      if(!edit->text().toUInt())
+      {
+         edit->setText("1");
+      }
+   }
+
+   void CSingleWindow::on_lineEditMapWidth_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditMapWidth);
+   }
+
+   void CSingleWindow::on_lineEditMapHeigt_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditMapHeigt);
+
+   }
+
+   void CSingleWindow::on_lineEditPlanetMinSize_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditPlanetMinSize);
+      checkInputData();
+   }
+
+   void CSingleWindow::on_lineEditPlanetMaxSize_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditPlanetMaxSize);
+      checkInputData();
+   }
+
+   void CSingleWindow::on_lineEditFleetMinCount_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditFleetMinCount);
+      checkInputData();
+   }
+
+   void CSingleWindow::on_lineEditFleetMaxCount_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditFleetMaxCount);
+      checkInputData();
+   }
+
+   void CSingleWindow::on_lineEditFlySpeed_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditFlySpeed);
+   }
+
+   void CSingleWindow::on_lineEditGrowSpeed_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditGrowSpeed);
+   }
+
+   void CSingleWindow::on_lineEditDispersion_editingFinished()
+   {
+      checkInputDataToEdit(ui->lineEditDispersion);
+   }
 
 } // namespace GUI
-
-
-
-
-
-
-
-
-
-
 
 

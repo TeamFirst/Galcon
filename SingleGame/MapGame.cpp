@@ -79,11 +79,17 @@ namespace SingleGame
       }
    }
 
+   unsigned int CMapGame::CountPlanets()
+   {
+      return m_vPlanet.size();
+   }
+
    void CMapGame::SetPlayers(std::vector<CPlayer>& vPlayer)
    {
       std::vector<CPlayer>::iterator itB = vPlayer.begin();
+      std::vector<CPlayer>::iterator itE = vPlayer.end();
 
-      for(int index = 0; itB != vPlayer.end();)
+      for(int index = 0; itB != itE;)
       {
          index = rand() % m_vPlanet.size();
          if(!m_vPlanet[index].m_pPlayer->GetID())
@@ -169,7 +175,6 @@ namespace SingleGame
 
       for(; itB != itE;)
       {
-         //CFleet tFleet = *itB;
          timeFinish = itB->GetTimeFinish(m_flySpeed);
 
          if(timeFinish < currentTime)
