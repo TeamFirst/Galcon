@@ -96,10 +96,10 @@ namespace Game
    {
       /// For every existing planet update its army & owner from given data
       Message::CStatePlanet inPl;
-      CPlanet* currPl;
       bool NewFlag = false;
       foreach (inPl, i_planets)
       {
+         CPlanet* currPl = 0;
          foreach (currPl, m_planets)
          {
             if (inPl.m_planetID == currPl->GetId())

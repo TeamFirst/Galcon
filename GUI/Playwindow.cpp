@@ -16,8 +16,8 @@ namespace GUI
       m_mousePressedY(0),
       m_mouseCurrentX(0),
       m_mouseCurrentY(0),
-      m_width(1000),
-      m_height(800)
+      m_width(500),
+      m_height(400)
    {
    }
 
@@ -204,6 +204,22 @@ namespace GUI
       int numSteps = numDegrees / 15;
       m_view->SetPercent(m_view->GetPercent() + numSteps);
       update();
+   }
+
+   void CPlayWindow::resizeEvent(QResizeEvent* event)
+   {
+      QSize newsize = event->size();
+      if ((newsize.width() != m_width) || (newsize.height() != m_height))
+      {
+         resize(m_width, m_height);
+      }
+//      if ((double)newsize.width()/newsize.height() > (double)m_logicalWidth/m_logicalHeight)
+//      {
+//         resize(newsize.width(), (double)(newsize.width()/m_logicalWidth) * m_logicalHeight);
+//      }
+//      {
+//         resize(((double)(newsize.height()/m_logicalHeight) * m_logicalWidth), newsize.height());
+//      }
    }
 } //Namespace GUI
 

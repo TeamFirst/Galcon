@@ -36,9 +36,13 @@ namespace Game
       m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
    }
 
-   void CGame::SlotFinishGame(Message::CMessageFinishGamePtr)
+   void CGame::SlotFinishGame(Message::CMessageFinishGamePtr mess)
    {
-      DeleteGame();
+      if (AvailiblePlayer(mess->m_playerID))
+      {
+         DeleteGame();
+         emit SendFinishGame(mess);
+      }
    }
 
    void CGame::SlotStartData(Message::CMessageStartMapGamePtr data)

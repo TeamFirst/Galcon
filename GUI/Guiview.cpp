@@ -76,7 +76,7 @@ namespace GUI
 
       if (!activePlanets.empty())
       {
-         QPen linesPen(CGUIPlanet::GetColor(m_playerId), 2);
+         QPen linesPen(CGUIPlanet::GetColor(m_playerId), 1);
          painter->setPen(linesPen);
          unsigned int min_x(0), min_y(0);
          unsigned int max_x(0), max_y(0);
@@ -193,7 +193,8 @@ namespace GUI
          currPl->GetPlanet()->GetPosition(x,y);
          radius = currPl->GetPlanet()->GetRadius();
          if ((clickX >= x - radius) && (clickX <= x + radius)
-               && (clickY >= y - radius) && (clickY <= y + radius))
+               && (clickY >= y - radius) && (clickY <= y + radius)
+               && (currPl->GetPlanet()->GetPlayerId() == m_playerId))
          {
             currPl->MakeActive();
             return true;
