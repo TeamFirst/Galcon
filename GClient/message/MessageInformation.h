@@ -14,7 +14,8 @@ namespace Message
       enum ETypeInformation
       {
          eConnectionToServer,
-         eMessageFromServer
+         eMessageFromServer,
+         eGameError
       };
 
       ETypeInformation m_typeInformation;
