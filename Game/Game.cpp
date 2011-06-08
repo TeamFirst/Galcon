@@ -2,6 +2,8 @@
 /// @author Dmitriy Kozhevnikov
 /// @date 06-06-2011
 
+#include <QDebug>
+
 #include "Game.h"
 #include "Space.h"
 

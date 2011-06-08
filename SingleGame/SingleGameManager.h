@@ -50,7 +50,7 @@ namespace SingleGame
 
    private:
       /// wait timer + generation map
-      void startGame(
+      bool startGame(
          const unsigned int timeToStart,
          const unsigned int widthMap,
          const unsigned int heigthMap,

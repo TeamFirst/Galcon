@@ -19,8 +19,8 @@ void CGalcon::connectSendersToTakers()
            m_gui, SLOT(TakeFieldSize(uint,uint)));
    connect(m_game, SIGNAL(SendError(Message::CMessageInformationPtr)),
            m_gui, SLOT(TakeInInformation(Message::CMessageInformationPtr)));
-   connect(m_game, SIGNAL(signalTimer()),
-           m_game, SLOT(slotTimer()));
+   connect(m_game, SIGNAL(signalTimer()), m_game, SLOT(slotTimer()));
+   connect(m_gui, SIGNAL(signalDisconnect()), this, SLOT(slotDisconnect()));
 
    connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
            m_manager, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
@@ -71,9 +71,21 @@ void CGalcon::connectNetworkSendersToTakers()
            m_manager, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
 }
 
+void CGalcon::disconnectNetworkSendersToTakers()
+{
+   disconnect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
+           m_manager, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
+}
+
 void CGalcon::connectSingleSendersToTakers()
 {
    connect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
+           m_singleGame, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
+}
+
+void CGalcon::disconnectSingleSendersToTakers()
+{
+   disconnect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
            m_singleGame, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
 }
 
@@ -87,4 +99,10 @@ void CGalcon::slotChoiceNetworkGame()
 void CGalcon::slotChoiceSingleGame()
 {
    connectSingleSendersToTakers();
+}
+
+void CGalcon::slotDisconnect()
+{
+   disconnectSingleSendersToTakers();
+   disconnectNetworkSendersToTakers();
 }

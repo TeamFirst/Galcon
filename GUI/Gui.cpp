@@ -100,15 +100,8 @@ namespace GUI
       CErrorWindow::Show("Winner!", "Wins "+
          QString::fromStdString(currPlayer->GetName()));
 
-      switch(m_typeGame)
-      {
-      case eSingleGame:
-         m_singleWindow->ShowWindow();
-         break;
-      case eNetworkGame:
-         m_enterWindow->ShowWindow();
-         break;
-      }
+      m_mainWindow->ShowWindow();
+      emit signalDisconnect();
    }
 
    void CGUI::TakeInInformation(const Message::CMessageInformationPtr)

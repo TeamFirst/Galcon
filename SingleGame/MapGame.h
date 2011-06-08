@@ -26,6 +26,8 @@ namespace SingleGame
          const unsigned int fleetMinCount,
          const unsigned int fleetMaxCount);
 
+      unsigned int CountPlanets();
+
       void SetPlayers(std::vector<CPlayer>& vPlayer);
 
       const std::vector<CPlanet>& GetPlanets() const;
