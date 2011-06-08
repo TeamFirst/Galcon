@@ -21,11 +21,14 @@ public:
 private slots:
    void slotChoiceNetworkGame();
    void slotChoiceSingleGame();
+   void slotDisconnect();
 
 private:
    void connectSendersToTakers();
    void connectNetworkSendersToTakers();
    void connectSingleSendersToTakers();
+   void disconnectNetworkSendersToTakers();
+   void disconnectSingleSendersToTakers();
 
    GUI::CGUI* m_gui;
    Game::CGame* m_game;

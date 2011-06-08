@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+
 #include "Player.h"
 #include "message/MessageConnectToServer.h"
 #include "message/MessageConnectToSingleGame.h"
@@ -60,6 +61,7 @@ namespace GUI
 
       void signalChoiceSingleGame();
       void signalChoiceNetworkGame();
+      void signalDisconnect();
 
    private slots:
       void slotChoiceSingleGame();
