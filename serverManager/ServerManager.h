@@ -56,6 +56,8 @@ namespace ServerManagerDecl
 
       /// flags
       bool m_connectToServer;
+      CParser::ETypeMessage m_ePhaseMessage;
+
 
    }; // class CServerManager
 } // namespace ServerManagerDecl

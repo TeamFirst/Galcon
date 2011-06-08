@@ -6,8 +6,9 @@ namespace ServerManagerDecl
 {
 /// constructor
    CServerManager::CServerManager():
-      m_connectToServer(false)//,
-      //m_parser()
+      m_connectToServer(false),
+      m_parser(),
+      m_ePhaseMessage(CParser::eUnknown)
    {
    }
 
@@ -48,22 +49,61 @@ namespace ServerManagerDecl
          switch(m_parser.CheckTypeMessage(sMes))
          {
          case CParser::eConfirmConnect :
-            emit SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
+            if(m_ePhaseMessage == CParser::eUnknown)
+            {
+               m_ePhaseMessage = CParser::eConfirmConnect;
+               emit SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
+            }
+            else
+            {
+               throw std::string("Error, Server send error message");
+            }
             break;
          case CParser::eError :
             emit SendError(m_parser.ParseMError(sMes));
             break;
          case CParser::eFinishGame :
-            emit SendFinishGame(m_parser.ParseMFinishGame(sMes));
+            if(m_ePhaseMessage == CParser::eStartGame)
+            {
+               m_ePhaseMessage = CParser::eUnknown;
+               emit SendFinishGame(m_parser.ParseMFinishGame(sMes));
+            }
+            else
+            {
+               throw std::string("Error, Server send error message");
+            }
             break;
          case CParser::eStartGame :
-            emit SendStartGame(m_parser.ParseMStartMapGame(sMes));
+            if(m_ePhaseMessage == CParser::eTimeToStart)
+            {
+               m_ePhaseMessage = CParser::eStartGame;
+               emit SendStartGame(m_parser.ParseMStartMapGame(sMes));
+            }
+            else
+            {
+               throw std::string("Error, Server send error message");
+            }
             break;
          case CParser::eStateMap :
-            emit SendStateMap(m_parser.ParseMStateMap(sMes));
+            if(m_ePhaseMessage == CParser::eStartGame)
+            {
+               emit SendStateMap(m_parser.ParseMStateMap(sMes));
+            }
+            else
+            {
+               throw std::string("Error, Server send error message");
+            }
             break;
          case CParser::eTimeToStart :
-            emit SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
+            if(m_ePhaseMessage == CParser::eConfirmConnect)
+            {
+               m_ePhaseMessage = CParser::eTimeToStart;
+               emit SendTimeToStart(m_parser.ParseMTimeToStartGame(sMes));
+            }
+            else
+            {
+               throw std::string("Error, Server send error message");
+            }
             break;
          case CParser::eUnknown :
             throw std::string("Error, Server send unknown message");
