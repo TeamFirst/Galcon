@@ -21,6 +21,7 @@ namespace Game
       unsigned short GetPlayerId() const;
       void GetPosition(unsigned int& x, unsigned int& y) const;
       unsigned int GetRadius() const;
+      unsigned int GetGrowth() const;
       unsigned short GetId() const;
 
       void SetArmy (const unsigned long army);
@@ -31,6 +32,7 @@ namespace Game
       unsigned short m_x;
       unsigned short m_y;
       unsigned short m_radius;
+      unsigned short m_growth;
       double m_army;
       unsigned short m_playerId;
    };

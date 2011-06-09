@@ -55,7 +55,7 @@ namespace Game
       {
          if (m_planets[i]->GetPlayerId() != 0) ///< Exclude growth on neutral planets
          {
-            m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth * m_planets[i]->GetRadius());
+            m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth * m_planets[i]->GetGrowth());
          }
       }
 

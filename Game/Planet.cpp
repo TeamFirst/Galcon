@@ -15,7 +15,8 @@ namespace Game
       m_id(id),
       m_x(x),
       m_y(y),
-      m_radius(radius),
+      m_radius(10 + radius + radius / 10),
+      m_growth(radius),
       m_army(army),
       m_playerId(playerId)
    {
@@ -45,6 +46,11 @@ namespace Game
    unsigned int CPlanet::GetRadius() const
    {
       return m_radius;
+   }
+
+   unsigned int CPlanet::GetGrowth() const
+   {
+      return m_growth;
    }
 
    void CPlanet::SetArmy(const unsigned long army)

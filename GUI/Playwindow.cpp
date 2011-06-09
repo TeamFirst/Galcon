@@ -46,7 +46,7 @@ namespace GUI
       QPainter painter(this);
       painter.setWindow(0, 0, m_logicalWidth, m_logicalHeight);
       painter.setViewport(0, 0, m_width, m_height);
-      m_view->Draw(&painter, m_logicalWidth/m_width);
+      m_view->Draw(&painter, (double)m_logicalWidth/m_width);
 
       /// Draw mouse selection rectangle
 

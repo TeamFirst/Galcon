@@ -49,7 +49,17 @@ namespace Game
    {
       bool flagRightData = true;
       QString errorMessage;
+      /// Check start data
 
+      if ((data->m_mapX > 1000) ||
+            (data->m_mapY > 800) ||
+            (data->m_flyV > 1000) ||
+            (data->m_growV > 50))
+      {
+         flagRightData = false;
+         errorMessage = "Fail map init";
+
+      }
       /// Add players
       Message::CPlayerStartData currPlayer;
       foreach (currPlayer, data->m_playerData)
@@ -79,22 +89,20 @@ namespace Game
                   QString().setNum(currPlayer.m_playerID).toAscii();
          }
       }
-
-      m_space = new CSpace(data->m_flyV,
-                           data->m_growV,
-                           data->m_mapX,
-                           data->m_mapY,
-                           data->m_planetData);
-
       if (flagRightData)
       {
+         m_space = new CSpace(data->m_flyV,
+                              data->m_growV,
+                              data->m_mapX,
+                              data->m_mapY,
+                              data->m_planetData);
          emit SendStartGame(data->m_mapX, data->m_mapY);
       }
       else
       {
          Message::CMessageInformationPtr mess(new Message::CMessageInformation);
          mess->m_typeInformation = Message::CMessageInformation::eGameError;
-         mess->m_strInformation = "Wrong start data";
+         mess->m_strInformation = errorMessage.toStdString();
          emit SendError(mess);
       }
    }
@@ -154,6 +162,7 @@ namespace Game
             return false;
          }
       }
+      return true;
    }
    bool CGame::CheckStateFleet(Message::CMessageStateMapPtr mess) const
    {
