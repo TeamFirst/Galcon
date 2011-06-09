@@ -24,7 +24,7 @@ namespace Game
 
    public:
       CGame(std::vector<CPlayer* >* players);
-      static const unsigned long m_timeTick = 100;
+      static const unsigned long m_timeTick = 50;
 
    signals:
       void SendStartGame(unsigned int mapX, unsigned int mapY);

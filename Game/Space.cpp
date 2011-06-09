@@ -130,7 +130,7 @@ namespace Game
          {
             if (currFleet->GetId() == currMessFleet.m_fleetID)
             {
-               currFleet->SetPercent(currMessFleet.m_percentRoute);
+               //currFleet->SetPercent(currMessFleet.m_percentRoute);
                flag = false;
             }
          }

@@ -36,10 +36,10 @@ namespace GUI
 
       QTransform tr;
       double angle = m_fleet->GetAngle();
-      double image_size = 27;
+      double image_size = 27*scale;
       double diag = image_size * sqrt(2);
       tr.rotateRadians(angle);
-      //tr.scale(0.5, 0.5);
+      tr.scale(scale, scale);
       if (abs(angle) > PI/2)
       {
          angle = angle > 0 ? angle - PI/2 : angle + PI/2;

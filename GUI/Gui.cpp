@@ -104,9 +104,13 @@ namespace GUI
       emit signalDisconnect();
    }
 
-   void CGUI::TakeInInformation(const Message::CMessageInformationPtr)
+   void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
    {
-      //CCriticalMessage::Show("Inside program error", mess->m_strInformation.c_str());
+      if (mess->m_typeInformation == Message::CMessageInformation::eGameError)
+      {
+         CErrorWindow::Show("Game error", QString::fromStdString(mess->m_strInformation));
+      }
+
    }
 
    void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
