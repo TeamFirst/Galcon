@@ -5,10 +5,13 @@
 namespace SingleGame
 {
 /// ---------------- constructor
-   CSingleGameManager::CSingleGameManager()
+   CSingleGameManager::CSingleGameManager() :
+      m_timerWaitStart(this),
+      m_timerRunTime(this),
+      m_timerBot(this)
    {
       m_timerWaitStart.setInterval(1000);
-      m_timerRunTime.setInterval(2000);      
+      m_timerRunTime.setInterval(2000);
       connect(&m_timerWaitStart, SIGNAL(timeout()), this, SLOT(slotWaitTime()));
       connect(&m_timerRunTime, SIGNAL(timeout()), this, SLOT(slotRunTime()));
       connect(&m_timerBot, SIGNAL(timeout()), this, SLOT(slotStepBot()));
@@ -20,7 +23,7 @@ namespace SingleGame
 
 /// -------------------------- publoc slots
    void CSingleGameManager::TakeServerConnect(const Message::CMessageConnectToSingleGamePtr pMessage)
-   {
+   {      
       bool start = startGame(
                0, //< time to start
                pMessage->m_mapWidth,

@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include <QString>
 
 #include "ServerManager.h"
@@ -158,6 +160,8 @@ namespace ServerManagerDecl
           ptr->m_typeInformation = Message::CMessageInformation::eMessageFromServer;
           ptr->m_strInformation = QString(str).toStdString();
           emit SendInInformation(ptr);
+
+          qDebug(QString(str).toAscii());
 
           parseStrFromServer(QString(str).toStdString());
       }
