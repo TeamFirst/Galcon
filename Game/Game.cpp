@@ -101,12 +101,21 @@ namespace Game
 
    void CGame::SlotStateMap(Message::CMessageStateMapPtr data)
    {
-      if (CheckStateData(data))
+      if (CheckStatePlanet(data))
       {
          m_space->SetPlanets(data->m_planetState);
-         m_space->SetFleets(data->m_fleetState);
-
-         m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
+         if (CheckStateFleet(data))
+         {
+            m_space->SetFleets(data->m_fleetState);
+            m_view->OnUpdate(m_space->GetPlanets(), m_space->GetFleets());
+         }
+         else
+         {
+            Message::CMessageInformationPtr mess(new Message::CMessageInformation);
+            mess->m_typeInformation = Message::CMessageInformation::eGameError;
+            mess->m_strInformation = "Wrong state data";
+            emit SendError(mess);
+         }
       }
       else
       {
@@ -115,6 +124,7 @@ namespace Game
          mess->m_strInformation = "Wrong state data";
          emit SendError(mess);
       }
+
    }
 
    inline bool CGame::AvailiblePlayer(unsigned int id) const
@@ -130,7 +140,7 @@ namespace Game
       return false;
    }
 
-   bool CGame::CheckStateData(Message::CMessageStateMapPtr mess) const
+   bool CGame::CheckStatePlanet(Message::CMessageStateMapPtr mess) const
    {
       Message::CStatePlanet currPlanet;
       foreach (currPlanet, mess->m_planetState)
@@ -144,6 +154,9 @@ namespace Game
             return false;
          }
       }
+   }
+   bool CGame::CheckStateFleet(Message::CMessageStateMapPtr mess) const
+   {
       Message::CStateFleet currFleet;
       foreach (currFleet, mess->m_fleetState)
       {
@@ -152,8 +165,6 @@ namespace Game
 
          if (!m_space->CheckPlanetId(currFleet.m_planetStartID)
                || !m_space->CheckPlanetId(currFleet.m_planetFinishID)
-               || (m_space->GetPlanetById(currFleet.m_planetStartID)->GetPlayerId()
-                   != currFleet.m_playerID)
                || (currFleet.m_playerID == 0))
          {
             return false;

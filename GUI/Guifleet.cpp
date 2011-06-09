@@ -35,7 +35,7 @@ namespace GUI
       /// Rotate on right angle
 
       QTransform tr;
-      //tr.scale(scale, scale);
+      tr.scale(0.5, 0.5);
       double angle = m_fleet->GetAngle();
       double diag = 27*sqrt(2);
       tr.rotateRadians(angle);

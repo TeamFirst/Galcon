@@ -43,7 +43,8 @@ namespace Game
 
    private:
       inline bool AvailiblePlayer(unsigned int id) const;
-      bool CheckStateData(Message::CMessageStateMapPtr mess) const;
+      bool CheckStatePlanet(Message::CMessageStateMapPtr mess) const;
+      bool CheckStateFleet(Message::CMessageStateMapPtr mess) const;
 
       std::vector<CPlayer* >* m_players;
       GUI::ISceneUpdates* m_view;

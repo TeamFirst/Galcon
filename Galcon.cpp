@@ -12,7 +12,7 @@ CGalcon::CGalcon()
 
    m_manager->moveToThread(&m_thread);
    m_singleGame->moveToThread(&m_thread);
-   m_game->moveToThread((&m_thread));
+   //m_game->moveToThread((&m_thread));
 
    m_thread.start();
 
