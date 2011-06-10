@@ -51,18 +51,27 @@ namespace SingleGame
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
                pMessage->m_startPlanetID);
-
-      slotRunTime();
+      if(!m_stepBot)
+      {
+         slotRunTime();
+      }
    }
 
    void CSingleGameManager::slotStepBot()
-   {      
-      foreach(CBot bot, m_vBot)
+   {
+      if(m_mapGame.GetFleets().size() < sMaxCountFleets)
       {
-         if(bot.HasPlanets())
+         m_stepBot = true;
+         foreach(CBot bot, m_vBot)
          {
-            TakeStepPlayer(bot.StepBot());
+            if(bot.HasPlanets())
+            {
+               TakeStepPlayer(bot.StepBot());
+            }
          }
+
+         m_stepBot = false;
+         slotRunTime();
       }
    }
 
@@ -151,7 +160,6 @@ namespace SingleGame
 /// --------------------------- timers
    void CSingleGameManager::slotWaitTime()
    {
-      //void SendTimeToStart(const Message::CMessageTimeToStartGamePtr pMessage);
       Message::CMessageTimeToStartGamePtr ptr(
                new Message::CMessageTimeToStartGame);
 
@@ -168,43 +176,36 @@ namespace SingleGame
    }
 
    void CSingleGameManager::slotRunTime()
-   {      
-      //void SendStateMap(const Message::CMessageStateMapPtr pMessage);
+   {
       m_mapGame.UpdateStateMap();
       QDateTime nowTime = QDateTime::currentDateTime();
 
       Message::CMessageStateMapPtr ptr(
                new Message::CMessageStateMap);
 
-      std::list<CFleet>::const_iterator itBFleet = m_mapGame.GetFleets().begin();
-      std::list<CFleet>::const_iterator itEFleet = m_mapGame.GetFleets().end();
-
-      Message::CStateFleet tempFleet;
-      for(; itBFleet != itEFleet; ++itBFleet)
+      Message::CStateFleet tempFleet;      
+      foreach(CFleet fleet, m_mapGame.GetFleets())
       {
-         tempFleet.m_countFleet = itBFleet->m_countFleet;
-         tempFleet.m_fleetID = itBFleet->GetID();
+         tempFleet.m_countFleet = fleet.m_countFleet;
+         tempFleet.m_fleetID = fleet.GetID();
          tempFleet.m_percentRoute = 100 *
                (nowTime.toMSecsSinceEpoch()
-               - itBFleet->m_timeStartMove.toMSecsSinceEpoch())
-               / (itBFleet->GetTimeFinish(m_mapGame.GetFlySpeed()).toMSecsSinceEpoch()
-               - itBFleet->m_timeStartMove.toMSecsSinceEpoch());
-         tempFleet.m_planetFinishID = itBFleet->m_toPlanet->GetID();
-         tempFleet.m_planetStartID = itBFleet->m_fromPlanet->GetID();
-         tempFleet.m_playerID = itBFleet->m_pPlayer->GetID();
+               - fleet.m_timeStartMove.toMSecsSinceEpoch())
+               / (fleet.GetTimeFinish(m_mapGame.GetFlySpeed()).toMSecsSinceEpoch()
+               - fleet.m_timeStartMove.toMSecsSinceEpoch());
+         tempFleet.m_planetFinishID = fleet.m_toPlanet->GetID();
+         tempFleet.m_planetStartID = fleet.m_fromPlanet->GetID();
+         tempFleet.m_playerID = fleet.m_pPlayer->GetID();
 
          ptr->m_fleetState.push_back(tempFleet);
       }
 
-      std::vector<CPlanet>::const_iterator itBPlanet = m_mapGame.GetPlanets().begin();
-      std::vector<CPlanet>::const_iterator itEPlanet = m_mapGame.GetPlanets().end();
-
       Message::CStatePlanet tempPlanet;
-      for(; itBPlanet != itEPlanet; ++itBPlanet)
+      foreach(CPlanet planet, m_mapGame.GetPlanets())
       {
-         tempPlanet.m_countFleet = itBPlanet->m_countFleet;         
-         tempPlanet.m_planetID = itBPlanet->GetID();         
-         tempPlanet.m_playerID = itBPlanet->m_pPlayer->GetID();
+         tempPlanet.m_countFleet = planet.m_countFleet;
+         tempPlanet.m_planetID = planet.GetID();
+         tempPlanet.m_playerID = planet.m_pPlayer->GetID();
 
          ptr->m_planetState.push_back(tempPlanet);
       }
@@ -224,28 +225,24 @@ namespace SingleGame
       ptr->m_mapX = m_mapGame.GetWidthMap();
       ptr->m_mapY = m_mapGame.GetHeigthMap();
 
-      Message::CPlanetStartData tempPlanet;
-      std::vector<CPlanet>::const_iterator itB = m_mapGame.GetPlanets().begin();
-      std::vector<CPlanet>::const_iterator itE = m_mapGame.GetPlanets().end();
-      for(; itB != itE; ++itB)
+      Message::CPlanetStartData tempPlanet;      
+      foreach(CPlanet planet, m_mapGame.GetPlanets())
       {
-         tempPlanet.m_countFleet = itB->m_countFleet;
-         tempPlanet.m_planetID = itB->GetID();
-         tempPlanet.m_planetR = itB->m_radius;
-         tempPlanet.m_planetX = itB->m_coordinates.x;
-         tempPlanet.m_planetY = itB->m_coordinates.y;
-         tempPlanet.m_playerID = itB->m_pPlayer->GetID();
+         tempPlanet.m_countFleet = planet.m_countFleet;
+         tempPlanet.m_planetID = planet.GetID();
+         tempPlanet.m_planetR = planet.m_radius;
+         tempPlanet.m_planetX = planet.m_coordinates.x;
+         tempPlanet.m_planetY = planet.m_coordinates.y;
+         tempPlanet.m_playerID = planet.m_pPlayer->GetID();
 
          ptr->m_planetData.push_back(tempPlanet);
       }
 
-      Message::CPlayerStartData tempPlayer;
-      std::vector<CPlayer>::const_iterator itBPl = m_vPlayer.begin();
-      std::vector<CPlayer>::const_iterator itEPl = m_vPlayer.end();
-      for(; itBPl != itEPl; ++itBPl)
+      Message::CPlayerStartData tempPlayer;      
+      foreach(CPlayer player, m_vPlayer)
       {
-         tempPlayer.m_playerID = itBPl->GetID();
-         tempPlayer.m_playerName = itBPl->m_name;
+         tempPlayer.m_playerID = player.GetID();
+         tempPlayer.m_playerName = player.m_name;
 
          ptr->m_playerData.push_back(tempPlayer);
       }
@@ -259,17 +256,14 @@ namespace SingleGame
 
    void CSingleGameManager::checkEndGame()
    {
-      std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
-      std::vector<CPlayer>::iterator itE = m_vPlayer.end();
-
       unsigned int countPlayers = 0;
       unsigned int winnId = 0;
 
-      for(; itB != itE; ++itB)
+      foreach(CPlayer player, m_vPlayer)
       {
-         if(!itB->Empty())
+         if(!player.Empty())
          {
-            winnId = itB->GetID();
+            winnId = player.GetID();
             ++countPlayers;
          }
       }
@@ -308,8 +302,7 @@ namespace SingleGame
       }
 
       std::vector<CPlayer>::iterator itB = m_vPlayer.begin();
-      std::vector<CPlayer>::iterator itE = m_vPlayer.end();      
-
+      std::vector<CPlayer>::iterator itE = m_vPlayer.end();
       for(++itB; itB != itE; ++itB)
       {
          tempBot.CreateBot(&(*itB), &m_mapGame, botLevel);

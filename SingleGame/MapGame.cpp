@@ -237,28 +237,24 @@ namespace SingleGame
       const unsigned int percent,
       const std::vector<unsigned int>& startPlanetID)
    {
-      CFleet tempFleet;
+      CPlanet* finishPlanet = getPlanet(finishPlanetID);      
 
-      std::vector<unsigned int>::const_iterator itB = startPlanetID.begin();
-      std::vector<unsigned int>::const_iterator itE = startPlanetID.end();
       std::list<CFleet>::iterator itInsertFleet;
-
-      CPlanet* finishPlanet = getPlanet(finishPlanetID);
-
-      for(; itB != itE; ++itB)
+      CFleet tempFleet;
+      foreach(unsigned int id, startPlanetID)
       {
-         if(finishPlanetID == *itB)
+         if(finishPlanetID == id)
          {
             continue;
          }
 
-         tempFleet.m_fromPlanet = getPlanet(*itB);
-         tempFleet.m_countFleet = getPlanet(*itB)->m_countFleet * percent / 100;
+         tempFleet.m_fromPlanet = getPlanet(id);
+         tempFleet.m_countFleet = getPlanet(id)->m_countFleet * percent / 100;
          tempFleet.m_fromPlanet->m_countFleet -= tempFleet.m_countFleet;
          tempFleet.m_toPlanet = finishPlanet;
          tempFleet.GenerationID();
          tempFleet.m_timeStartMove = QDateTime::currentDateTime();
-         tempFleet.m_pPlayer = getPlanet(*itB)->m_pPlayer;
+         tempFleet.m_pPlayer = getPlanet(id)->m_pPlayer;
 
          itInsertFleet =
                m_vFleet.insert(findInsertFleetPosition(tempFleet), tempFleet);
