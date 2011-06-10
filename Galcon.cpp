@@ -2,9 +2,6 @@
 
 CGalcon::CGalcon()
 {
-
-
-
    m_manager = new ServerManagerDecl::CServerManager();
    m_singleGame = new SingleGame::CSingleGameManager();
    m_game = new Game::CGame(&m_players);
@@ -28,8 +25,6 @@ CGalcon::CGalcon()
    qRegisterMetaType<Message::CMessageTimeToStartGamePtr>("Message::CMessageTimeToStartGamePtr");
    qRegisterMetaType<Message::CMessageErrorPtr>("Message::CMessageFinishGamePtr");
    qRegisterMetaType<Message::CMessageStepPlayerPtr>("Message::CMessageStepPlayerPtr");
-
-
 
    connectSendersToTakers();
    m_gui->ShowWindow();
