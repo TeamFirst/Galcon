@@ -7,11 +7,11 @@
 namespace ServerManagerDecl
 {
 /// constructor
-   CServerManager::CServerManager():
-      m_connectToServer(false),
-      m_parser(),
-      m_ePhaseMessage(CParser::eUnknown)
+   CServerManager::CServerManager()
    {
+      m_connectToServer = false;
+      //m_parser(),
+      m_ePhaseMessage = CParser::eUnknown;
    }
 
    CServerManager::~CServerManager()

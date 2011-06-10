@@ -219,7 +219,7 @@ namespace SingleGame
       }
    }
 
-   void CMapGame::updatePlanet(qint64 time)
+   void CMapGame::updatePlanet(const qint64 time)
    {
       std::vector<CPlanet>::iterator itB = m_vPlanet.begin();
       std::vector<CPlanet>::iterator itE = m_vPlanet.end();
