@@ -50,11 +50,11 @@ namespace SingleGame
             / (m_cCoefDispersionPlanets * m_cMaxPlanetRadius) - 1;
       unsigned int countPlanet = countPlanetX * countPlanetY;
 
-      CPlanet tempPlanet;
-      QDateTime nowTime = QDateTime::currentDateTime();
+      qint64 currentTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
 
       srand(time(NULL));
 
+      CPlanet tempPlanet;
       for(unsigned int i = 0; i < countPlanet; ++i)
       {
          tempPlanet.GenerationID();
@@ -73,7 +73,7 @@ namespace SingleGame
          tempPlanet.m_countFleet = m_cMinFleetCount
                + rand() % (m_cMaxFleetCount - m_cMinFleetCount);
          tempPlanet.m_pPlayer = &m_neutralPlayer;
-         tempPlanet.m_timeLastUpdate = nowTime;
+         tempPlanet.m_timeLastUpdate = currentTime;
 
          m_vPlanet.push_back(tempPlanet);
       }
@@ -150,34 +150,34 @@ namespace SingleGame
    }
 
 /// --------------------------- update data
-   void CMapGame::UpdateStateMap()
+   void CMapGame::UpdateStateMap(const qint64 currentTime)
    {
-      updateFleet();
-      updatePlanet(QDateTime::currentDateTime());
+      updateFleet(currentTime);
+      updatePlanet(currentTime);
    }
 
    void CMapGame::UpdateStateMap(
       const unsigned int finishPlanetID,
       const unsigned int percent,
-      const std::vector<unsigned int>& startPlanetID)
+      const std::vector<unsigned int>& startPlanetID,
+      const qint64 currentTime)
    {
-      UpdateStateMap();
-      addFleet(finishPlanetID, percent, startPlanetID);
+      UpdateStateMap(currentTime);
+      addFleet(finishPlanetID, percent, startPlanetID, currentTime);
    }
 
-   void CMapGame::updateFleet()
+   void CMapGame::updateFleet(const qint64 currentTime)
    {
-      QDateTime currentTime = QDateTime::currentDateTime();
-      QDateTime timeFinish;
+      qint64 timeFinish;
 
       std::list<CFleet>::iterator itB = m_vFleet.begin();
       std::list<CFleet>::iterator itE = m_vFleet.end();
 
       for(; itB != itE;)
       {
-         timeFinish = itB->GetTimeFinish(m_flySpeed);
+         timeFinish = itB->m_timeFinishMove;
 
-         if(timeFinish < currentTime)
+         if(itB->m_timeFinishMove < currentTime)
          {
             if(!itB->m_toPlanet->GetID())
             {
@@ -219,7 +219,7 @@ namespace SingleGame
       }
    }
 
-   void CMapGame::updatePlanet(QDateTime time)
+   void CMapGame::updatePlanet(qint64 time)
    {
       std::vector<CPlanet>::iterator itB = m_vPlanet.begin();
       std::vector<CPlanet>::iterator itE = m_vPlanet.end();
@@ -235,7 +235,8 @@ namespace SingleGame
    void CMapGame::addFleet(
       const unsigned int finishPlanetID,
       const unsigned int percent,
-      const std::vector<unsigned int>& startPlanetID)
+      const std::vector<unsigned int>& startPlanetID,
+      const qint64 currentTime)
    {
       CPlanet* finishPlanet = getPlanet(finishPlanetID);      
 
@@ -253,7 +254,8 @@ namespace SingleGame
          tempFleet.m_fromPlanet->m_countFleet -= tempFleet.m_countFleet;
          tempFleet.m_toPlanet = finishPlanet;
          tempFleet.GenerationID();
-         tempFleet.m_timeStartMove = QDateTime::currentDateTime();
+         tempFleet.m_timeStartMove = currentTime;
+         tempFleet.SetTimeFinish(m_flySpeed);
          tempFleet.m_pPlayer = getPlanet(id)->m_pPlayer;
 
          itInsertFleet =
@@ -286,7 +288,7 @@ namespace SingleGame
 
       for(; itB != itE; ++itB)
       {
-         if(itB->GetTimeFinish(m_flySpeed) > fleet.GetTimeFinish(m_flySpeed))
+         if(itB->m_timeFinishMove > fleet.m_timeFinishMove)
          {
             return itB;
          }

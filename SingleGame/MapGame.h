@@ -40,8 +40,9 @@ namespace SingleGame
       void UpdateStateMap(
          const unsigned int finishPlanetID,
          const unsigned int percent,
-         const std::vector<unsigned int>& startPlanetID);
-      void UpdateStateMap();
+         const std::vector<unsigned int>& startPlanetID,
+         const qint64 currentTime);
+      void UpdateStateMap(const qint64 currentTime);
 
       /// clear all data
       void Clear();
@@ -49,13 +50,14 @@ namespace SingleGame
    private:
       void createPlanet();
 
-      void updateFleet();
-      void updatePlanet(QDateTime time);
+      void updateFleet(const qint64 currentTime);
+      void updatePlanet(const qint64 time);
 
       void addFleet(
          const unsigned int finishPlanetID,
          const unsigned int percent,
-         const std::vector<unsigned int>& startPlanetID);
+         const std::vector<unsigned int>& startPlanetID,
+         const qint64 currentTime);
 
       CPlanet* getPlanet(const unsigned int ID);
 

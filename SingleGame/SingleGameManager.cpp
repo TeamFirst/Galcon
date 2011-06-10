@@ -50,7 +50,8 @@ namespace SingleGame
       m_mapGame.UpdateStateMap(
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
-               pMessage->m_startPlanetID);
+               pMessage->m_startPlanetID,
+               QDateTime::currentDateTime().toMSecsSinceEpoch());
       if(!m_stepBot)
       {
          slotRunTime();
@@ -177,8 +178,8 @@ namespace SingleGame
 
    void CSingleGameManager::slotRunTime()
    {
-      m_mapGame.UpdateStateMap();
-      QDateTime nowTime = QDateTime::currentDateTime();
+      qint64 currentTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+      m_mapGame.UpdateStateMap(currentTime);
 
       Message::CMessageStateMapPtr ptr(
                new Message::CMessageStateMap);
@@ -189,10 +190,10 @@ namespace SingleGame
          tempFleet.m_countFleet = fleet.m_countFleet;
          tempFleet.m_fleetID = fleet.GetID();
          tempFleet.m_percentRoute = 100 *
-               (nowTime.toMSecsSinceEpoch()
-               - fleet.m_timeStartMove.toMSecsSinceEpoch())
-               / (fleet.GetTimeFinish(m_mapGame.GetFlySpeed()).toMSecsSinceEpoch()
-               - fleet.m_timeStartMove.toMSecsSinceEpoch());
+               (currentTime
+               - fleet.m_timeStartMove)
+               / (fleet.m_timeFinishMove
+               - fleet.m_timeStartMove);
          tempFleet.m_planetFinishID = fleet.m_toPlanet->GetID();
          tempFleet.m_planetStartID = fleet.m_fromPlanet->GetID();
          tempFleet.m_playerID = fleet.m_pPlayer->GetID();
