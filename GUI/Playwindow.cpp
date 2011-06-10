@@ -41,7 +41,7 @@ namespace GUI
       delete m_view;
    }
 
-   void CPlayWindow::paintEvent(QPaintEvent *)
+   void CPlayWindow::paintEvent(QPaintEvent*)
    {
       QPainter painter(this);
       painter.setWindow(0, 0, m_logicalWidth, m_logicalHeight);
@@ -208,19 +208,22 @@ namespace GUI
 
    void CPlayWindow::resizeEvent(QResizeEvent* event)
    {
-      QSize newsize = event->size();
-      if ((double)newsize.width()/newsize.height() > (double)m_logicalWidth/m_logicalHeight)
+      if(event->size().height() != event->oldSize().height())
       {
-         m_width = newsize.width();
-         m_height = (m_width * m_logicalHeight/m_logicalWidth);
+         m_height = event->size().height();
+         m_width = double(m_height * m_logicalWidth)/double(m_logicalHeight);
+
          resize(m_width, m_height);
+
       }
-      else
+      else if(event->size().width() != event->oldSize().width())
       {
-         m_height = newsize.height();
-         m_width = (m_height * m_logicalWidth/m_logicalHeight);
+         m_width = event->size().width();
+         m_height = double(m_width * m_logicalHeight) / double(m_logicalWidth);
+
          resize(m_width, m_height);
       }
    }
+
 } //Namespace GUI
 
