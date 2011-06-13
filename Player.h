@@ -12,7 +12,11 @@ public:
 
    std::string GetName() const;
 
+   void SetArmy(const unsigned long army);
+   void NullArmy();
+
 private:
    unsigned short m_id;
    std::string m_name;
+   unsigned long m_army;
 };

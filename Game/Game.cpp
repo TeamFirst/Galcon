@@ -76,6 +76,9 @@ namespace Game
             errorMessage = "Failed player " + QString().setNum(currPlayer.m_playerID).toAscii();
          }
       }
+      /// Add neutral player
+      CPlayer* player = new CPlayer(0, "Neutral");
+      m_players->push_back(player);
 
       /// Check planets
       Message::CPlanetStartData currPlanet;
@@ -89,13 +92,17 @@ namespace Game
                   QString().setNum(currPlayer.m_playerID).toAscii();
          }
       }
+
+      /// Add planets
+
       if (flagRightData)
       {
          m_space = new CSpace(data->m_flyV,
                               data->m_growV,
                               data->m_mapX,
                               data->m_mapY,
-                              data->m_planetData);
+                              data->m_planetData,
+                              m_players);
          emit SendStartGame(data->m_mapX, data->m_mapY);
       }
       else

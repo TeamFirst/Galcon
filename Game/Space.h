@@ -10,6 +10,7 @@
 
 #include "message/MessageStartMapGame.h"
 #include "message/MessageStateMap.h"
+#include "Player.h"
 
 namespace Game
 {
@@ -21,7 +22,7 @@ namespace Game
    public:
 
       CSpace(unsigned short flySpeed, unsigned short growSpeed, unsigned short xSize, unsigned short ySize,
-             std::vector<Message::CPlanetStartData> planets);
+             std::vector<Message::CPlanetStartData> planets, std::vector<CPlayer*>* players);
       ~CSpace();
 
       void SetPlanets(const std::vector<Message::CStatePlanet>&);
@@ -31,11 +32,13 @@ namespace Game
       std::vector<CPlanet*> GetPlanets() const;
       std::list<CFleet*> GetFleets() const;
 
-      CPlanet* GetPlanetById(unsigned short id) const;
-      bool CheckPlanetId (unsigned int id) const;
+      CPlanet* GetPlanetById(const unsigned short id) const;
+      bool CheckPlanetId (const unsigned int id) const;
 
    private:
+      CPlayer* GetPlayerById(const unsigned int id) const;
 
+      std::vector<CPlayer* >* m_players;
       std::vector<CPlanet* > m_planets;
       std::list<CFleet* > m_fleets;
       unsigned short m_speed;

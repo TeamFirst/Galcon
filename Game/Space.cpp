@@ -10,20 +10,24 @@
 namespace Game
 {
    CSpace::CSpace(unsigned short flySpeed, unsigned short growSpeed, unsigned short xSize, unsigned short ySize,
-                  std::vector<Message::CPlanetStartData> planets):
+                  std::vector<Message::CPlanetStartData> planets, std::vector<CPlayer*>* players):
+      m_players(players),
       m_speed(flySpeed),
       m_growth(growSpeed),
       m_width(xSize),
       m_height(ySize)
    {
-      for (unsigned int i = 0; i < planets.size(); ++i)
+      CPlayer* currPlayer;
+      Message::CPlanetStartData currPlData;
+      foreach (currPlData, planets)
       {
-         CPlanet* tempPlanet = new CPlanet(planets[i].m_planetID,
-                                           planets[i].m_planetX,
-                                           planets[i].m_planetY,
-                                           planets[i].m_planetR,
-                                           planets[i].m_countFleet,
-                                           planets[i].m_playerID);
+         currPlayer = GetPlayerById(currPlData.m_playerID);
+         CPlanet* tempPlanet = new CPlanet(currPlData.m_planetID,
+                                           currPlData.m_planetX,
+                                           currPlData.m_planetY,
+                                           currPlData.m_planetR,
+                                           currPlData.m_countFleet,
+                                           currPlayer);
          m_planets.push_back(tempPlanet);
       }
    }
@@ -49,14 +53,23 @@ namespace Game
    {
       double plGrowth = i_time * (double)m_growth;
       double flMove = i_time * (double)m_speed;
+      /// Null army on every player
+
+      CPlayer* currPlayer;
+      foreach (currPlayer, *m_players)
+      {
+         currPlayer->NullArmy();
+      }
 
       ///  Make growth on planets
-      for (unsigned int i = 0; i < m_planets.size(); ++i)
+      CPlanet* currPlanet;
+      foreach (currPlanet, m_planets)
       {
-         if (m_planets[i]->GetPlayerId() != 0) ///< Exclude growth on neutral planets
+         if (currPlanet->GetPlayerId() != 0) ///< Exclude growth on neutral planets
          {
-            m_planets[i]->UpdateArmy(plGrowth * m_planets[i]->GetGrowth());
+            currPlanet->UpdateArmy(plGrowth * currPlanet->GetGrowth());
          }
+         currPlanet->GetPlayer()->SetArmy(currPlanet->GetArmy());
       }
 
       /// Move fleets
@@ -111,7 +124,8 @@ namespace Game
          if (NewFlag)
          {
             currPl->SetArmy(inPl.m_countFleet);
-            currPl->SetPlayer(inPl.m_playerID);
+            CPlayer* tempPlayer = GetPlayerById(inPl.m_playerID);
+            currPl->SetPlayer(tempPlayer);
          }
       }
    }
@@ -161,7 +175,7 @@ namespace Game
       return m_planets;
    }
 
-   CPlanet* CSpace::GetPlanetById(unsigned short id) const
+   CPlanet* CSpace::GetPlanetById(const unsigned short id) const
    {
       CPlanet* planet;
       foreach (planet, m_planets)
@@ -172,7 +186,7 @@ namespace Game
       return 0;
    }
 
-   bool CSpace::CheckPlanetId(unsigned int id) const
+   bool CSpace::CheckPlanetId(const unsigned int id) const
    {
       CPlanet* currPl;
       foreach (currPl, m_planets)
@@ -183,5 +197,18 @@ namespace Game
          }
       }
       return false;
+   }
+
+   CPlayer* CSpace::GetPlayerById(const unsigned int id) const
+   {
+      CPlayer* currPlayer;
+      foreach (currPlayer, *m_players)
+      {
+         if (currPlayer->GetId() == id)
+         {
+            return currPlayer;
+         }
+      }
+      return 0;
    }
 } //Namespace Game

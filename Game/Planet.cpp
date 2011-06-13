@@ -11,15 +11,16 @@ namespace Game
 {
    CPlanet::CPlanet(const unsigned short id, const unsigned short x, const unsigned short y,
                     const unsigned short radius, const unsigned long army,
-                    const unsigned short playerId):
+                    CPlayer* player):
       m_id(id),
       m_x(x),
       m_y(y),
       m_radius(10 + radius + radius / 10),
       m_growth(radius),
       m_army(army),
-      m_playerId(playerId)
+      m_player(player)
    {
+      m_playerId = m_player->GetId();
    }
 
    unsigned long CPlanet::GetArmy() const
@@ -30,6 +31,11 @@ namespace Game
    unsigned short CPlanet::GetPlayerId() const
    {
       return this->m_playerId;
+   }
+
+   CPlayer* CPlanet::GetPlayer() const
+   {
+      return m_player;
    }
 
    unsigned short CPlanet::GetId() const
@@ -58,9 +64,10 @@ namespace Game
       m_army = army;
    }
 
-   void CPlanet::SetPlayer(const unsigned short playerId)
+   void CPlanet::SetPlayer(CPlayer* player)
    {
-      m_playerId = playerId;
+      m_player = player;
+      m_playerId = m_player->GetId();
    }
 
    void CPlanet::UpdateArmy(const double army)
