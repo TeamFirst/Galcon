@@ -29,6 +29,10 @@ CGalcon::CGalcon()
    connectSendersToTakers();
    m_gui->ShowWindow();
 }
+CGalcon::~CGalcon()
+{
+   m_thread.exit();
+}
 
 void CGalcon::connectSendersToTakers()
 {

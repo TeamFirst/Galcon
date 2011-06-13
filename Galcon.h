@@ -18,6 +18,7 @@ class CGalcon : public QObject
 
 public:
    CGalcon();
+   ~CGalcon();
 
 private slots:
    void slotChoiceNetworkGame();
