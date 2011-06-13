@@ -26,6 +26,7 @@ namespace Game
 
       void SetArmy (const unsigned long army);
       void SetPlayer (const unsigned short playerId);
+      void UpdateArmy(const double army);
 
    private:
       unsigned short m_id;

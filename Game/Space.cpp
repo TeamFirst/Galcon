@@ -47,7 +47,7 @@ namespace Game
 
    void CSpace::Update(const double i_time)
    {
-      double plGrowth = i_time * m_growth;
+      double plGrowth = i_time * (double)m_growth;
       double flMove = i_time * (double)m_speed;
 
       ///  Make growth on planets
@@ -55,7 +55,7 @@ namespace Game
       {
          if (m_planets[i]->GetPlayerId() != 0) ///< Exclude growth on neutral planets
          {
-            m_planets[i]->SetArmy(m_planets[i]->GetArmy() + plGrowth * m_planets[i]->GetGrowth());
+            m_planets[i]->UpdateArmy(plGrowth * m_planets[i]->GetGrowth());
          }
       }
 
