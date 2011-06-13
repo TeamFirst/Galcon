@@ -123,6 +123,7 @@ namespace GUI
    void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)
    {
       m_playWindow->CreateWindow(X, Y);
+      m_playWindow->SetPlayers(m_players);
       m_waitWindow->DestroyWindow();
       m_playWindow->ShowWindow();
 

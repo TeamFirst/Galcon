@@ -3,6 +3,8 @@
 #include <QWidget>
 #include "message/MessageStepPlayer.h"
 
+class CPlayer;
+
 namespace GUI
 {
    class CGUIView;
@@ -14,6 +16,7 @@ namespace GUI
        explicit CPlayWindow(QWidget* parent  = 0);
 
        void CreateWindow(const unsigned int x, const unsigned int y);
+       void SetPlayers(std::vector<CPlayer* >* players);
        void DestroyWindow();
        void ShowWindow();
 
@@ -57,6 +60,7 @@ namespace GUI
        int m_mouseCurrentY;
 
        CGUIView* m_view;
+       std::vector<CPlayer*>* m_players;
        unsigned int m_width;
        unsigned int m_height;
        unsigned int m_logicalWidth;

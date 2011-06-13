@@ -12,6 +12,8 @@ public:
 
    std::string GetName() const;
 
+   unsigned long GetArmy() const;
+
    void SetArmy(const unsigned long army);
    void NullArmy();
 

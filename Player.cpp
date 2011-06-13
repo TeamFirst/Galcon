@@ -10,6 +10,11 @@ std::string CPlayer::GetName() const
    return m_name;
 }
 
+unsigned long CPlayer::GetArmy() const
+{
+   return m_army;
+}
+
 void CPlayer::SetArmy(const unsigned long army)
 {
    m_army += army;

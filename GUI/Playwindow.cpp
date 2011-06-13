@@ -1,5 +1,7 @@
 #include "Playwindow.h"
 #include "Guiview.h"
+#include "Player.h"
+
 #include <QMouseEvent>
 #include <QLine>
 #include <QVector>
@@ -30,6 +32,11 @@ namespace GUI
       resize(m_width, m_height);
    }
 
+   void CPlayWindow::SetPlayers(std::vector<CPlayer *> *players)
+   {
+      m_players = players;
+   }
+
    void CPlayWindow::ShowWindow()
    {
       show();
@@ -47,6 +54,16 @@ namespace GUI
       painter.setWindow(0, 0, m_logicalWidth, m_logicalHeight);
       painter.setViewport(0, 0, m_width, m_height);
       m_view->Draw(&painter, (double)m_logicalWidth/m_width);
+
+      /// Draw players statistic
+      CPlayer* currPlayer;
+      int i (1);
+      foreach (currPlayer, *m_players)
+      {
+         painter.setPen(Qt::white);
+         painter.drawText(10, 15*i, QVariant(quint32(currPlayer->GetArmy())).toString());
+         ++i;
+      }
 
       /// Draw mouse selection rectangle
 
