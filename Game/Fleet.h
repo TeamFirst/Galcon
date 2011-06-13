@@ -5,6 +5,8 @@
 /// @author Dmitriy Kozhevnikov
 /// @date 06-June-2011
 
+class CPlayer;
+
 namespace Game
 {
    class CPlanet;
@@ -17,8 +19,8 @@ namespace Game
    public:
 
       CFleet(const unsigned int id, CPlanet* from, CPlanet* to,
-             const unsigned int playerId, const unsigned long number, const double percent);
-
+             CPlayer* player, const unsigned long number, const double percent);
+      ~CFleet();
       /// Sets percent recieved from server to make position up-to-date
       void SetPercent(const double percent);
 
@@ -32,6 +34,7 @@ namespace Game
       /// Get functions
       unsigned long GetShipCount() const;
       unsigned short GetPlayerId() const;
+      CPlayer* GetPlayer() const;
       unsigned int GetId() const;
 
       bool ReachedDestination() const;
@@ -52,6 +55,7 @@ namespace Game
       Point m_fromPl;
       Point m_toPl;
 
+      CPlayer* m_player;
       unsigned int m_playerId;
       unsigned long m_number;
 

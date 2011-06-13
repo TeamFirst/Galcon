@@ -152,12 +152,13 @@ namespace Game
          /// If didn't found - add it to list
          if (flag)
          {
+            CPlayer* currPlayer = GetPlayerById(currMessFleet.m_playerID);
             CPlanet* planetFr = GetPlanetById(currMessFleet.m_planetStartID);
             CPlanet* planetTo = GetPlanetById(currMessFleet.m_planetFinishID);
             CFleet* newFleet = new CFleet(currMessFleet.m_fleetID,
                                     planetFr,
                                     planetTo,
-                                    currMessFleet.m_playerID,
+                                    currPlayer,
                                     currMessFleet.m_countFleet,
                                     currMessFleet.m_percentRoute);
             m_fleets.push_front(newFleet);

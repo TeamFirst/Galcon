@@ -4,6 +4,7 @@
 
 #include "Fleet.h"
 #include "Planet.h"
+#include "Player.h"
 
 #include <cmath>
 
@@ -11,14 +12,16 @@ namespace Game
 {
    const double PI = 3.141592653;
    CFleet::CFleet(const unsigned int id, CPlanet* from, CPlanet* to,
-                  const unsigned int playerId, const unsigned long number, const double percent):
+                  CPlayer* player, const unsigned long number, const double percent):
       m_id(id),
       m_from(from),
       m_to(to),
-      m_playerId(playerId),
+      m_player(player),
       m_number(number),
       m_percentPassed(percent)
    {
+      m_playerId = m_player->GetId();
+      m_player->AddFleetArmy(m_number);
       if (m_percentPassed < 100)
       {
          m_reached = false;
@@ -44,6 +47,11 @@ namespace Game
       updatePosition();
    }
 
+   CFleet::~CFleet()
+   {
+      m_player->RemoveFleetArmy(m_number);
+   }
+
    void CFleet::GetPosition(double& o_nX, double& o_nY) const
    {
       o_nX = m_actualX;
@@ -53,6 +61,11 @@ namespace Game
    unsigned short CFleet::GetPlayerId() const
    {
       return m_playerId;
+   }
+
+   CPlayer* CFleet::GetPlayer() const
+   {
+      return m_player;
    }
 
    unsigned int CFleet::GetId() const

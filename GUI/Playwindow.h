@@ -28,6 +28,7 @@ namespace GUI
        void mouseDoubleClickEvent(QMouseEvent *);
        void wheelEvent(QWheelEvent *);
        void resizeEvent(QResizeEvent *);
+       void keyPressEvent(QKeyEvent *);
 
        void mouseClick();
 

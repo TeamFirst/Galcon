@@ -87,6 +87,7 @@ namespace GUI
 
    void CGUI::TakeFinishGame(const Message::CMessageFinishGamePtr mess)
    {
+      m_playWindow->DestroyWindow();
       CPlayer* currPlayer = NULL;
       foreach (currPlayer, *m_players)
       {
@@ -105,7 +106,6 @@ namespace GUI
          CErrorWindow::Show("Loser!", "Unfortunately you lose. The winner is "+
             QString::fromStdString(currPlayer->GetName()) + "!");
       }
-      m_playWindow->DestroyWindow();
       m_players->clear();
       m_mainWindow->ShowWindow();
       emit signalDisconnect();

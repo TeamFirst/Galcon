@@ -1,5 +1,6 @@
 #include "Playwindow.h"
 #include "Guiview.h"
+#include "Guiplanet.h"
 #include "Player.h"
 
 #include <QMouseEvent>
@@ -57,11 +58,15 @@ namespace GUI
 
       /// Draw players statistic
       CPlayer* currPlayer;
-      int i (1);
+      int i(1);
       foreach (currPlayer, *m_players)
       {
-         painter.setPen(Qt::white);
-         painter.drawText(10, 15*i, QVariant(quint32(currPlayer->GetArmy())).toString());
+         painter.setPen(CGUIPlanet::GetColor(currPlayer->GetId()));
+         QString out("P:");
+         out.append(QVariant(quint32(currPlayer->GetArmy())).toString());
+         out.append(" F:");
+         out.append(QVariant(quint32(currPlayer->GetFleetArmy())).toString());
+         painter.drawText(10, 13*i, out);
          ++i;
       }
 
@@ -240,6 +245,11 @@ namespace GUI
 
          resize(m_width, m_height);
       }
+   }
+
+   void CPlayWindow::keyPressEvent(QKeyEvent* event)
+   {
+      //if (key == Qt::)
    }
 
 } //Namespace GUI
