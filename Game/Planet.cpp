@@ -62,6 +62,7 @@ namespace Game
    {
       m_playerId = playerId;
    }
+
    void CPlanet::UpdateArmy(const double army)
    {
       m_army += army;

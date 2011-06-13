@@ -96,9 +96,16 @@ namespace GUI
             break;
          }
       }
-
-      CErrorWindow::Show("Winner!", "Wins "+
-         QString::fromStdString(currPlayer->GetName()));
+      if (currPlayer->GetId() == m_playerId)
+      {
+         CErrorWindow::Show("Winner!", "Congratulation "+
+            QString::fromStdString(currPlayer->GetName()) + " you win!");
+      }
+      else
+      {
+         CErrorWindow::Show("Loser!", "Unfortunately you lose. The winner is "+
+            QString::fromStdString(currPlayer->GetName()) + "!");
+      }
       m_players->clear();
       m_mainWindow->ShowWindow();
       emit signalDisconnect();
