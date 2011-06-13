@@ -29,6 +29,7 @@ namespace ServerManagerDecl
    public slots:
       void TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage);
       void TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage);
+      void TakeExit();
 
    signals:
       void SendConfirmConnect(const Message::CMessageConfirmationConnectToServerPtr pMessage);

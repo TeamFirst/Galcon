@@ -76,6 +76,26 @@ namespace SingleGame
       }
    }
 
+   void CSingleGameManager::TakePause()
+   {
+      static bool pause = false;
+      if(pause) //< game is stop
+      {
+         pause = false;
+         pauseOFF();
+      }
+      else //< game is run
+      {
+         pause = true;
+         pauseON();
+      }
+   }
+
+   void CSingleGameManager::TakeExit()
+   {
+      clear();
+   }
+
 /// ----------------- generation start data
    bool CSingleGameManager::startGame(
       const unsigned int timeToStart,
@@ -284,6 +304,21 @@ namespace SingleGame
 
          SendFinishGame(ptr);
       }
+   }
+/// -------------------------------- pause
+   void CSingleGameManager::pauseON()
+   {
+      m_timerRunTime.stop();
+      m_timerBot.stop();
+      slotRunTime();
+   }
+
+   void CSingleGameManager::pauseOFF()
+   {
+      m_mapGame.SetCurrentTime(QDateTime::currentMSecsSinceEpoch());
+
+      m_timerRunTime.start();
+      m_timerBot.start();
    }
 
 /// -------------------------------- bot

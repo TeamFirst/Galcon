@@ -10,8 +10,12 @@ namespace ServerManagerDecl
    CServerManager::CServerManager()
    {
       m_connectToServer = false;
-      //m_parser(),
       m_ePhaseMessage = CParser::eUnknown;
+
+      connect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
+      connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+      connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+         this,SLOT(slotError(QAbstractSocket::SocketError)));
    }
 
    CServerManager::~CServerManager()
@@ -24,11 +28,7 @@ namespace ServerManagerDecl
    {
       m_tcpSocket = new QTcpSocket(this);
 
-      m_tcpSocket->connectToHost(QString(serverIP.c_str()), m_serverPort);
-      connect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
-      connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
-      connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
-         this,SLOT(slotError(QAbstractSocket::SocketError)));
+      m_tcpSocket->connectToHost(QString(serverIP.c_str()), m_serverPort);      
    }
 
    void CServerManager::sendToServer(const Message::IMessagePtr pMessage)
@@ -207,6 +207,11 @@ namespace ServerManagerDecl
          ptr->m_strInformation = "Error, No connection to server";
          emit SendInInformation(ptr);
       }
+   }
+
+   void CServerManager::TakeExit()
+   {
+      m_tcpSocket->disconnectFromHost();
    }
 
 } // namespace ServerManagerDecl

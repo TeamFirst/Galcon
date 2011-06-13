@@ -32,6 +32,8 @@ namespace SingleGame
    public slots:
       void TakeServerConnect(const Message::CMessageConnectToSingleGamePtr pMessage);
       void TakeStepPlayer(const Message::CMessageStepPlayerPtr pMessage);
+      void TakePause();
+      void TakeExit();
 
    signals:
       void SendConfirmConnect(const Message::CMessageConfirmationConnectToServerPtr pMessage);
@@ -69,6 +71,10 @@ namespace SingleGame
       /// run timer + logic
       void runPlay();
       void clear();
+
+      /// pause
+      void pauseON();
+      void pauseOFF();
 
       void createBot(
          const unsigned int botNumber,
