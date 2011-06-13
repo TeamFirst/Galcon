@@ -10,12 +10,7 @@ namespace ServerManagerDecl
    CServerManager::CServerManager()
    {
       m_connectToServer = false;
-      m_ePhaseMessage = CParser::eUnknown;
-
-      connect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
-      connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
-      connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
-         this,SLOT(slotError(QAbstractSocket::SocketError)));
+      m_ePhaseMessage = CParser::eUnknown;      
    }
 
    CServerManager::~CServerManager()
@@ -28,7 +23,11 @@ namespace ServerManagerDecl
    {
       m_tcpSocket = new QTcpSocket(this);
 
-      m_tcpSocket->connectToHost(QString(serverIP.c_str()), m_serverPort);      
+      m_tcpSocket->connectToHost(QString(serverIP.c_str()), m_serverPort);
+      connect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
+      connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+      connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+         this,SLOT(slotError(QAbstractSocket::SocketError)));
    }
 
    void CServerManager::sendToServer(const Message::IMessagePtr pMessage)
