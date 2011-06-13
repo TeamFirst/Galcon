@@ -297,5 +297,24 @@ namespace SingleGame
       return itE;
    }
 
+   void CMapGame::SetCurrentTime(const qint64 currentTime)
+   {
+      std::vector<CPlanet>::iterator itBPlanet = m_vPlanet.begin();
+      std::vector<CPlanet>::iterator itEPlanet = m_vPlanet.end();
+      qint64 timePause = currentTime - m_vPlanet.begin()->m_timeLastUpdate;
+      for(; itBPlanet != itEPlanet; ++itBPlanet)
+      {
+         itBPlanet->m_timeLastUpdate = currentTime;
+      }
+
+      std::list<CFleet>::iterator itBFleet = m_vFleet.begin();
+      std::list<CFleet>::iterator itEFleet = m_vFleet.end();
+      for(; itBFleet != itEFleet; ++itBFleet)
+      {
+         itBFleet->m_timeStartMove += timePause;
+         itBFleet->m_timeFinishMove += timePause;
+      }
+   }
+
 } // namespace SingleGame
 

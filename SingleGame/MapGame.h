@@ -44,6 +44,8 @@ namespace SingleGame
          const qint64 currentTime);
       void UpdateStateMap(const qint64 currentTime);
 
+      void SetCurrentTime(const qint64 currentTime);
+
       /// clear all data
       void Clear();
 

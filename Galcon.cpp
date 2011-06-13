@@ -44,8 +44,6 @@ void CGalcon::connectSendersToTakers()
 
    connect(m_game, SIGNAL(SendError(Message::CMessageInformationPtr)),
            m_gui, SLOT(TakeInInformation(Message::CMessageInformationPtr)));
-   connect(m_game, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)),
-           m_gui, SLOT(TakeFinishGame(Message::CMessageFinishGamePtr)));
 
    connect(m_game, SIGNAL(signalTimer()), m_game, SLOT(slotTimer()));
    connect(m_gui, SIGNAL(signalDisconnect()), this, SLOT(slotDisconnect()));
@@ -87,8 +85,8 @@ void CGalcon::connectSendersToTakers()
            m_gui, SLOT(TakeError(Message::CMessageErrorPtr)));
    connect(m_singleGame, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)),
            m_game, SLOT(SlotFinishGame(Message::CMessageFinishGamePtr)));
-//   connect(m_singleGame, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)),
-//           m_gui, SLOT(TakeFinishGame(Message::CMessageFinishGamePtr)));
+   connect(m_singleGame, SIGNAL(SendFinishGame(Message::CMessageFinishGamePtr)),
+           m_gui, SLOT(TakeFinishGame(Message::CMessageFinishGamePtr)));
    connect(m_singleGame, SIGNAL(SendStateMap(Message::CMessageStateMapPtr)),
            m_game, SLOT(SlotStateMap(Message::CMessageStateMapPtr)));
    connect(m_singleGame, SIGNAL(SendStartGame(Message::CMessageStartMapGamePtr)),

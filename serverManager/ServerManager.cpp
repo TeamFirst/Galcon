@@ -10,8 +10,7 @@ namespace ServerManagerDecl
    CServerManager::CServerManager()
    {
       m_connectToServer = false;
-      //m_parser(),
-      m_ePhaseMessage = CParser::eUnknown;
+      m_ePhaseMessage = CParser::eUnknown;      
    }
 
    CServerManager::~CServerManager()
@@ -207,6 +206,11 @@ namespace ServerManagerDecl
          ptr->m_strInformation = "Error, No connection to server";
          emit SendInInformation(ptr);
       }
+   }
+
+   void CServerManager::TakeExit()
+   {
+      m_tcpSocket->disconnectFromHost();
    }
 
 } // namespace ServerManagerDecl
