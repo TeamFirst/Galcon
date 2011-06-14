@@ -249,7 +249,10 @@ namespace GUI
 
    void CPlayWindow::keyPressEvent(QKeyEvent* event)
    {
-      //if (key == Qt::)
+      if (event->key() == Qt::Key_Escape)
+      {
+         emit PauseGame();
+      }
    }
 
 } //Namespace GUI

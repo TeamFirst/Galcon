@@ -36,6 +36,7 @@ namespace Game
       void SlotStartData(Message::CMessageStartMapGamePtr data);
       void SlotStateMap(Message::CMessageStateMapPtr data);
       void SlotFinishGame(Message::CMessageFinishGamePtr mes);
+      void SlotPause();
 
       void AddView(Message::CMessageAddViewPtr mes);
       void DeleteGame();
@@ -50,6 +51,7 @@ namespace Game
       GUI::ISceneUpdates* m_view;
       CSpace* m_space;
       QTimer* m_timer;
+      bool m_paused;
    };
 } // Namespace Game
 

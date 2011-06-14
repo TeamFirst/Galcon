@@ -21,6 +21,7 @@ namespace GUI
    class CSingleWindow;
    class ISceneUpdates;
    class CMainWindow;
+   class CPauseWindow;
 
    class CGUI : public QObject
    {
@@ -63,9 +64,12 @@ namespace GUI
       void signalChoiceNetworkGame();
       void signalDisconnect();
 
+      void signalPause();
+
    private slots:
       void slotChoiceSingleGame();
       void slotChoiceNetworkGame();
+      void slotPauseGame();
 
    private:
       CWaitWindow* m_waitWindow;
@@ -73,8 +77,10 @@ namespace GUI
       CSingleWindow* m_singleWindow;
       CPlayWindow* m_playWindow;
       CMainWindow* m_mainWindow;
+      CPauseWindow* m_pauseWindow;
 
       unsigned int m_playerId;
+      bool m_paused;
       std::vector<CPlayer* >* m_players;
 
       ETypeGame m_typeGame;

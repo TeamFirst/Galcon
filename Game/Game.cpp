@@ -10,7 +10,8 @@
 namespace Game
 {
    CGame::CGame(std::vector<CPlayer *> *players) :
-      m_players(players)
+      m_players(players),
+      m_paused(false)
    {
       m_timer = new QTimer(this);
       connect(m_timer, SIGNAL(timeout()), this, SIGNAL(signalTimer()));
@@ -140,6 +141,19 @@ namespace Game
          emit SendError(mess);
       }
 
+   }
+
+   void CGame::SlotPause()
+   {
+      if (!m_paused)
+      {
+         m_timer->stop();
+      }
+      else
+      {
+         m_timer->start();
+      }
+      m_paused = !m_paused;
    }
 
    inline bool CGame::AvailiblePlayer(unsigned int id) const

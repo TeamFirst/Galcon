@@ -50,6 +50,7 @@ void CGalcon::connectSendersToTakers()
 
    connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
            m_manager, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
+   connect(m_gui, SIGNAL(signalPause()), m_game, SLOT(SlotPause()));
 
    connect(m_gui, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)),
            m_singleGame, SLOT(TakeServerConnect(Message::CMessageConnectToSingleGamePtr)),
@@ -115,12 +116,14 @@ void CGalcon::connectSingleSendersToTakers()
 {
    connect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
            m_singleGame, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
+   connect(m_gui, SIGNAL(signalPause()), m_singleGame, SLOT(TakePause()));
 }
 
 void CGalcon::disconnectSingleSendersToTakers()
 {
    disconnect(m_gui, SIGNAL(SendStepPlayer(Message::CMessageStepPlayerPtr)),
            m_singleGame, SLOT(TakeStepPlayer(Message::CMessageStepPlayerPtr)));
+   disconnect(m_gui, SIGNAL(signalPause()), m_singleGame, SLOT(TakePause()));
 }
 
 /// private slots

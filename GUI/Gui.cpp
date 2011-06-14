@@ -8,19 +8,23 @@
 #include "Enterwindow.h"
 #include "Singlewindow.h"
 #include "Errorwindow.h"
+#include "Pausewindow.h"
 
 namespace GUI
 {
    CGUI::CGUI(std::vector<CPlayer *> *players, QObject *parent) :
       QObject(parent),
       m_playerId(0),
-      m_players(players)
+      m_players(players),
+      m_paused(false)
    {
       m_mainWindow = new CMainWindow();
       m_enterWindow = new CEnterWindow();
       m_waitWindow = new CWaitWindow();
       m_playWindow = new CPlayWindow();
       m_singleWindow = new CSingleWindow();
+      m_pauseWindow = new CPauseWindow();
+      m_pauseWindow->setWindowTitle("Paused");
 
       connect(m_enterWindow, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
               this, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)));
@@ -34,6 +38,9 @@ namespace GUI
               this, SLOT(slotChoiceSingleGame()));
       connect(m_mainWindow, SIGNAL(signalChoiceNetworkGame()),
               this, SLOT(slotChoiceNetworkGame()));
+      connect(m_pauseWindow, SIGNAL(ReturnToGame()), this, SLOT(slotPauseGame()));
+      connect(m_playWindow, SIGNAL(PauseGame()), this, SLOT(slotPauseGame()));
+      //connect(m_pauseWindow, SIGNAL(ExitGame()), this, SLOT());
    }
 
    CGUI::~CGUI()
@@ -150,6 +157,21 @@ namespace GUI
 
       m_mainWindow->DestroyWindow();
       m_enterWindow->ShowWindow();
+   }
+
+   void CGUI::slotPauseGame()
+   {
+      if (!m_paused)
+      {
+         m_pauseWindow->show();
+         emit signalPause();
+      }
+      else
+      {
+         m_pauseWindow->hide();
+         emit signalPause();
+      }
+      m_paused = !m_paused;
    }
 
 } // Namespace GUI

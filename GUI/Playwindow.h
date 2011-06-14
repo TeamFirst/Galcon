@@ -40,6 +40,7 @@ namespace GUI
 
    signals:
        void SendStepPlayer(Message::CMessageStepPlayerPtr mess);
+       void PauseGame();
    private:
        enum EMouseClick {
           ESingle,
