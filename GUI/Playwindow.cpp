@@ -58,16 +58,32 @@ namespace GUI
 
       /// Draw players statistic
       CPlayer* currPlayer;
+      unsigned long overAllArmy(0);
+      unsigned int barWidth(m_logicalWidth/2);
+      unsigned int barHeight(10);
       int i(1);
       foreach (currPlayer, *m_players)
       {
+         overAllArmy += currPlayer->GetArmy() + currPlayer->GetFleetArmy();
          painter.setPen(CGUIPlanet::GetColor(currPlayer->GetId()));
          QString out("P:");
          out.append(QVariant(quint32(currPlayer->GetArmy())).toString());
          out.append(" F:");
          out.append(QVariant(quint32(currPlayer->GetFleetArmy())).toString());
-         painter.drawText(10, 13*i, out);
+         painter.drawText(5, 12*i, out);
          ++i;
+      }
+      unsigned int currPosBar(m_logicalWidth/4);
+      unsigned int currWidth(0);
+      if (overAllArmy != 0)
+      {
+         foreach (currPlayer, *m_players)
+         {
+            painter.setBrush(CGUIPlanet::GetColor(currPlayer->GetId()));
+            currWidth = (barWidth*(currPlayer->GetArmy() + currPlayer->GetFleetArmy()))/overAllArmy;
+            painter.drawRect(currPosBar, 5, currWidth, barHeight);
+            currPosBar += currWidth;
+         }
       }
 
       /// Draw mouse selection rectangle
