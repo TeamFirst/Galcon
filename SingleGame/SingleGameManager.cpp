@@ -8,7 +8,8 @@ namespace SingleGame
    CSingleGameManager::CSingleGameManager() :
       m_timerWaitStart(this),
       m_timerRunTime(this),
-      m_timerBot(this)
+      m_timerBot(this),
+      m_pause(false)
    {
       m_timerWaitStart.setInterval(1000);
       m_timerRunTime.setInterval(2000);
@@ -87,15 +88,12 @@ namespace SingleGame
    {
       qDebug("Single - pause");
 
-      static bool pause = false;
-      if(pause) //< game is stop
-      {
-         pause = false;
+      if(m_pause) //< game is stop
+      {         
          pauseOFF();
       }
       else //< game is run
       {
-         pause = true;
          pauseON();
       }
    }
@@ -187,6 +185,7 @@ namespace SingleGame
       m_timerBot.stop();
       m_timeToStart = 0;
       m_vBot.clear();
+      m_pause = false;
 
       m_mapGame.Clear();
 
@@ -322,6 +321,7 @@ namespace SingleGame
 /// -------------------------------- pause
    void CSingleGameManager::pauseON()
    {
+      m_pause = true;
       m_timerRunTime.stop();
       m_timerBot.stop();
       slotRunTime();
@@ -329,6 +329,7 @@ namespace SingleGame
 
    void CSingleGameManager::pauseOFF()
    {
+      m_pause = false;
       m_mapGame.SetCurrentTime(QDateTime::currentMSecsSinceEpoch());
 
       m_timerRunTime.start();

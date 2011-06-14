@@ -15,8 +15,8 @@ namespace GUI
    CGUI::CGUI(std::vector<CPlayer *> *players, QObject *parent) :
       QObject(parent),
       m_playerId(0),
-      m_players(players),
-      m_paused(false)
+      m_paused(false),
+      m_players(players)
    {
       m_mainWindow = new CMainWindow();
       m_enterWindow = new CEnterWindow();
@@ -84,7 +84,8 @@ namespace GUI
       CErrorWindow::Show("Server error", mess->m_strError.c_str());
       m_playWindow->DestroyWindow();
       m_waitWindow->DestroyWindow();
-      m_enterWindow->ShowWindow();
+      m_mainWindow->ShowWindow();
+      emit signalExit();
    }
 
    void CGUI::TakeTimeStartToGame(const Message::CMessageTimeToStartGamePtr mess)

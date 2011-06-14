@@ -25,7 +25,6 @@ namespace GUI
    void CWaitWindow::DestroyWindow()
    {
       m_timer.stop();
-      ui->lcdNumber->hide();
       hide();
    }
 

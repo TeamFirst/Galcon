@@ -92,6 +92,8 @@ namespace SingleGame
       std::vector<CBot> m_vBot;
       bool m_stepBot;
 
+      bool m_pause;
+
       static const unsigned int sMaxCountFleets = 10;
 
    }; // class CSingleGameManager
