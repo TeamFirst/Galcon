@@ -51,6 +51,7 @@ void CGalcon::connectSendersToTakers()
    connect(m_gui, SIGNAL(SendClientToServer(Message::CMessageConnectToServerPtr)),
            m_manager, SLOT(TakeServerConnect(Message::CMessageConnectToServerPtr)));
    connect(m_gui, SIGNAL(signalPause()), m_game, SLOT(SlotPause()));
+   connect(m_gui, SIGNAL(signalDisconnect()), m_game, SLOT(SlotExitGame()));
 
    connect(m_gui, SIGNAL(SendClientToSingleGame(Message::CMessageConnectToSingleGamePtr)),
            m_singleGame, SLOT(TakeServerConnect(Message::CMessageConnectToSingleGamePtr)),

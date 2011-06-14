@@ -70,6 +70,7 @@ namespace GUI
       void slotChoiceSingleGame();
       void slotChoiceNetworkGame();
       void slotPauseGame();
+      void slotExitToMain();
 
    private:
       CWaitWindow* m_waitWindow;

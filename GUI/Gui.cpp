@@ -40,7 +40,7 @@ namespace GUI
               this, SLOT(slotChoiceNetworkGame()));
       connect(m_pauseWindow, SIGNAL(ReturnToGame()), this, SLOT(slotPauseGame()));
       connect(m_playWindow, SIGNAL(PauseGame()), this, SLOT(slotPauseGame()));
-      //connect(m_pauseWindow, SIGNAL(ExitGame()), this, SLOT());
+      connect(m_pauseWindow, SIGNAL(ExitGame()), this, SLOT(slotExitToMain()));
    }
 
    CGUI::~CGUI()
@@ -172,6 +172,14 @@ namespace GUI
          emit signalPause();
       }
       m_paused = !m_paused;
+   }
+
+   void CGUI::slotExitToMain()
+   {
+     m_playWindow->DestroyWindow();
+     m_players->clear();
+     m_mainWindow->ShowWindow();
+     emit signalDisconnect();
    }
 
 } // Namespace GUI

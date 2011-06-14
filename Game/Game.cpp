@@ -156,6 +156,11 @@ namespace Game
       m_paused = !m_paused;
    }
 
+   void CGame::SlotExitGame()
+   {
+      DeleteGame();
+   }
+
    inline bool CGame::AvailiblePlayer(unsigned int id) const
    {
       CPlayer* currPl;

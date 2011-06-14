@@ -37,6 +37,7 @@ namespace Game
       void SlotStateMap(Message::CMessageStateMapPtr data);
       void SlotFinishGame(Message::CMessageFinishGamePtr mes);
       void SlotPause();
+      void SlotExitGame();
 
       void AddView(Message::CMessageAddViewPtr mes);
       void DeleteGame();
