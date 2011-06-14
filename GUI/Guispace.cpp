@@ -12,6 +12,8 @@ namespace GUI
       painter->drawRect(0, 0, m_width, m_height);
 
       QPixmap pm(":/GUI/backspace.png");
-      painter->drawPixmap(0,0, pm);
+      QSize areaSize(m_width, m_height);
+      QPixmap space(pm.scaled(areaSize, Qt::IgnoreAspectRatio));
+      painter->drawPixmap(0,0, space);
    }
 } // Namespace GUI
