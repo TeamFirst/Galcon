@@ -12,7 +12,7 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
       m_ePhaseMessage = CParser::eUnknown;
-      m_timerConfirm.setInterval(10000);
+      m_timerConfirm.setInterval(1000);
       connect(&m_timerConfirm, SIGNAL(timeout()), this, SLOT(slotTimeStartOut()));
    }
 
@@ -86,6 +86,7 @@ namespace ServerManagerDecl
          case CParser::eFinishGame :
             if(m_ePhaseMessage == CParser::eStartGame)
             {
+               disconnectFromServer();
                m_ePhaseMessage = CParser::eUnknown;
                emit SendFinishGame(m_parser.ParseMFinishGame(sMes));
             }
@@ -190,10 +191,6 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
 
-      /*Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
-      ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
-      ptr->m_strInformation = "Error connection";
-      emit SendInInformation(ptr);*/
       Message::CMessageErrorPtr ptr(
                new Message::CMessageError);
       ptr->m_strError = "Error connection";
