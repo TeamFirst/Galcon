@@ -12,6 +12,7 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
       m_ePhaseMessage = CParser::eUnknown;
+      m_timerConfirm.setInterval(10000);
       connect(&m_timerConfirm, SIGNAL(timeout()), this, SLOT(slotTimeStartOut()));
    }
 
@@ -35,6 +36,7 @@ namespace ServerManagerDecl
    void CServerManager::disconnectFromServer()
    {
       m_connectToServer = false;
+      m_tcpSocket->waitForDisconnected(0);
       m_tcpSocket->disconnectFromHost();
 
       disconnect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
@@ -43,6 +45,8 @@ namespace ServerManagerDecl
          this,SLOT(slotError(QAbstractSocket::SocketError)));
 
       delete m_tcpSocket;
+
+      qDebug("Disconnect from server - end");
    }
 
    void CServerManager::sendToServer(const Message::IMessagePtr pMessage)
@@ -186,10 +190,14 @@ namespace ServerManagerDecl
    {
       m_connectToServer = false;
 
-      Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+      /*Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
       ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
       ptr->m_strInformation = "Error connection";
-      emit SendInInformation(ptr);
+      emit SendInInformation(ptr);*/
+      Message::CMessageErrorPtr ptr(
+               new Message::CMessageError);
+      ptr->m_strError = "Error connection";
+      emit SendError(ptr);
    }
 
    void CServerManager::slotTimeStartOut()
@@ -202,9 +210,9 @@ namespace ServerManagerDecl
       ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
       ptr->m_strInformation = "Error, time wait confirmation from server - out";
 
-      disconnectFromServer();
-
       emit SendInInformation(ptr);
+
+      disconnectFromServer();
    }
 
 /// public slots
@@ -217,7 +225,7 @@ namespace ServerManagerDecl
 
          qDebug("Network - start wait confirm timer");
 
-         m_timerConfirm.start(10000);
+         m_timerConfirm.start();
       }
       else
       {
