@@ -137,6 +137,7 @@ namespace GUI
       m_playWindow->SetPlayers(m_players);
       m_waitWindow->DestroyWindow();
       m_playWindow->ShowWindow();
+      m_paused = false;
 
       Message::CMessageAddViewPtr ptr(new Message::CMessageAddView);
       ptr->m_view = (GUI::ISceneUpdates*)m_playWindow->GetView();
@@ -168,12 +169,18 @@ namespace GUI
       if (!m_paused)
       {
          m_pauseWindow->show();
-         emit signalPause();
+         if (m_typeGame == eSingleGame)
+         {
+            emit signalPause();
+         }
       }
       else
       {
          m_pauseWindow->hide();
-         emit signalPause();
+         if (m_typeGame == eSingleGame)
+         {
+            emit signalPause();
+         }
       }
       m_paused = !m_paused;
    }

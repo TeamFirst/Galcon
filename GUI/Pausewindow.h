@@ -15,7 +15,7 @@ namespace GUI
       void ExitGame();
 
    private:
-      QPushButton* returnButton;
-      QPushButton* exitButton;
+      QPushButton* m_returnButton;
+      QPushButton* m_exitButton;
    };
 } //Namespace GUI
