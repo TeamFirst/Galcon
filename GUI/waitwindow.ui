@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Wait time to start</string>
   </property>
   <widget class="QLCDNumber" name="lcdNumber">
    <property name="enabled">
