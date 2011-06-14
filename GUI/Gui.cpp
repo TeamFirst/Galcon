@@ -185,7 +185,7 @@ namespace GUI
       m_playWindow->DestroyWindow();
       m_players->clear();
       m_mainWindow->ShowWindow();
-      emit signalDisconnect();
+      emit signalExit();
    }
 
 } // Namespace GUI

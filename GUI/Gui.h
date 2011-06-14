@@ -65,6 +65,7 @@ namespace GUI
       void signalDisconnect();
 
       void signalPause();
+      void signalExit();
 
    private slots:
       void slotChoiceSingleGame();

@@ -51,7 +51,7 @@ void CGalcon::connectSendersToTakers()
 
    connect(m_gui, SIGNAL(signalPause()), m_game, SLOT(SlotPause()));
    connect(m_gui, SIGNAL(signalPause()), m_singleGame, SLOT(TakePause()));
-   connect(m_gui, SIGNAL(signalDisconnect()), m_game, SLOT(SlotExitGame()));
+   connect(m_gui, SIGNAL(signalExit()), m_game, SLOT(SlotExitGame()));
 
    connect(m_gui, SIGNAL(signalChoiceNetworkGame()), this, SLOT(slotChoiceNetworkGame()));
    connect(m_gui, SIGNAL(signalChoiceSingleGame()), this, SLOT(slotChoiceSingleGame()));
