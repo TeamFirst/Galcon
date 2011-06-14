@@ -176,10 +176,12 @@ namespace GUI
 
    void CGUI::slotExitToMain()
    {
-     m_playWindow->DestroyWindow();
-     m_players->clear();
-     m_mainWindow->ShowWindow();
-     emit signalDisconnect();
+      qDebug("Gui - exit to main");
+
+      m_playWindow->DestroyWindow();
+      m_players->clear();
+      m_mainWindow->ShowWindow();
+      emit signalDisconnect();
    }
 
 } // Namespace GUI

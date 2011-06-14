@@ -278,7 +278,7 @@ namespace SingleGame
          }
       }
 
-      return &(*itE); /// if this case - error program
+      return NULL;
    }
 
    std::list<CFleet>::iterator CMapGame::findInsertFleetPosition(const CFleet& fleet)

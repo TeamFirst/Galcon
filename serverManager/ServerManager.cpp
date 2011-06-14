@@ -30,6 +30,18 @@ namespace ServerManagerDecl
          this,SLOT(slotError(QAbstractSocket::SocketError)));
    }
 
+   void CServerManager::disconnectFromServer()
+   {
+      m_tcpSocket->disconnectFromHost();
+
+      disconnect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
+      disconnect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+      disconnect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+         this,SLOT(slotError(QAbstractSocket::SocketError)));
+
+      delete m_tcpSocket;
+   }
+
    void CServerManager::sendToServer(const Message::IMessagePtr pMessage)
    {
       QByteArray  arrBlock;
@@ -210,7 +222,7 @@ namespace ServerManagerDecl
 
    void CServerManager::TakeExit()
    {
-      m_tcpSocket->disconnectFromHost();
+      disconnectFromServer();
    }
 
 } // namespace ServerManagerDecl

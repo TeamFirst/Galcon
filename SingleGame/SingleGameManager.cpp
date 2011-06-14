@@ -51,7 +51,7 @@ namespace SingleGame
                pMessage->m_finishPlanetID,
                pMessage->m_percent,
                pMessage->m_startPlanetID,
-               QDateTime::currentDateTime().toMSecsSinceEpoch());
+               QDateTime::currentMSecsSinceEpoch());
       if(!m_stepBot)
       {
          slotRunTime();
@@ -78,6 +78,8 @@ namespace SingleGame
 
    void CSingleGameManager::TakePause()
    {
+      qDebug("Single - pause");
+
       static bool pause = false;
       if(pause) //< game is stop
       {
@@ -93,6 +95,8 @@ namespace SingleGame
 
    void CSingleGameManager::TakeExit()
    {
+      qDebug("Single - exit");
+
       clear();
    }
 
@@ -168,12 +172,16 @@ namespace SingleGame
 
    void CSingleGameManager::clear()
    {
+      qDebug("Clear single game");
+
       m_vPlayer.clear();
       m_timerWaitStart.stop();
       m_timerRunTime.stop();
       m_timerBot.stop();
       m_timeToStart = 0;
-      m_vBot.clear();      
+      m_vBot.clear();
+
+      m_mapGame.Clear();
 
       CGameObject::ClearID();
    }
@@ -299,7 +307,6 @@ namespace SingleGame
 
          ptr->m_playerID = winnId;
 
-         m_mapGame.Clear();
          clear();
 
          SendFinishGame(ptr);

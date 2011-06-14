@@ -48,6 +48,7 @@ namespace ServerManagerDecl
 
    private:
       void connectToServer(const std::string& serverIP, const unsigned int m_serverPort);
+      void disconnectFromServer();
       void sendToServer(const Message::IMessagePtr pMessage);
       void parseStrFromServer(const std::string& sMes);
 
