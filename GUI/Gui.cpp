@@ -183,6 +183,7 @@ namespace GUI
       qDebug("Gui - exit to main");
 
       m_playWindow->DestroyWindow();
+      m_pauseWindow->hide();
       m_players->clear();
       m_mainWindow->ShowWindow();
       emit signalExit();

@@ -217,7 +217,7 @@ namespace ServerManagerDecl
 
          qDebug("Network - start wait confirm timer");
 
-         m_timerConfirm.start(1000);
+         m_timerConfirm.start(10000);
       }
       else
       {
