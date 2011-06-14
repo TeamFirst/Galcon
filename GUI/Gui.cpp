@@ -188,7 +188,7 @@ namespace GUI
    void CGUI::slotExitToMain()
    {
       qDebug("Gui - exit to main");
-
+      m_paused = false;
       m_playWindow->DestroyWindow();
       m_pauseWindow->hide();
       m_players->clear();
