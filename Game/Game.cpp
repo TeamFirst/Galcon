@@ -49,6 +49,7 @@ namespace Game
    void CGame::SlotStartData(Message::CMessageStartMapGamePtr data)
    {
       bool flagRightData = true;
+      m_paused = false;
       QString errorMessage;
       /// Check start data
 
