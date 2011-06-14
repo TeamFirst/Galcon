@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QTimer>
 
 #include "message/MessageItf.h"
 #include "message/MessageConnectToServer.h"
@@ -45,6 +46,7 @@ namespace ServerManagerDecl
       void slotConnected();
       void slotReadyRead();
       void slotError(QAbstractSocket::SocketError);
+      void slotTimeStartOut();
 
    private:
       void connectToServer(const std::string& serverIP, const unsigned int m_serverPort);
@@ -53,6 +55,7 @@ namespace ServerManagerDecl
       void parseStrFromServer(const std::string& sMes);
 
       QTcpSocket* m_tcpSocket;
+      QTimer m_timerConfirm;
 
       CParser m_parser;
 

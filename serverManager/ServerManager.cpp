@@ -7,10 +7,12 @@
 namespace ServerManagerDecl
 {
 /// constructor
-   CServerManager::CServerManager()
+   CServerManager::CServerManager():
+      m_timerConfirm(this)
    {
       m_connectToServer = false;
-      m_ePhaseMessage = CParser::eUnknown;      
+      m_ePhaseMessage = CParser::eUnknown;
+      connect(&m_timerConfirm, SIGNAL(timeout()), this, SLOT(slotTimeStartOut()));
    }
 
    CServerManager::~CServerManager()
@@ -27,11 +29,12 @@ namespace ServerManagerDecl
       connect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
       connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
       connect(m_tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
-         this,SLOT(slotError(QAbstractSocket::SocketError)));
+         this,SLOT(slotError(QAbstractSocket::SocketError)));      
    }
 
    void CServerManager::disconnectFromServer()
    {
+      m_connectToServer = false;
       m_tcpSocket->disconnectFromHost();
 
       disconnect(m_tcpSocket, SIGNAL(connected()), this, SLOT(slotConnected()));
@@ -64,6 +67,7 @@ namespace ServerManagerDecl
          case CParser::eConfirmConnect :
             if(m_ePhaseMessage == CParser::eUnknown)
             {
+               m_timerConfirm.stop();
                m_ePhaseMessage = CParser::eConfirmConnect;
                emit SendConfirmConnect(m_parser.ParseMConfirmConnect(sMes));
             }
@@ -188,6 +192,21 @@ namespace ServerManagerDecl
       emit SendInInformation(ptr);
    }
 
+   void CServerManager::slotTimeStartOut()
+   {
+      qDebug("Network - stop timer");
+
+      m_timerConfirm.stop();
+
+      Message::CMessageInformationPtr ptr(new Message::CMessageInformation);
+      ptr->m_typeInformation = Message::CMessageInformation::eConnectionToServer;
+      ptr->m_strInformation = "Error, time wait confirmation from server - out";
+
+      disconnectFromServer();
+
+      emit SendInInformation(ptr);
+   }
+
 /// public slots
    void CServerManager::TakeServerConnect(const Message::CMessageConnectToServerPtr pMessage)
    {
@@ -195,6 +214,10 @@ namespace ServerManagerDecl
       {
          connectToServer(pMessage->m_serverIP, pMessage->m_serverPort);
          sendToServer(pMessage);
+
+         qDebug("Network - start wait confirm timer");
+
+         m_timerConfirm.start(1000);
       }
       else
       {

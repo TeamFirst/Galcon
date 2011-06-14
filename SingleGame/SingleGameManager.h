@@ -48,7 +48,7 @@ namespace SingleGame
    private slots:
       void slotWaitTime();
       void slotRunTime();
-      void slotStepBot();
+      void slotStepBot();      
 
    private:
       /// wait timer + generation map

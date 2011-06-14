@@ -120,11 +120,15 @@ namespace GUI
 
    void CGUI::TakeInInformation(const Message::CMessageInformationPtr mess)
    {
-      if (mess->m_typeInformation == Message::CMessageInformation::eGameError)
+      if(mess->m_typeInformation == Message::CMessageInformation::eGameError)
       {
          CErrorWindow::Show("Game error", QString::fromStdString(mess->m_strInformation));
       }
 
+      if(mess->m_typeInformation == Message::CMessageInformation::eConnectionToServer)
+      {
+         CErrorWindow::Show("Server error", QString::fromStdString(mess->m_strInformation));
+      }
    }
 
    void CGUI::TakeFieldSize(const unsigned int X, const unsigned int Y)

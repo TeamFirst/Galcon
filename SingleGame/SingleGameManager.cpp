@@ -42,6 +42,13 @@ namespace SingleGame
       if(!start)
       {
          clear();
+
+         Message::CMessageInformationPtr ptr(
+                  new Message::CMessageInformation);
+         ptr->m_typeInformation = Message::CMessageInformation::eGameError;
+         ptr->m_strInformation = "Error map setting";
+
+         SendInInformation(ptr);
       }
    }
 
